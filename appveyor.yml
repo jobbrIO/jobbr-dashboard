@@ -13,7 +13,7 @@ assembly_info:
   patch: false
 
 before_build:
-  - nuget restore source/Jobbr.Dashboard.Backend.sln
+  - nuget restore Jobbr.Dashboard.Backend.sln
   - ps: C:\ProgramData\chocolatey\lib\GitVersion.Portable\tools\GitVersion.exe /l console /output buildserver /updateAssemblyInfo
 
 platform: Any CPU
