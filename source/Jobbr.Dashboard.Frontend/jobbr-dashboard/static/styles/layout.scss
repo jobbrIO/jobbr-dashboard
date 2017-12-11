@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+	display: grid;
+	grid-template-rows: auto 30px;
+	grid-template-columns: 300px 1fr;
+	height: 100vh;
+}
+
+.content {
+  background-color: lightblue;
+}
+
+.sidebar {
+  background-color: lime;
+}
+
+.footer {
+  background-color: plum;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
