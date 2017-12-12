@@ -1,4 +1,5 @@
-﻿using Jobbr.Server.Builder;
+﻿using System;
+using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
 using Jobbr.Server.WebAPI;
@@ -14,7 +15,7 @@ namespace Sample.Jobbr.Server
             var jobbrBuilder = new JobbrBuilder();
             jobbrBuilder.AddForkedExecution(config =>
             {
-                config.JobRunDirectory = "c:/jobbr/temp";
+                config.JobRunDirectory = "c:/temp";
                 config.JobRunnerExecutable = "../../../Sample.JobRunner/bin/Debug/Sample.JobRunner.exe";
                 config.MaxConcurrentProcesses = 1;
             });
@@ -31,6 +32,11 @@ namespace Sample.Jobbr.Server
             using (var jobbr = jobbrBuilder.Create())
             {
                 jobbr.Start();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Press Enter to exit");
+                Console.ResetColor();
+                Console.ReadLine();
             }
         }
     }
