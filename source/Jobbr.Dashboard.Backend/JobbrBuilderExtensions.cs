@@ -5,7 +5,7 @@ namespace Jobbr.Dashboard.Backend
 {
     public static class JobbrBuilderExtensions
     {
-        public static void AddWebApi(this IJobbrBuilder builder)
+        public static void AddDashboard(this IJobbrBuilder builder)
         {
             builder.AddDashboard(configuration => { });
         }

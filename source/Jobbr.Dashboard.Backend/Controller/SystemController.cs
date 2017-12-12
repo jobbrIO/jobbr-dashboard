@@ -68,5 +68,12 @@ namespace Jobbr.Dashboard.Backend.Controller
 
             return Ok(driveInfos);
         }
+
+        [HttpGet]
+        [Route("signalr/trigger")]
+        public IHttpActionResult TriggerSignalR()
+        {
+            return Ok();
+        }   
     }
 }

@@ -36,6 +36,7 @@ namespace Jobbr.Dashboard.Backend
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             app.UseWebApi(config);
+            //app.MapSignalR();
         }
     }
 }
