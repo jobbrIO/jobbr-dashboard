@@ -1,0 +1,50 @@
+@import '../../static/styles/colors.scss';
+
+ul.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+
+  li a {
+    display: block;
+    color: $text-color;
+    padding: 16px 18px;
+    text-decoration: none;
+    background-color: $menu-background;
+  }
+
+  span {
+    padding-right: 12px;
+  }
+
+  li a:hover {
+    background-color: $menu-background-hover;
+  }
+
+  li:nth-child(1) a span {
+    color: $nav-dashboard-color;
+  }
+
+  li:nth-child(2) a span {
+    color: $nav-jobqueue-color;
+  }
+
+  li:nth-child(3) a span {
+    color: $nav-triggers-color;
+  }
+
+  li:nth-child(4) a span {
+    color: $nav-settings-color;
+  }
+}
+
+.nav-title {
+  padding: 8px 14px;
+  border-bottom: 1px solid $border-color;
+
+  strong {
+    font-size: 40px;
+    color: #ffc533;
+  }
+}

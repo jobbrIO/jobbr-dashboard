@@ -1,29 +1,55 @@
+@import 'colors';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
 * {
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 html, body {
   margin: 0;
   padding: 0;
+  color: $text-color;
 }
 
 .page {
 	display: grid;
 	grid-template-rows: auto 30px;
-	grid-template-columns: 300px 1fr;
-	height: 100vh;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
 }
 
 .content {
-  background-color: lightblue;
+  background-color: $background-color;
+  border-left: 1px solid $border-color;
 }
 
 .sidebar {
-  background-color: lime;
+  background-color: $background-color;
 }
 
-.footer {
-  background-color: plum;
+footer {
+  background-color: $footer-background-color;
+  border-top: 1px solid $footer-border-top-color;
+
   grid-column-start: 1;
   grid-column-end: 3;
+  
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+
+  div {
+    border-left: 1px solid rgba(99, 114, 138, .4);
+    padding: 5px 9px 5px 4px;
+  }
+
+  div:first-child {
+    border: 0;
+  }
+
+  .icon {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
