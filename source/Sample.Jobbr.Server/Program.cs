@@ -1,4 +1,5 @@
 ﻿using System;
+using Jobbr.Dashboard.Backend;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
@@ -27,7 +28,7 @@ namespace Sample.Jobbr.Server
             });
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
-            //jobbrBuilder.AddDashboard();
+            jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}dashboard");
 
             using (var jobbr = jobbrBuilder.Create())
             {

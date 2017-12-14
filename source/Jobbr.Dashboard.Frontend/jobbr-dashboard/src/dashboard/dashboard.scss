@@ -1,0 +1,7 @@
+@import '../../static/styles/box.scss';
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 400px auto;
+  grid-gap: $box-gap;
+}

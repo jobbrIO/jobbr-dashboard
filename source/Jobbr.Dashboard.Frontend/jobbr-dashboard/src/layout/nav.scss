@@ -1,4 +1,4 @@
-@import '../../static/styles/colors.scss';
+@import '../../static/styles/variables';
 
 ul.nav {
   list-style-type: none;
@@ -39,12 +39,3 @@ ul.nav {
   }
 }
 
-.nav-title {
-  padding: 8px 14px;
-  border-bottom: 1px solid $border-color;
-
-  strong {
-    font-size: 40px;
-    color: #ffc533;
-  }
-}

@@ -1,0 +1,16 @@
+@import 'variables';
+
+.flat-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 4px;
+  }
+
+  span.icon {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}

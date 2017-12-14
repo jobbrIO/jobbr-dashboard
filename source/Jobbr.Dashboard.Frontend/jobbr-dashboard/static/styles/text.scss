@@ -1,5 +1,29 @@
-@import 'colors';
+@import 'variables';
 
 .text-highlight {
   color: $text-color-highlight;
+}
+
+.text-success {
+  color: $text-success;
+}
+
+.rotated-text {
+  display: inline-block;
+  overflow: hidden;
+  width: 1.2em;
+  padding-top: 8px;
+}
+
+.rotated-text__inner {
+  display: inline-block;
+  white-space: nowrap;
+  transform: translate(1.6em, 0) rotate(90deg);
+  transform-origin: 0 0;
+}
+
+.rotated-text__inner:before {
+  content: "";
+  float: left;
+  margin-top: 100%;
 }

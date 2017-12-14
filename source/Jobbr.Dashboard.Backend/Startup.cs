@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
+using Microsoft.Owin.Cors;
 using Owin;
 
 namespace Jobbr.Dashboard.Backend
@@ -34,8 +36,10 @@ namespace Jobbr.Dashboard.Backend
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             app.UseWebApi(config);
+            app.UseCors(CorsOptions.AllowAll);
             //app.MapSignalR();
         }
     }

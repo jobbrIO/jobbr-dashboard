@@ -1,0 +1,42 @@
+@import '../../static/styles/variables';
+.jobs {
+  .job {
+    background: $box-background-color;
+    display: flex;
+    flex-direction: row;
+
+    .job-status {
+      width: 30px;
+      text-transform: uppercase;
+      background-color: $job-running;
+      color: $text-color-highlight;
+    }
+
+    .job-select {
+      width: 40px;
+      padding: 8px;
+    }
+
+    .job-content {
+      padding: 8px;
+      flex-grow: 1;
+
+      display: flex;
+    
+      h2 {
+        color: $main-color;
+        margin-top: 0;
+        margin-bottom: 8px;
+
+        small {
+          color: $text-color;
+          font-size:0.6em;
+        }
+      }
+    }
+  }
+
+  .running {
+    border: 1px solid $job-running;
+  }
+}

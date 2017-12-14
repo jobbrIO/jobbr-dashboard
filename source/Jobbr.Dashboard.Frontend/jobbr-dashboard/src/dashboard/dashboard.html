@@ -1,0 +1,62 @@
+<template>
+  <require from="./dashboard.scss"></require>
+  <require from="./cpu-graph/cpu-graph"></require>
+  <require from="./memory-graph/memory-graph"></require>
+
+  <div class="dashboard">
+    <div class="box box-no-title">
+      <div class="box-content">
+        <h2>
+          <i class="fas fa-server"></i> Jobbr Server</h2>
+        <ul class="flat-list">
+          <li>
+            <span class="icon">
+              <i class="fas fa-link"></i>
+            </span> http://
+            <span class="text-highlight">localhost:1337</span>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-clock"></i>
+            </span> Up for
+            <strong class="text-success">2 hours 4 minutes</strong>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-fighter-jet"></i>
+            </span>Max. concurrent Jobs:
+            <span class="text-highlight">4</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-circle-notch fa-spin extra-spacing-right"></i>Running Jobs</h1>
+      </div>
+      <div class="box-content">
+        heyho
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-microchip extra-spacing-right"></i>CPU / Memory</h1>
+      </div>
+      <div class="box-content">
+        <cpu-graph></cpu-graph>
+        <memory-graph></memory-graph>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-hdd extra-spacing-right"></i>Storage</h1>
+      </div>
+      <div class="box-content">
+        
+      </div>
+    </div>
+  </div>
+</template>

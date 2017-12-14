@@ -1,12 +1,9 @@
 <template>
-  <div class="nav-title">
-    <!-- <img src="../../static/img/logo.png" /> -->
-    <strong>Jobbr</strong> Dashboard
-  </div>
+  <require from="./nav.scss"></require>
   <ul class="nav">
-    <li><a href="#"><span><i class="fab fa-microsoft"></i></span> Dashboard</a></li>
-    <li><a href="#"><span><i class="fas fa-align-justify"></i></span> Job Queue</a></li>
-    <li><a href="#"><span><i class="far fa-calendar"></i></span> Triggers</a></li>
-    <li><a href="#"><span><i class="fas fa-cog"></i></span> Settings</a></li>
+    <li><a route-href="route: dashboard"><span><i class="fab fa-microsoft"></i></span> Dashboard</a></li>
+    <li><a route-href="route: queue"><span><i class="fas fa-align-justify"></i></span> Job Queue</a></li>
+    <li><a route-href="route: jobs"><span><i class="far fa-calendar"></i></span> Jobs</a></li>
+    <li><a route-href="route: settings"><span><i class="fas fa-cog"></i></span> Settings</a></li>
   </ul>
 </template>
