@@ -1,0 +1,11 @@
+@import '../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../node_modules/bootstrap/scss/_alert.scss';
+@import '../../node_modules/bootstrap/scss/_buttons';
+@import '../../node_modules/bootstrap/scss/_button-group.scss';
+@import '../../node_modules/bootstrap/scss/_dropdown.scss';
+@import '../../node_modules/bootstrap/scss/_tooltip.scss';
+
+// bootstrap modifications
+.btn {
+  border-radius: 0px;
+}
