@@ -24,7 +24,16 @@ namespace Sample.Jobbr.Server
             jobbrBuilder.AddJobs(repo =>
             {
                 repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName) // why no assembly overload?
-                    .WithTrigger("* * * * *");
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" })
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Priority = "High",
+                            Comment = "Heyho!"
+                        }
+                    });
             });
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
