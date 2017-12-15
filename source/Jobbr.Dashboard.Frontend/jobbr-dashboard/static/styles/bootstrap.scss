@@ -1,11 +1,78 @@
+@import 'variables';
+
+$body-bg : $background-color;
+$body-color : $text-color;
+
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+$input-bg: transparent;
+$input-border-color: $border-color;
+
+
+$input-group-addon-color : $text-color;
+$input-group-addon-bg : $background-color;
+$input-group-addon-border-color : $border-color;
+
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+// $dropdown-min-width : 10rem !default;
+// $dropdown-padding-y : .5rem !default;
+// $dropdown-spacer : .125rem !default;
+$dropdown-bg : $background-color;
+// $dropdown-border-color : rgba($black, .15) !default;
+// $dropdown-border-width : $border-width !default;
+$dropdown-divider-bg : $border-color;
+// $dropdown-box-shadow : 0 .5rem 1rem rgba($black, .175) !default;
+$dropdown-link-color : $text-color;
+// $dropdown-link-hover-color : darken($gray-900, 5%) !default;
+$dropdown-link-hover-bg : $job-info;
+// $dropdown-link-active-color : $component-active-color !default;
+// $dropdown-link-active-bg : $component-active-bg !default;
+// $dropdown-link-disabled-color : $gray-600 !default;
+// $dropdown-item-padding-y : .25rem !default;
+// $dropdown-item-padding-x : 1.5rem !default;
+// $dropdown-header-color : $gray-600 !default;
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+// $table-cell-padding:          .75rem !default;
+// $table-cell-padding-sm:       .3rem !default;
+
+$table-bg: $box-background-color;
+
+// $table-accent-bg:             rgba($black,.05) !default;
+// $table-hover-bg:              rgba($black,.075) !default;
+// $table-active-bg:             $table-hover-bg !default;
+
+// $table-border-width:          $border-width !default;
+// $table-border-color:          $gray-200 !default;
+
+// $table-head-bg:               $gray-200 !default;
+// $table-head-color:            $gray-700 !default;
+
+// $table-dark-bg:               $gray-900 !default;
+// $table-dark-accent-bg:        rgba($white, .05) !default;
+// $table-dark-hover-bg:         rgba($white, .075) !default;
+// $table-dark-border-color:     lighten($gray-900, 7.5%) !default;
+// $table-dark-color:            $body-bg !default;
+
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/mixins';
+
 @import '../../node_modules/bootstrap/scss/bootstrap-reboot';
 @import '../../node_modules/bootstrap/scss/_alert.scss';
 @import '../../node_modules/bootstrap/scss/_buttons';
 @import '../../node_modules/bootstrap/scss/_button-group.scss';
 @import '../../node_modules/bootstrap/scss/_dropdown.scss';
 @import '../../node_modules/bootstrap/scss/_tooltip.scss';
-
-// bootstrap modifications
-.btn {
-  border-radius: 0px;
-}
+@import '../../node_modules/bootstrap/scss/_input-group.scss';
+@import '../../node_modules/bootstrap/scss/_custom-forms.scss';
+@import '../../node_modules/bootstrap/scss/_forms.scss';
+@import '../../node_modules/bootstrap/scss/_tables.scss';

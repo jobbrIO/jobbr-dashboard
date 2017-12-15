@@ -4,6 +4,10 @@ import {Aurelia} from 'aurelia-framework'
 import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
+import 'jquery';
+import 'popper.js';
+import '../node_modules/bootstrap/js/src/button';
+import '../node_modules/bootstrap/js/src/dropdown';
 import '../static/styles/bootstrap.scss'
 import '../static/styles/layout.scss';
 import '../static/styles/text.scss';

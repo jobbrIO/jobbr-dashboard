@@ -2,6 +2,7 @@
   <require from="./dashboard.scss"></require>
   <require from="./cpu-graph/cpu-graph"></require>
   <require from="./memory-graph/memory-graph"></require>
+  <require from="../resources/elements/hightlightjs/highlightjs"></require>
 
   <div class="dashboard">
     <div class="box box-no-title">
@@ -44,6 +45,20 @@
         <button type="button" class="btn btn-info">Info</button>
         <button type="button" class="btn btn-light">Light</button>
         <button type="button" class="btn btn-dark">Dark</button>
+        <br /><br />
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger">Action</button>
+          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item text-warning" href="#"><i class="fas fa-pause"></i> disable all triggers</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="box">
@@ -52,8 +67,8 @@
           <i class="fas fa-microchip extra-spacing-right"></i>CPU / Memory</h1>
       </div>
       <div class="box-content">
-        <cpu-graph></cpu-graph>
-        <memory-graph></memory-graph>
+        <!-- <cpu-graph></cpu-graph>
+        <memory-graph></memory-graph> -->
       </div>
     </div>
     <div class="box">

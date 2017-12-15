@@ -1,11 +1,25 @@
 @import 'variables';
-
 .text-highlight {
   color: $text-color-highlight;
 }
 
 .text-success {
   color: $text-success;
+}
+
+.text-warning {
+  color: $text-warning;
+}
+
+h2 {
+  color: $main-color;
+  margin-top: 0;
+  margin-bottom: 8px;
+  
+  small {
+    color: $text-color;
+    font-size: 0.6em;
+  }
 }
 
 .rotated-text {

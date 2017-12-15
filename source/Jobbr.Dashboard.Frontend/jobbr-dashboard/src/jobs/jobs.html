@@ -1,20 +1,113 @@
 <template>
   <require from="./jobs.scss"></require>
+  <require from="../resources/elements/hightlightjs/highlightjs"></require>
   <div class="jobs">
     <div class="filter">
 
     </div>
     <div class="list">
-      <div class="job">
+      <div class="job" repeat.for="job of jobs">
         <div class="job-status rotated-text">
-          <span class="rotated-text__inner">active</span>
+          <!-- <span class="rotated-text__inner">running</span> -->
         </div>
         <div class="job-content running">
           <div class="job-select">
             <input type="checkbox" name="job-x" />
           </div>
-          <div class="fill">
-            <h2><i class="fas fa-suitcase extra-spacing-right"></i> MinutelyJob <small>Sample.JobServer.MinutelyJob</small></h2>
+          <div class="fill job-details">
+            <div class="job-title-line left-right-container">
+              <div>
+                <h2>
+                  <i class="fas fa-suitcase extra-spacing-right"></i> MinutelyJob
+                  <small>Sample.JobServer.MinutelyJob</small>
+                </h2>
+              </div>
+              <div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary">next start in
+                    <strong>14 minutes</strong>
+                  </button>
+                  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item text-warning" href="#">
+                      <i class="far fa-pause-circle"></i> disable all triggers
+                    </a>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-danger">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </div>
+            </div>
+            <div class="job-parameters">
+              <highlightjs language="json" theme="" code.bind="job.parameters"></highlightjs>
+            </div>
+            <div class="job-triggers">
+              <table class="trigger-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>state</th>
+                    <th>definition</th>
+                    <th>start</th>
+                    <th>end</th>
+                    <th>parameters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>
+                      <span class="text-success">active</span>
+                    </td>
+                    <td>
+                      <span class="text-highlight">* * * * *</span>
+                    </td>
+                    <td>12. Jan 2017</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>
+                      <span class="text-success">active</span>
+                    </td>
+                    <td>
+                      <span class="text-highlight">25.12.2017 14:05</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>
+                      <span class="text-warning">disabled</span>
+                    </td>
+                    <td>
+                      <span class="text-highlight">20.12.2017 18:00</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>
+                      <span class="text-success">active</span>
+                    </td>
+                    <td>
+                      <span class="text-highlight">*/5 * * * *</span>
+                    </td>
+                    <td>20. Jun 2017</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

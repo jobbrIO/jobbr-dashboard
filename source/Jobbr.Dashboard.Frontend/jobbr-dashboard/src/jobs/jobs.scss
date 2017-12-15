@@ -1,4 +1,5 @@
 @import '../../static/styles/variables';
+
 .jobs {
   .job {
     background: $box-background-color;
@@ -22,15 +23,25 @@
       flex-grow: 1;
 
       display: flex;
-    
-      h2 {
-        color: $main-color;
-        margin-top: 0;
-        margin-bottom: 8px;
 
-        small {
-          color: $text-color;
-          font-size:0.6em;
+      .job-details {
+        display: grid;
+        grid-template-rows: 44px auto;
+        grid-template-columns: 260px auto;
+
+        .job-title-line {
+          grid-row: 1 / 2;
+          grid-column: 1 / 3;
+        }
+
+        .job-parameters {
+          grid-row: 2 / 3;
+          grid-column: 1 / 2;
+        }
+
+        .job-triggers {
+          grid-row: 2 / 3;
+          grid-column: 2 / 3;
         }
       }
     }
@@ -38,5 +49,27 @@
 
   .running {
     border: 1px solid $job-running;
+  }
+
+  .trigger-table {
+    margin: 24px;
+    width: 800px;
+    background-color: $background-color;
+    
+    tr:nth-child(odd) {
+      background-color: #272A31;
+    }
+
+    tr:nth-child(even) {
+      background-color: #22252B;
+    }
+
+    th {
+      text-transform: capitalize;
+    }
+
+    th, td {
+      padding: 6px;
+    }
   }
 }

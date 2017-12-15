@@ -28,15 +28,17 @@ body {
 .header {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
-
   border-bottom: 1px solid $border-color;
   border-left: 1px solid $border-color;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .logo {
   grid-row: 1/ 2;
   grid-column: 1 / 2;
-
   padding: 8px 14px;
   border-bottom: 1px solid $border-color;
   strong {
@@ -74,4 +76,9 @@ footer {
 
 .fill {
   flex-grow: 1;
+}
+
+.left-right-container {
+  display: flex;
+  justify-content: space-between;
 }
