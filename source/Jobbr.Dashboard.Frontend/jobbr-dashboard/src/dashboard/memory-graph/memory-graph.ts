@@ -8,6 +8,7 @@ export class MemoryGraphCustomElement {
   private apiClient: ApiClient;
 
   private smoothie: SmoothieChart;
+  private timeoutId;
 
   constructor(private element: Element) {
     this.apiClient = new ApiClient();
@@ -36,7 +37,7 @@ export class MemoryGraphCustomElement {
 
       var line = new TimeSeries();
 
-      setInterval(() => {
+      this.timeoutId = setInterval(() => {
         this.apiClient.getMemoryInfo().then(data => {
           line.append(new Date().getTime(), data.FreeMemory);
         });
@@ -51,6 +52,7 @@ export class MemoryGraphCustomElement {
   }
 
   detached() {
+    clearTimeout(this.timeoutId);
     this.smoothie.stop();
   }
 }
