@@ -14,6 +14,7 @@ import '../static/styles/text.scss';
 import '../static/styles/box.scss';
 import '../static/styles/list.scss';
 import '../static/styles/checkbox.scss';
+import '../static/styles/table.scss';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });

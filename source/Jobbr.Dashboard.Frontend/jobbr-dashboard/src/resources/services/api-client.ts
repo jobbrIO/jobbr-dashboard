@@ -1,7 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { HttpClient } from 'aurelia-fetch-client';
 
-
 @autoinject
 export class ApiClient {
 
@@ -46,5 +45,24 @@ export class ApiClient {
     });
 
     return httpClient.fetch('system/memory').then(response => response.json());
+  }
+
+  getJobRunsByJobId(jobId: number) {
+    let httpClient = new HttpClient();
+
+    httpClient.configure(config => {
+      config
+        .useStandardConfiguration()
+        .withDefaults({
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'Fetch'
+          }
+        })
+        .withBaseUrl('http://localhost:1338/jobs/' + jobId + '/runs');
+    });
+
+    return httpClient.fetch('').then(response => response.json());
   }
 }

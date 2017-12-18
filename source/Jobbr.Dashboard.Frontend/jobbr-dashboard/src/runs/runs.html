@@ -1,0 +1,67 @@
+<template>
+  <div>
+    <h2 if.bind="jobId">
+      <i class="fas fa-suitcase extra-spacing-right"></i> MinutelyJob
+      <small>Sample.JobServer.MinutelyJob</small>
+    </h2>
+    <h2 if.bind="!jobId">
+      <i class="fas fa-flag-checkered"></i> All runs
+    </h2>
+  </div>
+
+  <div class="box box-table">
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>State</th>
+          <th>Progress</th>
+          <th>Planned Start</th>
+          <th>Actual Start</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5</td>
+          <td>
+            <span class="text-success">completed</span>
+          </td>
+          <td>
+            <span class="text-highlight">100%</span>
+          </td>
+          <td>12. Jan 2017 12:45</td>
+          <td>4 seconds</td>
+          <td>2 minutes 4 seconds</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>
+            <span class="text-warning">running</span>
+          </td>
+          <td>
+            <span class="text-highlight">75%</span>
+          </td>
+          <td>12. Jan 2017 12:40</td>
+          <td>9 seconds</td>
+          <td>2 minutes 4 seconds</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            <span class="text-inactive">error</span>
+          </td>
+          <td>
+            <span class="text-highlight">5%</span>
+          </td>
+          <td>12. Jan 2017 12:40</td>
+          <td>9 seconds</td>
+          <td>2 minutes 4 seconds</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</template>
