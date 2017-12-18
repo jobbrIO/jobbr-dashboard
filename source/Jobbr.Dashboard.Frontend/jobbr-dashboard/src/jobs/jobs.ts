@@ -1,10 +1,12 @@
+import { ApiClient } from 'resources/services/api-client';
+import { JobDto } from './../resources/services/dtos';
 import { autoinject } from 'aurelia-dependency-injection';
 
 @autoinject
 export class Jobs {
-  public jobs;
+  public jobs: Array<JobDto>;
 
-  constructor() {
+  constructor(private api: ApiClient) {
     this.jobs = [
       {
         "id": 1,
@@ -17,20 +19,20 @@ export class Jobs {
             "Comment": "Heyho!"
           }
         },
-        "trigger": [
-          {
-            "triggerType": "Recurring",
-            "id": 1,
-            "isActive": true,
-            "parameters": {
-              "Foo": "Bar",
-              "Nested": {
-                "Priority": "High",
-                "Comment": "Heyho!"
-              }
-            }
-          }
-        ]
+        // "trigger": [
+        //   {
+        //     "triggerType": "Recurring",
+        //     "id": 1,
+        //     "isActive": true,
+        //     "parameters": {
+        //       "Foo": "Bar",
+        //       "Nested": {
+        //         "Priority": "High",
+        //         "Comment": "Heyho!"
+        //       }
+        //     }
+        //   }
+        // ]
       },
       {
         "id": 2,
@@ -39,21 +41,25 @@ export class Jobs {
         "parameters": {
           "Foo": "Bar"
         },
-        "trigger": [
-          {
-            "triggerType": "Recurring",
-            "id": 1,
-            "isActive": true,
-            "parameters": {
-              "Foo": "Bar",
-              "Nested": {
-                "Priority": "High",
-                "Comment": "Heyho!"
-              }
-            }
-          }
-        ]
+        // "trigger": [
+        //   {
+        //     "triggerType": "Recurring",
+        //     "id": 1,
+        //     "isActive": true,
+        //     "parameters": {
+        //       "Foo": "Bar",
+        //       "Nested": {
+        //         "Priority": "High",
+        //         "Comment": "Heyho!"
+        //       }
+        //     }
+        //   }
+        // ]
       }
     ];
+  }
+
+  public attached() {
+    this.api.getAllJobs().then(r => this.jobs = r);
   }
 }
