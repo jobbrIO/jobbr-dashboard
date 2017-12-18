@@ -5,11 +5,21 @@
     background: $box-background-color;
     display: flex;
     flex-direction: row;
+    margin-bottom: 12px;
 
     .job-status {
       width: 30px;
       text-transform: uppercase;
+      
+    }
+
+    .job-status-running {
       background-color: $job-running;
+      color: $text-color-highlight;
+    }
+    
+    .job-status-inactive {
+      background-color: $job-offline;
       color: $text-color-highlight;
     }
 
@@ -49,6 +59,10 @@
 
   .running {
     border: 1px solid $job-running;
+  }
+
+  .not-running {
+    border: 1px solid $job-offline;
   }
 
   .trigger-table {

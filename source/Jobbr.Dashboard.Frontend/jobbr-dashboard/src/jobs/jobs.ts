@@ -31,6 +31,28 @@ export class Jobs {
             }
           }
         ]
+      },
+      {
+        "id": 2,
+        "uniqueName": "HourlyJob",
+        "type": "Sample.Jobbr.Server.HourlyJob",
+        "parameters": {
+          "Foo": "Bar"
+        },
+        "trigger": [
+          {
+            "triggerType": "Recurring",
+            "id": 1,
+            "isActive": true,
+            "parameters": {
+              "Foo": "Bar",
+              "Nested": {
+                "Priority": "High",
+                "Comment": "Heyho!"
+              }
+            }
+          }
+        ]
       }
     ];
   }

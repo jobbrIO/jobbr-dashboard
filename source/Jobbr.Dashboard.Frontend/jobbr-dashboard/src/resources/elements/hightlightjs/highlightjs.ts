@@ -11,8 +11,7 @@ export class HighlightjsCustomElement {
   }
 
   attached() {
-    let foo = document.querySelector('code');
-
-    hljs.highlightBlock(foo);
+    let codeElement = this.element.getElementsByTagName('code')[0];
+    hljs.highlightBlock(codeElement);
   }
 }
