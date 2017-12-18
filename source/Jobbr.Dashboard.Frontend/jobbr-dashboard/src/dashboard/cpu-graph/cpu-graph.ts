@@ -7,12 +7,14 @@ export class CpuGraphCustomElement {
 
   private apiClient: ApiClient;
 
+  private smoothie: SmoothieChart;
+
   constructor(private element: Element) {
     this.apiClient = new ApiClient();
   }
 
   attached() {
-    let smoothie = new SmoothieChart({
+    this.smoothie = new SmoothieChart({
       grid: {
         strokeStyle: '#39434f', 
         fillStyle: '#22252B',
@@ -29,8 +31,8 @@ export class CpuGraphCustomElement {
 
     let canvas = <HTMLCanvasElement>document.getElementById("cpu-canvas");
 
-    smoothie.streamTo(canvas, 250);
-
+    this.smoothie.streamTo(canvas, 250);
+    
     var line = new TimeSeries();
 
     setInterval(() => {
@@ -39,9 +41,13 @@ export class CpuGraphCustomElement {
       });
     }, 250);
 
-    smoothie.addTimeSeries(line, { 
+    this.smoothie.addTimeSeries(line, { 
       strokeStyle: 'rgb(0, 255, 0)',
       fillStyle: 'rgba(0, 255, 0, 0.1)', 
       lineWidth: 1 });
+  }
+
+  detached() {
+    this.smoothie.stop();
   }
 }
