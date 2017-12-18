@@ -1,18 +1,22 @@
 import { autoinject } from "aurelia-framework";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { ApiClient } from "resources/services/api-client";
+import { clearInterval } from "timers";
 
 @autoinject()
 export class CpuGraphCustomElement {
 
   private apiClient: ApiClient;
 
+  private smoothie: SmoothieChart;
+  private timeoutId;
+
   constructor(private element: Element) {
     this.apiClient = new ApiClient();
   }
 
   attached() {
-    let smoothie = new SmoothieChart({
+    this.smoothie = new SmoothieChart({
       grid: {
         strokeStyle: '#39434f', 
         fillStyle: '#22252B',
@@ -29,19 +33,24 @@ export class CpuGraphCustomElement {
 
     let canvas = <HTMLCanvasElement>document.getElementById("cpu-canvas");
 
-    smoothie.streamTo(canvas, 250);
-
+    this.smoothie.streamTo(canvas, 250);
+    
     var line = new TimeSeries();
 
-    setInterval(() => {
+    this.timeoutId = setInterval(() => {
       this.apiClient.getCpuInfo().then(data => {
         line.append(new Date().getTime(), data);
       });
     }, 250);
 
-    smoothie.addTimeSeries(line, { 
+    this.smoothie.addTimeSeries(line, { 
       strokeStyle: 'rgb(0, 255, 0)',
       fillStyle: 'rgba(0, 255, 0, 0.1)', 
       lineWidth: 1 });
+  }
+
+  detached() {
+    clearTimeout(this.timeoutId);
+    this.smoothie.stop();
   }
 }

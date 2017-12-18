@@ -36,4 +36,23 @@ export class ApiClient {
   getAllJobs(): Promise<Array<JobDto>> {
     return this.httpClient.fetch('/jobs').then(r => r.json());
   }
+
+  getJobRunsByJobId(jobId: number) {
+    let httpClient = new HttpClient();
+
+    httpClient.configure(config => {
+      config
+        .useStandardConfiguration()
+        .withDefaults({
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'Fetch'
+          }
+        })
+        .withBaseUrl('http://localhost:1338/jobs/' + jobId + '/runs');
+    });
+
+    return httpClient.fetch('').then(response => response.json());
+  }
 }

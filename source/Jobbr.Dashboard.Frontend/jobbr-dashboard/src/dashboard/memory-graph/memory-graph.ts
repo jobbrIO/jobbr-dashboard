@@ -7,13 +7,16 @@ export class MemoryGraphCustomElement {
 
   private apiClient: ApiClient;
 
+  private smoothie: SmoothieChart;
+  private timeoutId;
+
   constructor(private element: Element) {
     this.apiClient = new ApiClient();
   }
 
   attached() {
     this.apiClient.getMemoryInfo().then(data => {
-      let smoothie = new SmoothieChart({
+      this.smoothie = new SmoothieChart({
         grid: {
           strokeStyle: '#39434f',
           fillStyle: '#22252B',
@@ -30,21 +33,26 @@ export class MemoryGraphCustomElement {
 
       let canvas = <HTMLCanvasElement>document.getElementById("memory-canvas");
 
-      smoothie.streamTo(canvas, 1000);
+      this.smoothie.streamTo(canvas, 1000);
 
       var line = new TimeSeries();
 
-      setInterval(() => {
+      this.timeoutId = setInterval(() => {
         this.apiClient.getMemoryInfo().then(data => {
           line.append(new Date().getTime(), data.freeMemory);
         });
       }, 1000);
 
-      smoothie.addTimeSeries(line, {
+      this.smoothie.addTimeSeries(line, {
         strokeStyle: 'rgb(38, 108, 179)',
         fillStyle: 'rgba(38, 108, 179, 0.1)',
         lineWidth: 1
       });
     });
+  }
+
+  detached() {
+    clearTimeout(this.timeoutId);
+    this.smoothie.stop();
   }
 }

@@ -35,6 +35,10 @@ ul.nav {
   }
 
   li:nth-child(4) a span {
+    color: $nav-runs-color;
+  }
+  
+  li:nth-child(5) a span {
     color: $nav-settings-color;
   }
 }

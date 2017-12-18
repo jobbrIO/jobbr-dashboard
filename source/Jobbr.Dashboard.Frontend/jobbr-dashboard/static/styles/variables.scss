@@ -8,7 +8,8 @@ $random2: #00F2A6;
 
 $job-running: #5B933F;
 $job-paused: #dd992c;
-$job-error: #a52731;
+//$job-error: #a52731;
+$job-error: #FF652F;
 $job-info: #24578f;
 $job-primary: #b21557;
 $job-offline: #63728a;
@@ -44,9 +45,18 @@ $menu-background-hover: $box-background-color;
 $nav-dashboard-color: #34b3e4;
 $nav-jobqueue-color: #b968c7;
 $nav-triggers-color: #7cb82f;
+$nav-runs-color: $random1;
 $nav-settings-color: #8fb1cc;
 
 $footer-background-color: #39434F;
 $footer-border-top-color: #555B62;
 
 $header-height: 66px;
+
+$table-background-color: $box-background-color;
+$table-row-odd-color: #272A31;
+$table-row-even-color: #22252B;
+$table-row-hover-color: #30343C;
+$table-header-color: $text-color-highlight;
+
+$checkbox-border-color: #637189;
