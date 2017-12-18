@@ -1,5 +1,6 @@
-import {FrameworkConfiguration} from 'aurelia-framework';
+import { PLATFORM } from 'aurelia-framework';
+import { FrameworkConfiguration } from 'aurelia-framework';
 
 export function configure(config: FrameworkConfiguration) {
-  //config.globalResources([]);
+  config.globalResources(PLATFORM.moduleName('./value-converters/jsonValueConverter'));
 }
