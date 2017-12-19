@@ -15,7 +15,7 @@ export class Runs {
     if (this.jobId) {
 
     } else {
-      this.jobRuns = this.apiClient.getJobRuns();
+      this.apiClient.getJobRuns().then(runs => this.jobRuns = runs);
     }
   }
 }

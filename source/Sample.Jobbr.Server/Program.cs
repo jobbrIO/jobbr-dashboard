@@ -4,6 +4,7 @@ using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
 using Jobbr.Server.WebAPI;
+using Jobbr.Storage.RavenDB;
 
 namespace Sample.Jobbr.Server
 {
@@ -38,6 +39,11 @@ namespace Sample.Jobbr.Server
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
             jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}dashboard");
+            jobbrBuilder.AddRavenDbStorage(config =>
+            {
+                config.Url = "http://localhost:8080/";
+                config.Database = "Jobbr";
+            });
 
             using (var jobbr = jobbrBuilder.Create())
             {
