@@ -1,3 +1,4 @@
+import { DashboardMemoryResponse, JobDto } from './dtos';
 import { autoinject } from "aurelia-framework";
 import { HttpClient } from 'aurelia-fetch-client';
 
@@ -7,12 +8,9 @@ export class ApiClient {
   private httpClient: HttpClient;
 
   constructor() {
-  }
-
-  getCpuInfo(): Promise<any> {
-    let httpClient = new HttpClient();
-
-    httpClient.configure(config => {
+    this.httpClient = new HttpClient();
+      
+    this.httpClient.configure(config => {
       config
         .useStandardConfiguration()
         .withDefaults({
@@ -22,29 +20,21 @@ export class ApiClient {
             'X-Requested-With': 'Fetch'
           }
         })
-        .withBaseUrl('http://localhost:1338/dashboard/');
+        .withBaseUrl('http://localhost:1338');
     });
-
-    return httpClient.fetch('system/cpu').then(response => response.json());
   }
 
-  getMemoryInfo(): Promise<any> {
-    let httpClient = new HttpClient();
+  getCpuInfo(): Promise<number> {
+    //return this.httpClient.get('/dashboard/system/cpu').then(r => r.response).catch(error => console.log(error));
+    return this.httpClient.fetch('/dashboard/system/cpu').then(r => r.json()).catch(e => console.log(e));
+  }
 
-    httpClient.configure(config => {
-      config
-        .useStandardConfiguration()
-        .withDefaults({
-          credentials: 'same-origin',
-          headers: {
-            'Accept': 'application/json',
-            'X-Requested-With': 'Fetch'
-          }
-        })
-        .withBaseUrl('http://localhost:1338/dashboard/');
-    });
+  getMemoryInfo(): Promise<DashboardMemoryResponse> {
+    return this.httpClient.fetch('/dashboard/system/memory').then(r => r.json());
+  }
 
-    return httpClient.fetch('system/memory').then(response => response.json());
+  getAllJobs(): Promise<Array<JobDto>> {
+    return this.httpClient.fetch('/jobs').then(r => r.json());
   }
 
   getJobRunsByJobId(jobId: number) {

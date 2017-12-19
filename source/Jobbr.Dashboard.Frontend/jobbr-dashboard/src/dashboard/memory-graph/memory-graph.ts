@@ -27,7 +27,7 @@ export class MemoryGraphCustomElement {
         labels: { fillStyle: '#ffc533' },
         interpolation: 'step',
         minValue: 0,
-        maxValue: data.TotalPhysicalMemory,
+        maxValue: data.totalPhysicalMemory,
         limitFPS: 60,
       });
 
@@ -39,7 +39,7 @@ export class MemoryGraphCustomElement {
 
       this.timeoutId = setInterval(() => {
         this.apiClient.getMemoryInfo().then(data => {
-          line.append(new Date().getTime(), data.FreeMemory);
+          line.append(new Date().getTime(), data.freeMemory);
         });
       }, 1000);
 
