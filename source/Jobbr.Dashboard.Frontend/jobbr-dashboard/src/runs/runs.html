@@ -2,6 +2,7 @@
   <require from="../resources/value-converters/timeSinceValueConverter"></require>
   <require from="../resources/value-converters/dateValueConverter"></require>
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
+  <require from="../resources/value-converters/coalesceValueConverter"></require>
   <div>
     <h2 if.bind="jobId">
       <i class="fas fa-suitcase extra-spacing-right"></i> MinutelyJob
@@ -13,7 +14,6 @@
   </div>
 
   <div class="box box-table">
-
     <table>
       <thead>
         <tr>
@@ -29,51 +29,13 @@
         <tr repeat.for="run of jobRuns">
           <td>${run.jobRunId}</td>
           <td><span class="${run.state | jobRunStateToColor}">${run.state}</span></td>
-          <td>${run.progress}%</td>
+          <td>${run.progress} <span if.bind="run.progress">%</span></td>
           <td>${run.plannedStartUtc | date}</td>
           <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc} later</td>
           <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
         </tr>
-
-        <tr>
-          <td>5</td>
-          <td>
-            <span class="text-success">completed</span>
-          </td>
-          <td>
-            <span class="text-highlight">100%</span>
-          </td>
-          <td>12. Jan 2017 12:45</td>
-          <td>4 seconds</td>
-          <td>2 minutes 4 seconds</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>
-            <span class="text-warning">running</span>
-          </td>
-          <td>
-            <span class="text-highlight">75%</span>
-          </td>
-          <td>12. Jan 2017 12:40</td>
-          <td>9 seconds</td>
-          <td>2 minutes 4 seconds</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>
-            <span class="text-inactive">error</span>
-          </td>
-          <td>
-            <span class="text-highlight">5%</span>
-          </td>
-          <td>12. Jan 2017 12:40</td>
-          <td>9 seconds</td>
-          <td>2 minutes 4 seconds</td>
-        </tr>
       </tbody>
     </table>
-
   </div>
 
 </template>
