@@ -18,7 +18,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
+          <th if.bind="!jobId">Name</th>
           <th>State</th>
           <th>Progress</th>
           <th>Planned Start</th>
@@ -29,7 +29,7 @@
       <tbody>
         <tr repeat.for="run of jobRuns">
           <td><a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a></td>
-          <td><strong>${run.jobName}</strong></td>
+          <td if.bind="!jobId"><strong>${run.jobName}</strong></td>
           <td><span class="${run.state | jobRunStateToColor}">${run.state}</span></td>
           <td>${run.progress} <span if.bind="run.progress">%</span></td>
           <td>${run.plannedStartUtc | date}</td>
