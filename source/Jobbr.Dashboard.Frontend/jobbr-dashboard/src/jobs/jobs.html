@@ -6,10 +6,7 @@
 
     </div>
     <div class="list">
-
-      ${jobs | json}
-
-      <div class="job">
+      <div class="job" repeat.for="job of jobs">
         <div class="job-status job-status-running rotated-text">
           <span class="rotated-text__inner">running</span>
         </div>
@@ -23,8 +20,8 @@
               <div>
                 <a route-href="route: runs; params.bind: {jobId: 1}">
                   <h2>
-                    <i class="fas fa-suitcase extra-spacing-right"></i> MinutelyJob
-                    <small>Sample.JobServer.MinutelyJob</small>
+                    <i class="fas fa-suitcase extra-spacing-right"></i> ${job.uniqueName}
+                    <small>${job.type}</small>
                   </h2>
                 </a>
               </div>
@@ -48,7 +45,7 @@
               </div>
             </div>
             <div class="job-parameters">
-              <highlightjs language="json" theme="" code.bind="jobs[0].parameters"></highlightjs>
+              <highlightjs language="json" theme="" code.bind="job.parameters"></highlightjs>
             </div>
             <div class="job-triggers">
               <table class="trigger-table">
