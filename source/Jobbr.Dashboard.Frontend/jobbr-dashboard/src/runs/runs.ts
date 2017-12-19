@@ -3,7 +3,7 @@ import { autoinject } from 'aurelia-framework';
 
 @autoinject
 export class Runs {
-  public jobId: string;
+  public jobId: number;
   public jobRuns;
 
   constructor(private apiClient: ApiClient) {
@@ -13,7 +13,7 @@ export class Runs {
     this.jobId = params.jobId;
 
     if (this.jobId) {
-
+      this.apiClient.getJobRunsByJobId(this.jobId).then(runs => this.jobRuns = runs)
     } else {
       this.apiClient.getJobRuns().then(runs => this.jobRuns = runs);
     }
