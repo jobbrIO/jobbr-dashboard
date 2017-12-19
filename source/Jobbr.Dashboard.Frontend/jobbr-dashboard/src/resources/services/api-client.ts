@@ -37,21 +37,10 @@ export class ApiClient {
   }
 
   getJobRunsByJobId(jobId: number) {
-    let httpClient = new HttpClient();
+    return this.httpClient.fetch('/jobs/' + jobId + '/runs').then(r => r.json());
+  }
 
-    httpClient.configure(config => {
-      config
-        .useStandardConfiguration()
-        .withDefaults({
-          credentials: 'same-origin',
-          headers: {
-            'Accept': 'application/json',
-            'X-Requested-With': 'Fetch'
-          }
-        })
-        .withBaseUrl('http://localhost:1338/jobs/' + jobId + '/runs');
-    });
-
-    return httpClient.fetch('').then(response => response.json());
+  getJobRuns() {
+    return this.httpClient.fetch('/jobruns/?userDisplayName').then(r => r.json());
   }
 }
