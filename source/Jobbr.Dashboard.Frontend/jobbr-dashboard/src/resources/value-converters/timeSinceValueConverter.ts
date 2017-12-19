@@ -5,40 +5,46 @@ export class TimeSinceValueConverter {
       return '';
     }
 
+    if (!fromDate) {
+      fromDate = new Date();
+    } else {
+      fromDate = new Date(fromDate);
+    }
+
     let date: Date = new Date(value);
 
-    var seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+    var seconds = Math.abs(Math.floor((fromDate.getTime() - date.getTime()) / 1000));
 
     var interval = Math.floor(seconds / 31536000);
 
     if (interval > 1) {
-      return interval + " Jahre";
+      return interval + " years";
     }
 
     interval = Math.floor(seconds / 2592000);
 
     if (interval > 1) {
-      return interval + " Monate";
+      return interval + " months";
     }
 
     interval = Math.floor(seconds / 86400);
 
     if (interval > 1) {
-      return interval + " Tagen";
+      return interval + " days";
     }
 
     interval = Math.floor(seconds / 3600);
 
     if (interval > 1) {
-      return interval + " Stunden";
+      return interval + " hours";
     }
 
     interval = Math.floor(seconds / 60);
 
     if (interval > 1) {
-      return interval + " Minuten";
+      return interval + " minutes";
     }
 
-    return Math.floor(seconds) + " Sekunden";
+    return Math.floor(seconds) + " seconds";
   }
 }
