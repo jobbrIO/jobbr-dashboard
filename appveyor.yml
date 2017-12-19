@@ -13,7 +13,7 @@ assembly_info:
   patch: false
 
 before_build:
-  - nuget restore source/Jobbr.Dashboard.Backend.sln
+  - nuget restore source/Jobbr.Dashboard.sln
   - ps: C:\ProgramData\chocolatey\lib\GitVersion.Portable\tools\GitVersion.exe /l console /output buildserver /updateAssemblyInfo
 
 platform: Any CPU
@@ -21,7 +21,7 @@ configuration: Release
 
 build:
   parallel: true 
-  project: source/Jobbr.Dashboard.Backend.sln
+  project: source/Jobbr.Dashboard.sln
 
 after_build:
   - cmd: nuget install ILMerge -ExcludeVersion
