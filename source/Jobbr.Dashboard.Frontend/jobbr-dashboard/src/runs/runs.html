@@ -5,8 +5,8 @@
   <require from="../resources/value-converters/coalesceValueConverter"></require>
   <div>
     <h2 if.bind="jobId">
-      <i class="fas fa-suitcase extra-spacing-right"></i> MinutelyJob
-      <small>Sample.JobServer.MinutelyJob</small>
+      <i class="fas fa-suitcase extra-spacing-right"></i> ${job.uniqueName}
+      <small>${job.type}</small>
     </h2>
     <h2 if.bind="!jobId">
       <i class="fas fa-flag-checkered"></i> All runs
@@ -18,6 +18,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>Name</th>
           <th>State</th>
           <th>Progress</th>
           <th>Planned Start</th>
@@ -27,11 +28,12 @@
       </thead>
       <tbody>
         <tr repeat.for="run of jobRuns">
-          <td>${run.jobRunId}</td>
+          <td><a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a></td>
+          <td><strong>${run.jobName}</strong></td>
           <td><span class="${run.state | jobRunStateToColor}">${run.state}</span></td>
           <td>${run.progress} <span if.bind="run.progress">%</span></td>
           <td>${run.plannedStartUtc | date}</td>
-          <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc} later</td>
+          <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc} <span if.bind="run.auctualStartUtc">later</span></td>
           <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
         </tr>
       </tbody>

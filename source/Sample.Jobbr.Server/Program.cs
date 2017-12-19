@@ -35,6 +35,14 @@ namespace Sample.Jobbr.Server
                             Comment = "Heyho!"
                         }
                     });
+
+                repo.Define(typeof(FailingJob).Name, typeof(FailingJob).FullName)
+                    .WithTrigger("*/5 * * * *", parameters: new {SomeProperty = "foobar"})
+                    .WithParameter(new
+                    {
+                        Bla = "Blub",
+                        Foo = "Bar"
+                    });
             });
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
