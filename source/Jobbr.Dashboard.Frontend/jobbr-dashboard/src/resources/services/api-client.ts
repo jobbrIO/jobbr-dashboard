@@ -25,7 +25,6 @@ export class ApiClient {
   }
 
   getCpuInfo(): Promise<number> {
-    //return this.httpClient.get('/dashboard/system/cpu').then(r => r.response).catch(error => console.log(error));
     return this.httpClient.fetch('/dashboard/system/cpu').then(r => r.json()).catch(e => console.log(e));
   }
 
