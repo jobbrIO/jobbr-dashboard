@@ -49,7 +49,7 @@
       <HintPath>..\packages\Jobbr.ComponentModel.Registration.1.0.1\lib\net462\Jobbr.ComponentModel.Registration.dll</HintPath>
     </Reference>
     <Reference Include="Jobbr.Server, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jobbr.Server.1.1.0-unstable.1\lib\net462\Jobbr.Server.dll</HintPath>
+      <HintPath>..\packages\Jobbr.Server.1.1.0-unstable.4\lib\net462\Jobbr.Server.dll</HintPath>
     </Reference>
     <Reference Include="Jobbr.Server.ForkedExecution, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.Execution.Forked.1.0.0\lib\net462\Jobbr.Server.ForkedExecution.dll</HintPath>

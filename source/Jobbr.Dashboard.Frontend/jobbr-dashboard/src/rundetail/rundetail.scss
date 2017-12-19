@@ -1,0 +1,8 @@
+@import '../../static/styles/box.scss';
+
+.rundetail-grid {
+  display: grid;
+
+  grid-template-columns: 600px auto auto;
+  grid-gap: $box-gap;
+}
