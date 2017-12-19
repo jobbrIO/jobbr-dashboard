@@ -25,7 +25,7 @@ namespace Sample.Jobbr.Server
             jobbrBuilder.AddJobs(repo =>
             {
                 repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName) // why no assembly overload?
-                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" })
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: DateTime.MinValue, validToDateTimeUtc: DateTime.MaxValue)
                     .WithParameter(new
                     {
                         Foo = "Bar",
