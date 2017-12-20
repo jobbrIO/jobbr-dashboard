@@ -3,6 +3,7 @@
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
   <require from="../resources/value-converters/timeSinceValueConverter"></require>
   <require from="../resources/value-converters/dateValueConverter"></require>
+  <require from="../resources/value-converters/fileSizeValueConverter"></require>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
 
   <div class="rundetail-grid">
@@ -29,7 +30,9 @@
             <span class="icon">
               <i class="fas fa-bolt"></i>
             </span> Trigger
-            <strong class="text-highlight">${trigger.triggerType} <span class="text-success" if.bind="trigger.triggerType == 'Recurring'">${trigger.definition}</span></strong>
+            <strong class="text-highlight">${trigger.triggerType}
+              <span class="text-success" if.bind="trigger.triggerType == 'Recurring'">${trigger.definition}</span>
+            </strong>
           </li>
 
           <li>
@@ -59,13 +62,29 @@
         <highlightjs if.bind="jobRun.instanceParameter" code.bind="jobRun.instanceParameter"></highlightjs>
       </div>
     </div>
-    <div class="box">
+    <div class="box artefacts">
       <div class="box-title">
         <h1>
-          <i class="fas fa-hdd extra-spacing-right"></i>Storage</h1>
+          <i class="fas fa-hdd extra-spacing-right"></i>Artefacts
+        </h1>
       </div>
       <div class="box-content">
-
+        <table>
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>Size</th>
+              <th>Content-Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="artefact of jobRun.artefacts">
+              <td><a href="http://localhost:1338/jobruns/${jobRun.jobRunId}/artefacts/${artefact.filename}">${artefact.filename}</a></td>
+              <td>${artefact.size | fileSize}</td>
+              <td>${artefact.contentType}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

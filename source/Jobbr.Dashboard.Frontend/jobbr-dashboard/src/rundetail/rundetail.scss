@@ -5,4 +5,8 @@
 
   grid-template-columns: 600px auto auto;
   grid-gap: $box-gap;
+
+  .artefacts {
+    grid-column: 1 / 4;
+  }
 }
