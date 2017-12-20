@@ -31,3 +31,17 @@ export class JobRunArtefactDto {
   size: number;
   contentType: string
 }
+
+export class JobTriggerDto {
+  id: number;
+  type: string;
+  isActive: boolean;
+  parameters: string;
+  comment: string;
+  userId: string;
+  userDisplayName: string;
+  startDateTimeUtc: string;
+  endDateTimeUtc: string;
+  definition: string;
+  delayedMinutes: number;
+}

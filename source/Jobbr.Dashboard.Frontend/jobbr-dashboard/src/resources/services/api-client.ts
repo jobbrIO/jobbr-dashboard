@@ -1,4 +1,4 @@
-import { DashboardMemoryResponse, JobDto, JobRunDto } from './dtos';
+import { DashboardMemoryResponse, JobDto, JobRunDto, JobTriggerDto } from './dtos';
 import { autoinject } from "aurelia-framework";
 import { HttpClient } from 'aurelia-fetch-client';
 
@@ -50,5 +50,9 @@ export class ApiClient {
   
   getJobRun(id: number): Promise<JobRunDto> {
     return this.httpClient.fetch('/jobruns/' + id).then(r => r.json());
+  }
+
+  getTrigger(jobId: number, triggerId: number): Promise<JobTriggerDto> {
+    return this.httpClient.fetch('/jobs/' + jobId + '/triggers/' + triggerId).then(r => r.json());
   }
 }

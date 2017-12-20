@@ -27,6 +27,13 @@
           </li>
           <li>
             <span class="icon">
+              <i class="fas fa-bolt"></i>
+            </span> Trigger
+            <strong class="text-highlight">${trigger.triggerType} <span class="text-success" if.bind="trigger.triggerType == 'Recurring'">${trigger.definition}</span></strong>
+          </li>
+
+          <li>
+            <span class="icon">
               <i class="fab fa-algolia"></i>
             </span> Duration
             <strong class="text-highlight">${jobRun.auctualEndUtc | timeSince:jobRun.auctualStartUtc}</strong>
