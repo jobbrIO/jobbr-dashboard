@@ -25,7 +25,7 @@ build:
   project: source/Jobbr.Dashboard.sln
 
 after_build:
-  - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build
+  - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & node_modules\.bin\au.cmd build
   - cmd: nuget install ILMerge -ExcludeVersion
   - cmd: mkdir ilmerged
   - cmd: ILMerge\tools\ILMerge.exe /out:ilmerged/Jobbr.Dashboard.dll source/Jobbr.Dashboard/bin/Release/*.dll /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /internalize:internalize_exclude.txt
