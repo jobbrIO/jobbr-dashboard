@@ -101,6 +101,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyJob.cs" />
+    <Compile Include="HourlyJob.cs" />
     <Compile Include="MinutelyJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

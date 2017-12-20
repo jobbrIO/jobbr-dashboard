@@ -35,6 +35,29 @@ namespace Sample.Jobbr.Server
                             Comment = "Heyho!"
                         }
                     });
+
+                repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
+                    .WithTrigger("0 * * * *", parameters: new {Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot"})
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Equipment = "Nuke",
+                        }
+                    });
+
+
+                repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
+                    .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Equipment = "Nuke",
+                        }
+                    });
             });
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
