@@ -1,3 +1,91 @@
 <template>
-  
+  <require from="./rundetail.scss"></require>
+  <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
+  <require from="../resources/value-converters/timeSinceValueConverter"></require>
+  <require from="../resources/value-converters/dateValueConverter"></require>
+  <require from="../resources/value-converters/fileSizeValueConverter"></require>
+  <require from="../resources/elements/hightlightjs/highlightjs"></require>
+
+  <div class="rundetail-grid">
+    <div class="box box-no-title">
+      <div class="box-content">
+        <h2>
+          <i class="fas fa-flag-checkered"></i> ${jobRun.jobTitle}
+          <small>${job.type}</small>
+        </h2>
+        <ul class="flat-list">
+          <li>
+            <span class="icon">
+              <i class="fas fa-hourglass-end"></i>
+            </span> State
+            <strong class="${jobRun.state | jobRunStateToColor}">${jobRun.state}</strong>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-clock"></i>
+            </span> Start time
+            <strong class="text-highlight">${jobRun.auctualStartUtc | date}</strong>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-bolt"></i>
+            </span> Trigger
+            <strong class="text-highlight">${trigger.triggerType}
+              <span class="text-success" if.bind="trigger.triggerType == 'Recurring'">${trigger.definition}</span>
+            </strong>
+          </li>
+
+          <li>
+            <span class="icon">
+              <i class="fab fa-algolia"></i>
+            </span> Duration
+            <strong class="text-highlight">${jobRun.auctualEndUtc | timeSince:jobRun.auctualStartUtc}</strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-wrench extra-spacing-right"></i>Job Parameters</h1>
+      </div>
+      <div class="box-content">
+        <highlightjs if.bind="jobRun.jobParameter" code.bind="jobRun.jobParameter"></highlightjs>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-wrench extra-spacing-right"></i>Instance Parameters</h1>
+      </div>
+      <div class="box-content">
+        <highlightjs if.bind="jobRun.instanceParameter" code.bind="jobRun.instanceParameter"></highlightjs>
+      </div>
+    </div>
+    <div class="box artefacts">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-hdd extra-spacing-right"></i>Artefacts
+        </h1>
+      </div>
+      <div class="box-content">
+        <table>
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>Size</th>
+              <th>Content-Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="artefact of jobRun.artefacts">
+              <td><a href="http://localhost:1338/jobruns/${jobRun.jobRunId}/artefacts/${artefact.filename}">${artefact.filename}</a></td>
+              <td>${artefact.size | fileSize}</td>
+              <td>${artefact.contentType}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>

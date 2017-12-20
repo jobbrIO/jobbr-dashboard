@@ -25,6 +25,7 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .feature(PLATFORM.moduleName('resources/index'))
+    .feature(PLATFORM.moduleName('plugins/aurelia-chart/index'))
     .plugin(PLATFORM.moduleName('aurelia-animator-css'));
 
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.

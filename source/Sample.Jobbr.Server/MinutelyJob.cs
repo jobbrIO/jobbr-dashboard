@@ -18,6 +18,8 @@ namespace Sample.Jobbr.Server
             }
 
             File.AppendAllText("random-artefact.txt", "lorem ipsum");
+            File.AppendAllText("log.txt", "blub");
+            File.AppendAllText("bla.json", "asdf");
         }
     }
 }
