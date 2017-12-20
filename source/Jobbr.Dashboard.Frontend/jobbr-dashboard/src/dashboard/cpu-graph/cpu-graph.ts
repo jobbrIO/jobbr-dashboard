@@ -21,7 +21,7 @@ export class CpuGraphCustomElement {
         strokeStyle: '#39434f', 
         fillStyle: '#22252B',
         lineWidth: 1,
-        millisPerLine: 250, 
+        millisPerLine: 1000, 
         verticalSections: 5,
       },
       labels: { fillStyle: '#ffc533' },
@@ -33,7 +33,7 @@ export class CpuGraphCustomElement {
 
     let canvas = <HTMLCanvasElement>document.getElementById("cpu-canvas");
 
-    this.smoothie.streamTo(canvas, 250);
+    this.smoothie.streamTo(canvas, 1000);
     
     var line = new TimeSeries();
 
@@ -41,7 +41,7 @@ export class CpuGraphCustomElement {
       this.apiClient.getCpuInfo().then(data => {
         line.append(new Date().getTime(), data);
       });
-    }, 250);
+    }, 1000);
 
     this.smoothie.addTimeSeries(line, { 
       strokeStyle: 'rgb(0, 255, 0)',

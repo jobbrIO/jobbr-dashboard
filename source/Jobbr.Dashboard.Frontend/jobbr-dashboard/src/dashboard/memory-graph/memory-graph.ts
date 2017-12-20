@@ -21,7 +21,7 @@ export class MemoryGraphCustomElement {
           strokeStyle: '#39434f',
           fillStyle: '#22252B',
           lineWidth: 1,
-          millisPerLine: 250,
+          millisPerLine: 1000,
           verticalSections: 5,
         },
         labels: { fillStyle: '#ffc533' },
