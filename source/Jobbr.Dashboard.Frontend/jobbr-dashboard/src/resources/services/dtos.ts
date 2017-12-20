@@ -10,6 +10,14 @@ export class DashboardMemoryResponse {
   freeMemory: number
 }
 
+export class DiskInfoDto {
+  name: string;
+  freeSpace: number;
+  totalSPace: number;
+  freeSpacePercentage: number;
+  type: string;
+}
+
 export class JobRunDto {
   jobId: number;
   triggerId: number;

@@ -1,4 +1,4 @@
-import { DashboardMemoryResponse, JobDto, JobRunDto, JobTriggerDto } from './dtos';
+import { DashboardMemoryResponse, JobDto, JobRunDto, JobTriggerDto, DiskInfoDto } from './dtos';
 import { autoinject } from "aurelia-framework";
 import { HttpClient } from 'aurelia-fetch-client';
 
@@ -30,6 +30,10 @@ export class ApiClient {
 
   getMemoryInfo(): Promise<DashboardMemoryResponse> {
     return this.httpClient.fetch('/dashboard/system/memory').then(r => r.json());
+  }
+
+  getDiskInfo(): Promise<Array<DiskInfoDto>> {
+    return this.httpClient.fetch('/dashboard/system/disks').then(r => r.json());
   }
 
   getAllJobs(): Promise<Array<JobDto>> {
