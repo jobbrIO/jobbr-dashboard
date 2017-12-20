@@ -17,8 +17,8 @@
     </dependencies>
   </metadata>
   <files>
-    <!-- TODO -->
-    <!--<file src="../ilmerged/Jobbr.Server.dll" target="lib\net462"/>
-    <file src="../ilmerged/Jobbr.Server.pdb" target="lib\net462"/>-->
+    <file src="../ilmerged/Jobbr.Dashboard.dll" target="lib\net462"/>
+    <file src="../ilmerged/Jobbr.Dashboard.pdb" target="lib\net462"/>
+    <file src="../Jobbr.Dashboard.Frontend/jobbr-dashboard/dist/*" target="app/" />
   </files>
 </package>
