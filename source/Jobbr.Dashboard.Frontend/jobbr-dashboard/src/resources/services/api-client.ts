@@ -59,4 +59,8 @@ export class ApiClient {
   getTrigger(jobId: number, triggerId: number): Promise<JobTriggerDto> {
     return this.httpClient.fetch('/jobs/' + jobId + '/triggers/' + triggerId).then(r => r.json());
   }
+
+  getJobDetails(jobId: number): Promise<JobDetailsDto> {
+    return this.httpClient.fetch('/jobs/' + jobId).then(r => r.json());
+  }
 }

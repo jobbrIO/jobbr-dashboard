@@ -1,0 +1,34 @@
+<template>
+  <require from="../resources/elements/hightlightjs/highlightjs"></require>
+  <div class="job-parameters collapse collapse-${job.id}">
+    <highlightjs code.bind="job.parameters" if.bind="job.parameters"></highlightjs>
+  </div>
+  <div class="job-triggers collapse collapse-${job.id}">
+    <table class="trigger-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>state</th>
+          <th>definition</th>
+          <th>start</th>
+          <th>end</th>
+          <th>parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr repeat.for="trigger of job.trigger">
+          <td>${trigger.id}</td>
+          <td>
+            <span class="text-success">${trigger.active}</span>
+          </td>
+          <td>
+            <span class="text-highlight">${trigger.definition}</span>
+          </td>
+          <td>${trigger.startDateTimeUtc | date}</td>
+          <td>${trigger.endDateTimeUtc | date}</td>
+          <td><i class="fas fa-search"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
