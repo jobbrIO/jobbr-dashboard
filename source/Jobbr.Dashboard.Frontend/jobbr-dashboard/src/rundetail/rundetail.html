@@ -4,6 +4,7 @@
   <require from="../resources/value-converters/timeSinceValueConverter"></require>
   <require from="../resources/value-converters/dateValueConverter"></require>
   <require from="../resources/value-converters/fileSizeValueConverter"></require>
+  <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
 
   <div class="rundetail-grid">
@@ -31,7 +32,7 @@
               <i class="fas fa-bolt"></i>
             </span> Trigger
             <strong class="text-highlight">${trigger.triggerType}
-              <span class="text-success" if.bind="trigger.triggerType == 'Recurring'">${trigger.definition}</span>
+              <a class="text-success" if.bind="trigger.triggerType == 'Recurring'" href="https://crontab.guru/#${trigger.definition | definitionToUrl}">${trigger.definition}</a>
             </strong>
           </li>
 

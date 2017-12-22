@@ -3,6 +3,10 @@
   <require from="./cpu-graph/cpu-graph"></require>
   <require from="./memory-graph/memory-graph"></require>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
+  <require from="../resources/value-converters/timeSinceValueConverter"></require>
+  <require from="../resources/value-converters/dateValueConverter"></require>
+  <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
+  <require from="../resources/value-converters/fileSizeValueConverter"></require>
 
   <div class="dashboard">
     <div class="box box-no-title">
@@ -34,9 +38,50 @@
     <div class="box">
       <div class="box-title">
         <h1>
-          <i class="fas fa-circle-notch fa-spin extra-spacing-right"></i>Running Jobs</h1>
+          <i class="fas fa-circle-notch ${jobRuns.length > 0 ? 'fa-spin' : ''} extra-spacing-right"></i>Scheduled &amp; Running Jobs
+        </h1>
       </div>
       <div class="box-content">
+
+        <p if.bind="jobRuns.length == 0">
+          No scheduled / running jobs
+        </p>
+
+        <table if.bind="jobRuns.length > 0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>State</th>
+              <th>Progress</th>
+              <th>Planned Start</th>
+              <th>Actual Start</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="run of jobRuns">
+              <td>
+                <a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a>
+              </td>
+              <td>
+                <strong>${run.jobName}</strong>
+              </td>
+              <td>
+                <span class="${run.state | jobRunStateToColor}">${run.state}</span>
+              </td>
+              <td>${run.progress}
+                <span if.bind="run.progress">%</span>
+              </td>
+              <td>${run.plannedStartUtc | date}</td>
+              <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc}
+                <span if.bind="run.auctualStartUtc">later</span>
+              </td>
+              <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
+            </tr>
+          </tbody>
+        </table>
+
         <button type="button" class="btn btn-primary">Primary</button>
         <button type="button" class="btn btn-secondary">Secondary</button>
         <button type="button" class="btn btn-success">Success</button>
@@ -45,14 +90,16 @@
         <button type="button" class="btn btn-info">Info</button>
         <button type="button" class="btn btn-light">Light</button>
         <button type="button" class="btn btn-dark">Dark</button>
-        <br /><br />
+        <br />
+        <br />
         <div class="btn-group">
           <button type="button" class="btn btn-danger">Action</button>
           <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item text-warning" href="#"><i class="fas fa-pause"></i> disable all triggers</a>
+            <a class="dropdown-item text-warning" href="#">
+              <i class="fas fa-pause"></i> disable all triggers</a>
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
             <div class="dropdown-divider"></div>
@@ -77,6 +124,23 @@
           <i class="fas fa-hdd extra-spacing-right"></i>Storage</h1>
       </div>
       <div class="box-content">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Free Space</th>
+              <th>Total Space</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="disk of disks">
+              <td>${disk.name}</td>
+              <td class="text-success">${disk.freeSpace | fileSize}</td>
+              <td>${disk.totalSpace | fileSize}</td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
     </div>
