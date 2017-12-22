@@ -1,7 +1,8 @@
 <template>
   <require from="./jobs.scss"></require>
-  <require from="../resources/elements/hightlightjs/highlightjs"></require>
   <require from="../resources/elements/collapsable/collapsable"></require>
+  <require from="./job-details"></require>
+
   <div class="jobs">
     <div class="filter">
 
@@ -17,113 +18,41 @@
             <label for="job-x"></label>
           </div>
           <div class="fill job-details">
-
-            <!-- <collapsable>
-              <div slot="always"> -->
-                <div class="job-title-line left-right-container">
-                  <div>
-                    <a route-href="route: runs; params.bind: {jobId: job.id}">
-                      <h2>
-                        <i class="fas fa-suitcase extra-spacing-right"></i> ${job.uniqueName}
-                        <small>${job.type}</small>
-                      </h2>
+            <div class="job-title-line left-right-container">
+              <div>
+                <a route-href="route: runs; params.bind: {jobId: job.id}">
+                  <h2>
+                    <i class="fas fa-suitcase extra-spacing-right"></i> ${job.uniqueName}
+                    <small>${job.type}</small>
+                  </h2>
+                </a>
+              </div>
+              <div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary">next trigger in
+                    <strong>14 minutes</strong>
+                  </button>
+                  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item text-warning" href="#">
+                      <i class="far fa-pause-circle"></i> disable all triggers
                     </a>
                   </div>
-                  <div>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-primary">next trigger in
-                        <strong>14 minutes</strong>
-                      </button>
-                      <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item text-warning" href="#">
-                          <i class="far fa-pause-circle"></i> disable all triggers
-                        </a>
-                      </div>
-                    </div>
-                    <button type="button" class="btn btn-danger">
-                      <i class="far fa-trash-alt"></i>
-                    </button>
+                </div>
+                <button type="button" class="btn btn-danger">
+                  <i class="far fa-trash-alt"></i>
+                </button>
 
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse-${job.id}" aria-expanded="false">
-                      <i class="fa fa-chevron-down" aria-hidden="true"></i> Details
-                    </button>
-                  </div>
-                </div>
-              <!-- </div>
-              <div slot="collapsible"> -->
-                <div class="job-parameters collapse collapse-${job.id}">
-                  <highlightjs language="json" theme="" code.bind="job.parameters"></highlightjs>
-                </div>
-                <div class="job-triggers collapse collapse-${job.id}">
-                  <table class="trigger-table">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>state</th>
-                        <th>definition</th>
-                        <th>start</th>
-                        <th>end</th>
-                        <th>parameters</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <span class="text-success">active</span>
-                        </td>
-                        <td>
-                          <span class="text-highlight">* * * * *</span>
-                        </td>
-                        <td>12. Jan 2017</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>
-                          <span class="text-success">active</span>
-                        </td>
-                        <td>
-                          <span class="text-highlight">25.12.2017 14:05</span>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>
-                          <span class="text-inactive">disabled</span>
-                        </td>
-                        <td>
-                          <span class="text-highlight">20.12.2017 18:00</span>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>
-                          <span class="text-success">active</span>
-                        </td>
-                        <td>
-                          <span class="text-highlight">*/5 * * * *</span>
-                        </td>
-                        <td>20. Jun 2017</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              <!-- </div>
-            </collapsable> -->
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse-${job.id}" aria-expanded="false"
+                  click.delegate="">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i> Details
+                </button>
+              </div>
+            </div>
+            <job-details job-id.bind="job.id"></job-details>
           </div>
         </div>
       </div>

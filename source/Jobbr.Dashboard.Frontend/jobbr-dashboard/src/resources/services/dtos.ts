@@ -45,3 +45,11 @@ export class JobTriggerDto {
   definition: string;
   delayedMinutes: number;
 }
+
+export class JobDetailsDto {
+  id: number;
+  uniqueName: string;
+  type: string;
+  parameters: string;
+  trigger: Array<JobTriggerDto>;
+}
