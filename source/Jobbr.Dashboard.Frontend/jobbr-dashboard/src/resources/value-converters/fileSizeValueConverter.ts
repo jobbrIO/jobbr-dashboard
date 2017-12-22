@@ -1,7 +1,11 @@
 export class FileSizeValueConverter {
   toView(value) {
     let i = -1;
-    let units = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+    const units = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    if (value == 0) {
+      return '0' + units[0];
+    }
 
     do {
       value = value / 1024;
