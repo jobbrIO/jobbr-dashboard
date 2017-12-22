@@ -10,6 +10,7 @@ import 'popper.js';
 import '../node_modules/bootstrap/js/src/button';
 import '../node_modules/bootstrap/js/src/dropdown';
 import '../node_modules/bootstrap/js/src/collapse';
+import '../node_modules/bootstrap/js/src/popover';
 
 import '../static/styles/bootstrap.scss'
 import '../static/styles/layout.scss';

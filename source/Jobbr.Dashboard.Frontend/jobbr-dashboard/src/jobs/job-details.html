@@ -1,9 +1,11 @@
 <template>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
+  <require from="../resources/attributes/popover"></require>
+
   <div class="job-parameters collapse collapse-${job.id}">
     <highlightjs code.bind="job.parameters" if.bind="job.parameters"></highlightjs>
   </div>
-  <div class="job-triggers collapse collapse-${job.id}">
+  <div class="job-triggers collapse collapse-${job.id}" if.bind="job">
     <table class="trigger-table">
       <thead>
         <tr>
@@ -26,7 +28,7 @@
           </td>
           <td>${trigger.startDateTimeUtc | date}</td>
           <td>${trigger.endDateTimeUtc | date}</td>
-          <td><i class="fas fa-search"></i></td>
+          <td popover="content.bind: job.parameters; header: Parameters"><i class="fas fa-search"></td>
         </tr>
       </tbody>
     </table>
