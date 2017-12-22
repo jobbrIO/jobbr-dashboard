@@ -78,7 +78,7 @@ namespace Sample.Jobbr.Server
 
             using (var jobbr = jobbrBuilder.Create())
             {
-                jobbr.Start();
+                jobbr.Start(TimeSpan.FromSeconds(20).Milliseconds);
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Press Enter to exit");
