@@ -1,4 +1,4 @@
-import { DashboardMemoryResponse, JobDto, JobRunDto, JobTriggerDto, DiskInfoDto } from './dtos';
+import { DashboardMemoryResponse, DiskInfoDto, JobDetailsDto, JobDto, JobRunDto, JobTriggerDto } from './dtos';
 import { autoinject } from "aurelia-framework";
 import { HttpClient } from 'aurelia-fetch-client';
 
