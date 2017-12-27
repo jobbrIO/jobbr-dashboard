@@ -25,6 +25,7 @@ build:
   project: source/Jobbr.Dashboard.sln
 
 after_build:
+  - cmd: dir
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & node_modules\.bin\au.cmd build
   - cmd: nuget install ILMerge -ExcludeVersion
   - cmd: mkdir ilmerged
