@@ -28,6 +28,8 @@ build:
   parallel: true 
   project: source/Jobbr.Dashboard.sln
 
+test: off
+
 after_build:
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build
   - cmd: nuget install ILMerge -ExcludeVersion
