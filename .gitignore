@@ -252,4 +252,4 @@ paket-files/
 *.sln.iml
 
 tools/Jobbr.*
-source/Jobbr.Dashboard.Frontend/jobbr-dashboard/dist
+source/Jobbr.Dashboard.Frontend/jobbr-dashboard/disT
