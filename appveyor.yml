@@ -34,6 +34,8 @@ after_build:
   - cmd: nuget install ILMerge -ExcludeVersion
   - cmd: mkdir ilmerged
   - cmd: ILMerge\tools\ILMerge.exe /out:ilmerged/Jobbr.Dashboard.Backend.dll source/Jobbr.Dashboard.Backend/bin/Release/*.dll /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /internalize:internalize_exclude.txt /allowDup:HttpRequestMessageExtensions /allowDup:MediaTypeFormatterExtensions
+  - cmd: dir
+  - cmd: tree
   - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
   - cmd: appveyor PushArtifact "Jobbr.Dashboard.%GitVersion_NuGetVersion%.nupkg"
 
