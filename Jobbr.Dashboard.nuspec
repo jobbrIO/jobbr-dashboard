@@ -19,6 +19,6 @@
   <files>
     <file src="ilmerged/Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
     <file src="ilmerged/Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
-    <file src="Jobbr.Dashboard.Frontend/jobbr-dashboard/dist/*" target="app/" />
+    <file src="source/Jobbr.Dashboard.Frontend/jobbr-dashboard/dist/*" target="app/" />
   </files>
 </package>
