@@ -8,7 +8,7 @@ branches:
 
 install:
   - choco install gitversion.portable -pre -y
-  - npm install source/Jobbr.Dashboard.Frontend/jobbr-dashboard
+  - npm install source/Jobbr.Dashboard.Frontend/jobbr-dashboard --prefix source/Jobbr.Dashboard.Frontend/jobbr-dashboard
 
 assembly_info:
   patch: false
