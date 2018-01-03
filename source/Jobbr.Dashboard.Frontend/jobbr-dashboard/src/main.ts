@@ -19,6 +19,7 @@ import '../static/styles/box.scss';
 import '../static/styles/list.scss';
 import '../static/styles/checkbox.scss';
 import '../static/styles/table.scss';
+import '../static/styles/highlightjs.scss';
 
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 
