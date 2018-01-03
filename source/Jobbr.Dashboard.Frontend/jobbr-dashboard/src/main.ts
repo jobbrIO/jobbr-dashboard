@@ -27,7 +27,8 @@ export function configure(aurelia: Aurelia) {
     .standardConfiguration()
     .feature(PLATFORM.moduleName('resources/index'))
     .feature(PLATFORM.moduleName('plugins/aurelia-chart/index'))
-    .plugin(PLATFORM.moduleName('aurelia-animator-css'));
+    .plugin(PLATFORM.moduleName('aurelia-animator-css'))
+    .plugin(PLATFORM.moduleName('aurelia-bootstrap'), config => config.options.version = 4); // bootstrap v4
 
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
