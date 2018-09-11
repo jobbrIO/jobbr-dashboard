@@ -27,6 +27,7 @@
     "@types/node": "^10.9.4",
     "@types/webpack": "^4.4.11",
     "aurelia-binding": "^2.1.4",
+    "aurelia-bootstrap": "^0.1.20",
     "aurelia-cli": "^0.34.0",
     "aurelia-pal": "^1.8.0",
     "aurelia-protractor-plugin": "^1.0.6",
