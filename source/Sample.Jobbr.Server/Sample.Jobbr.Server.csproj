@@ -51,6 +51,9 @@
     <Reference Include="Jobbr.Server, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.Server.1.1.0\lib\net462\Jobbr.Server.dll</HintPath>
     </Reference>
+    <Reference Include="Jobbr.Server.ForkedExecution, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jobbr.Execution.Forked.1.1.1\lib\net462\Jobbr.Server.ForkedExecution.dll</HintPath>
+    </Reference>
     <Reference Include="Jobbr.Server.WebAPI, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.Server.WebAPI.1.1.0\lib\net45\Jobbr.Server.WebAPI.dll</HintPath>
     </Reference>
@@ -132,10 +135,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\jobbr-execution-forked\source\Jobbr.Server.ForkedExecution\Jobbr.Server.ForkedExecution.csproj">
-      <Project>{9B30197B-7ABF-4C74-9733-6F4594683761}</Project>
-      <Name>Jobbr.Server.ForkedExecution</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Jobbr.Dashboard.Backend\Jobbr.Dashboard.Backend.csproj">
       <Project>{dea0da38-db0f-4ee5-9a22-a47fd338fded}</Project>
       <Name>Jobbr.Dashboard.Backend</Name>
