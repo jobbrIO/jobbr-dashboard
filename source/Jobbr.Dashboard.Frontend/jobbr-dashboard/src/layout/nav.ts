@@ -1,7 +1,6 @@
 import { autoinject } from 'aurelia-framework';
-import './nav.scss';
 
-@autoinject
+@autoinject()
 export class Nav {
   constructor() {
     

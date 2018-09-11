@@ -1,0 +1,18 @@
+@import 'variables';
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+@import 'bootstrap.scss';
+@import 'box.scss';
+@import 'checkbox.scss';
+@import 'colors.scss';
+@import 'layout.scss';
+@import 'list.scss';
+@import 'table.scss';
+@import 'text.scss';
+
+@import '../../src/layout/nav.scss';
+@import '../../src/dashboard/dashboard.scss';
+@import '../../src/jobs/jobs.scss';
+@import '../../src/rundetail/rundetail.scss';
+@import '../../src/runs/runs.scss';

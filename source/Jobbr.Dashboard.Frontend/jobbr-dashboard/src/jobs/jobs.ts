@@ -1,5 +1,5 @@
-import { ApiClient } from 'resources/api/api-client';
-import { JobDto } from 'resources/api/dtos';
+import { ApiClient } from '../resources/api/api-client';
+import { JobDto } from '../resources/api/dtos';
 import { autoinject } from 'aurelia-dependency-injection';
 import * as $ from 'jquery';
 

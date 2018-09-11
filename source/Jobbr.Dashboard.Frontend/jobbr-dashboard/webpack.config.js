@@ -4,16 +4,18 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const project = require('./aurelia_project/aurelia.json');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
-const { optimize: { CommonsChunkPlugin, UglifyJsPlugin }, ProvidePlugin } = require('webpack');
+const { ProvidePlugin } = require('webpack');
+const webpack = require('webpack');
 const { TsConfigPathsPlugin, CheckerPlugin } = require('awesome-typescript-loader');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
-const when = (condition, config, negativeConfig) =>
-  condition ? ensureArray(config) : ensureArray(negativeConfig);
+const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 
 // primary config:
-const title = 'Jobbr Dashboard';
+const title = 'Jobbr';
 const outDir = path.resolve(__dirname, project.platform.output);
 const srcDir = path.resolve(__dirname, 'src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
@@ -23,30 +25,44 @@ const cssRules = [
   { loader: 'css-loader' },
 ];
 
-module.exports = ({production, server, extractCss, coverage} = {}) => ({
+module.exports = ({production, server, extractCss, coverage, analyze} = {}) => ({
   resolve: {
     extensions: ['.ts', '.js'],
     modules: [srcDir, 'node_modules'],
+    // Enforce single aurelia-binding, to avoid v1/v2 duplication due to
+    // out-of-date dependencies on 3rd party aurelia plugins
+    alias: { 'aurelia-binding': path.resolve(__dirname, 'node_modules/aurelia-binding') }
   },
   entry: {
-    app: ['aurelia-bootstrapper'],
-    vendor: ['bluebird'],
+    app: 'aurelia-bootstrapper',
   },
+  mode: production ? 'production' : 'development',
   output: {
     path: outDir,
     publicPath: baseUrl,
     filename: production ? '[name].[chunkhash].bundle.js' : '[name].[hash].bundle.js',
     sourceMapFilename: production ? '[name].[chunkhash].bundle.map' : '[name].[hash].bundle.map',
     chunkFilename: production ? '[name].[chunkhash].chunk.js' : '[name].[hash].chunk.js'
+  }, 
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    }
   },
   devServer: {
     contentBase: outDir,
     // serve index.html for all 404 (required for push-state)
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   devtool: production ? 'nosources-source-map' : 'cheap-module-eval-source-map',
   module: {
-    rules: [
+    rules: [  
       // CSS required in JS/TS files should use the style-loader that auto-injects it into the website
       // only when the issuer is a .js/.ts file, so the loaders are not applied inside html templates
       {
@@ -65,17 +81,27 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         use: cssRules
       },
       {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-        issuer: /\.[tj]s$/i
-      },
-      {
-        test: /\.scss$/,
-        use: ['css-loader', 'sass-loader'],
-        issuer: /\.html?$/i
+        test: /\.(scss)$/,
+        use: [{
+          loader: 'style-loader', // inject CSS to page
+        }, {
+          loader: 'css-loader', // translates CSS into CommonJS modules
+        }, {
+          loader: 'postcss-loader', // Run post css actions
+          options: {
+            plugins: function () { // post css plugins, can be exported to postcss.config.js
+              return [
+                require('precss'),
+                require('autoprefixer')
+              ];
+            }
+          }
+        }, {
+          loader: 'sass-loader' // compiles Sass to CSS
+        }]
       },
       { test: /\.html$/i, loader: 'html-loader' },
-      { test: /\.ts$/i, loader: 'awesome-typescript-loader', exclude: nodeModulesDir },
+      { test: /\.tsx?$/, loader: "ts-loader" },
       { test: /\.json$/i, loader: 'json-loader' },
       // use Bluebird as the global Promise implementation:
       { test: /[\/\\]node_modules[\/\\]bluebird[\/\\].+\.js$/, loader: 'expose-loader?Promise' },
@@ -93,15 +119,18 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     ]
   },
   plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new AureliaPlugin(),
     new ProvidePlugin({
-      'Promise': 'bluebird'
+      'Promise': 'bluebird',
+      '$': 'jquery',
+      'jQuery': 'jquery',
+      'window.jQuery': 'jquery',
+      'moment': 'moment',
     }),
     new ModuleDependenciesPlugin({
-      'aurelia-testing': [ './compile-spy', './view-spy' ]
+      'aurelia-testing': [ './compile-spy', './view-spy' ],
     }),
-    new TsConfigPathsPlugin(),
-    new CheckerPlugin(),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
       minify: production ? {
@@ -122,17 +151,11 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       }
     }),
     ...when(extractCss, new ExtractTextPlugin({
-      filename: production ? '[contenthash].css' : '[id].css',
+      filename: production ? '[md5:contenthash:hex:20].css' : '[id].css',
       allChunks: true
     })),
-    ...when(production, new CommonsChunkPlugin({
-      name: ['common']
-    })),
     ...when(production, new CopyWebpackPlugin([
-      { from: 'static/favicon.ico', to: 'favicon.ico' }
-    ])),
-    ...when(production, new UglifyJsPlugin({
-      sourceMap: true
-    }))
+      { from: 'static/favicon.ico', to: 'favicon.ico' }])),
+    ...when(analyze, new BundleAnalyzerPlugin())
   ]
 });

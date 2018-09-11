@@ -12,13 +12,7 @@ import '../node_modules/bootstrap/js/src/dropdown';
 import '../node_modules/bootstrap/js/src/collapse';
 import '../node_modules/bootstrap/js/src/popover';
 
-import '../static/styles/bootstrap.scss'
-import '../static/styles/layout.scss';
-import '../static/styles/text.scss';
-import '../static/styles/box.scss';
-import '../static/styles/list.scss';
-import '../static/styles/checkbox.scss';
-import '../static/styles/table.scss';
+import '../static/styles/styles.scss';
 
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 

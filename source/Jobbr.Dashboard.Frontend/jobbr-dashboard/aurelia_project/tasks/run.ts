@@ -18,6 +18,7 @@ function runWebpack(done) {
     contentBase: config.output.path,
     historyApiFallback: true,
     open: project.platform.open,
+    disableHostCheck: true,
     stats: {
       colors: require('supports-color')
     }
