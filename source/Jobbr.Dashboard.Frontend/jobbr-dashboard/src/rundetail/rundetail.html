@@ -1,5 +1,4 @@
 <template>
-  <require from="./rundetail.scss"></require>
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
   <require from="../resources/value-converters/timeSinceValueConverter"></require>
   <require from="../resources/value-converters/dateValueConverter"></require>
@@ -32,7 +31,7 @@
               <i class="fas fa-bolt"></i>
             </span> Trigger
             <strong class="text-highlight">${trigger.triggerType}
-              <a class="text-success" if.bind="trigger.triggerType == 'Recurring'" href="https://crontab.guru/#${trigger.definition | definitionToUrl}">${trigger.definition}</a>
+              <a class="text-success" if.bind="trigger.triggerType == 'Recurring'" href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a>
             </strong>
           </li>
 
@@ -40,7 +39,7 @@
             <span class="icon">
               <i class="fab fa-algolia"></i>
             </span> Duration
-            <strong class="text-highlight">${jobRun.auctualEndUtc | timeSince:jobRun.auctualStartUtc}</strong>
+            <strong class="text-highlight">${jobRun.actualEndUtc | timeSince:jobRun.actualStartUtc}</strong>
           </li>
         </ul>
       </div>

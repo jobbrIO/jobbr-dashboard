@@ -5,12 +5,14 @@ import { JobRunDto } from 'resources/api/dtos';
 
 @autoinject()
 export class Dashboard {
+  
+  static finishedStates = ['Completed', 'Failed', 'Omitted', 'Deleted', 'Null'];
+  static JobRunUpdateInterval = 5000;
 
   public jobRuns: Array<JobRunDto>;
   public disks: Array<DiskInfoDto>;
 
-  static finishedStates = ['Completed', 'Failed', 'Omitted', 'Deleted', 'Null'];
-  static JobRunUpdateInterval = 5000;
+  private interval;
 
   constructor(private apiClient: ApiClient) {
     apiClient.getDiskInfo().then(disks => this.disks = disks);
@@ -21,11 +23,8 @@ export class Dashboard {
     return this.apiClient.getRunningJobRuns().then(jobRuns => {
       let filtered = jobRuns.items.filter(p => { return Dashboard.finishedStates.indexOf(p.state) == -1; });
       this.jobRuns = filtered;
-      console.log(this.jobRuns);
     });
   }
-
-  private interval;
 
   attached() {
     this.updateRunningJobRuns().then(() => {

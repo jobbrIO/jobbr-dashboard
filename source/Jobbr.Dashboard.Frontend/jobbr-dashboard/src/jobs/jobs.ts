@@ -3,7 +3,7 @@ import { JobDto } from '../resources/api/dtos';
 import { autoinject } from 'aurelia-dependency-injection';
 import * as $ from 'jquery';
 
-@autoinject
+@autoinject()
 export class Jobs {
   public jobs: Array<JobDto>;
 
@@ -12,6 +12,6 @@ export class Jobs {
   }
 
   public attached() {
-    this.api.getAllJobs().then(r => this.jobs = r);
+    this.api.getAllJobs().then(r => this.jobs = r.items);
   }
 }

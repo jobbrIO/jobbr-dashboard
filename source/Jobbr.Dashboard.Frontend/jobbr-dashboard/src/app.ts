@@ -17,7 +17,6 @@ export class App {
       { route: ['', 'dashboard'], name: 'dashboard', moduleId: PLATFORM.moduleName('dashboard/dashboard'), title: 'Dashboard' },
       { route: ['jobs'], name: 'jobs', moduleId: PLATFORM.moduleName('jobs/jobs'), title: 'Jobs' },
       { route: ['jobs/:jobId/runs', 'runs'], name: 'runs', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs' },
-      { route: ['jobs/:jobId/runs'], name: 'runs-from-job', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs' },
       { route: ['runs/:id'], name: 'rundetail', moduleId: PLATFORM.moduleName('rundetail/rundetail'), title: 'Run Detail' },
       { route: ['settings'], name: 'settings', moduleId: PLATFORM.moduleName('settings/settings'), title: 'Settings' },
     ]);

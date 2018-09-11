@@ -1,5 +1,5 @@
-import { JobDto, JobRunDto, JobTriggerDto } from 'resources/api/dtos';
-import { ApiClient } from 'resources/api/api-client';
+import { JobDto, JobRunDto, JobTriggerDto } from '../resources/api/dtos';
+import { ApiClient } from '../resources/api/api-client';
 import { autoinject } from 'aurelia-framework';
 
 @autoinject

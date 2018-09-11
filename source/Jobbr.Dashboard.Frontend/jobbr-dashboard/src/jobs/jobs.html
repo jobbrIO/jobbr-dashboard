@@ -13,8 +13,8 @@
         </div>
         <div class="job-content running">
           <div class="job-select">
-            <input type="checkbox" id="job-x">
-            <label for="job-x"></label>
+            <input type="checkbox" id="job-checkbox-${$index}">
+            <label for="job-checkbox-${$index}"></label>
           </div>
           <div class="fill job-details">
             <div class="job-title-line left-right-container">
@@ -27,7 +27,7 @@
                 </a>
               </div>
               <div>
-                <div class="btn-group">
+                <!-- <div class="btn-group">
                   <button type="button" class="btn btn-primary">next trigger in
                     <strong>14 minutes</strong>
                   </button>
@@ -40,13 +40,11 @@
                       <i class="far fa-pause-circle"></i> disable all triggers
                     </a>
                   </div>
-                </div>
+                </div> -->
                 <button type="button" class="btn btn-danger">
                   <i class="far fa-trash-alt"></i>
                 </button>
-
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse-${job.id}" aria-expanded="false"
-                  click.delegate="">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse-${job.id}" aria-expanded="false" >
                   <i class="fa fa-chevron-down" aria-hidden="true"></i> Details
                 </button>
               </div>

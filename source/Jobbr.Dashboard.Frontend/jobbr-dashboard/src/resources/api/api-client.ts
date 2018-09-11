@@ -37,7 +37,7 @@ export class ApiClient {
     return this.httpClient.fetch('/dashboard/system/disks').then(r => r.json());
   }
 
-  getAllJobs(): Promise<Array<JobDto>> {
+  getAllJobs(): Promise<PagedResult<JobDto>> {
     return this.httpClient.fetch('/jobs').then(r => r.json());
   }
 
@@ -45,7 +45,7 @@ export class ApiClient {
     return this.httpClient.fetch('/jobs/' + id).then(r => r.json());
   }
 
-  getJobRunsByJobId(jobId: number): Promise<Array<JobRunDto>> {
+  getJobRunsByJobId(jobId: number): Promise<PagedResult<JobRunDto>> {
     return this.httpClient.fetch('/jobs/' + jobId + '/runs').then(r => r.json());
   }
 

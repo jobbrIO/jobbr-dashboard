@@ -3,10 +3,10 @@ import { ApiClient } from 'resources/api/api-client';
 import { bindable } from 'aurelia-templating';
 import { autoinject } from "aurelia-framework";
 
-@autoinject
+@autoinject()
 export class JobDetails {
 
-  @bindable
+  @bindable()
   public jobId: number;
 
   private job: JobDetailsDto;
