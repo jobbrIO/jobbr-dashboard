@@ -1,6 +1,7 @@
 import { DashboardMemoryResponse, DiskInfoDto, JobDetailsDto, JobDto, JobRunDto, JobTriggerDto } from './dtos';
 import { autoinject } from "aurelia-framework";
 import { HttpClient } from 'aurelia-fetch-client';
+import { PagedResult } from './paged-result';
 
 @autoinject
 export class ApiClient {
@@ -48,7 +49,7 @@ export class ApiClient {
     return this.httpClient.fetch('/jobs/' + jobId + '/runs').then(r => r.json());
   }
 
-  getJobRuns(): Promise<Array<JobRunDto>> {
+  getJobRuns(): Promise<PagedResult<JobRunDto>> {
     return this.httpClient.fetch('/jobruns/?userDisplayName').then(r => r.json());
   }
   
@@ -62,5 +63,9 @@ export class ApiClient {
 
   getJobDetails(jobId: number): Promise<JobDetailsDto> {
     return this.httpClient.fetch('/jobs/' + jobId).then(r => r.json());
+  }
+
+  getRunningJobRuns(): Promise<PagedResult<JobRunDto>> {
+    return this.httpClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200').then(r => r.json());
   }
 }

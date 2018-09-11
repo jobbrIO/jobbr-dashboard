@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { SmoothieChart, TimeSeries } from "smoothie";
-import { ApiClient } from "resources/services/api-client";
+import { ApiClient } from "resources/api/api-client";
 import { clearInterval } from "timers";
 
 @autoinject()

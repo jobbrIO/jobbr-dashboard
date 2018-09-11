@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using Jobbr.Dashboard.Backend;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
 using Jobbr.Server.WebAPI;
-using Jobbr.Storage.RavenDB;
+using Jobbr.Storage.MsSql;
 
 namespace Sample.Jobbr.Server
 {
@@ -25,7 +26,7 @@ namespace Sample.Jobbr.Server
             jobbrBuilder.AddJobs(repo =>
             {
                 repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName) // why no assembly overload?
-                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: DateTime.MinValue, validToDateTimeUtc: DateTime.MaxValue)
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1))
                     .WithParameter(new
                     {
                         Foo = "Bar",
@@ -70,18 +71,23 @@ namespace Sample.Jobbr.Server
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
             jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}dashboard");
-            jobbrBuilder.AddRavenDbStorage(config =>
+            //jobbrBuilder.AddRavenDbStorage(config =>
+            //{
+            //    config.Url = "http://localhost:8080/";
+            //    config.Database = "Jobbr";
+            //});
+            jobbrBuilder.AddMsSqlStorage(config =>
             {
-                config.Url = "http://localhost:8080/";
-                config.Database = "Jobbr";
+                config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard;Connect Timeout=5;Integrated Security=True";
+                config.CreateTablesIfNotExists = true;
             });
 
             using (var jobbr = jobbrBuilder.Create())
             {
-                jobbr.Start(TimeSpan.FromSeconds(20).Milliseconds);
+                jobbr.Start(5000);
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Press Enter to exit");
+                Console.WriteLine("Jobbr is running. Press Enter to quit");
                 Console.ResetColor();
                 Console.ReadLine();
             }
