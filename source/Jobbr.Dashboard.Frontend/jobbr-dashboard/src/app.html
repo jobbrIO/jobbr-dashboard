@@ -1,22 +1,6 @@
 <template>
-  <require from="./layout/nav"></require>
-  <require from="./layout/footer"></require>
-  <div class="page">
-    <div class="sidebar">
-      <nav></nav>
-    </div>
-    <div class="logo">
-      <strong>Jobbr</strong> Dashboard
-    </div>
-    <div class="header">
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1"><i class="fas fa-search"></i></span>
-        <input type="text" class="form-control" placeholder="search jobs, triggers, artefacts...">
-      </div>
-    </div>
-    <div class="content">
-      <router-view swap-order="after" containerless></router-view>
-    </div>
-    <footer></footer>
-  </div>
+  <compose view="./nav.html"></compose>
+  <main role="main" class="container-fluid">
+    <router-view swap-order="after" containerless></router-view>
+  </main>
 </template>

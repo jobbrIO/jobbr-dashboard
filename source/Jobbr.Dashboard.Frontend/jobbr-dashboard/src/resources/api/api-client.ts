@@ -46,11 +46,11 @@ export class ApiClient {
   }
 
   getJobRunsByJobId(jobId: number): Promise<PagedResult<JobRunDto>> {
-    return this.httpClient.fetch('/jobs/' + jobId + '/runs').then(r => r.json());
+    return this.httpClient.fetch('/jobs/' + jobId + '/runs?sort=-PlannedStartDateTimeUtc').then(r => r.json());
   }
 
   getJobRuns(): Promise<PagedResult<JobRunDto>> {
-    return this.httpClient.fetch('/jobruns/?userDisplayName').then(r => r.json());
+    return this.httpClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc').then(r => r.json());
   }
   
   getJobRun(id: number): Promise<JobRunDto> {

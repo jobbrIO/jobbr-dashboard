@@ -14,7 +14,7 @@ import '../node_modules/bootstrap/js/src/popover';
 
 import '../static/styles/styles.scss';
 
-Bluebird.config({ warnings: { wForgottenReturn: false } });
+Bluebird.config({ warnings: { wForgottenReturn: false }, longStackTraces: false });
 
 export function configure(aurelia: Aurelia) {
   aurelia.use

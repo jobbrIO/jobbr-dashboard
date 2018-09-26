@@ -1,25 +1,32 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration } from "aurelia-router";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-@autoinject
+@autoinject()
 export class App {
 
-  constructor(private router: Router) {
+  public router: Router;
 
+  constructor() {
   }
-  
-  configureRouter(config: RouterConfiguration, router: Router) {
+
+  configureRouter(config: RouterConfiguration, router: Router): void {
+
     config.options.pushState = true;
 
-    this.router = router;
-
     config.map([
-      { route: ['', 'dashboard'], name: 'dashboard', moduleId: PLATFORM.moduleName('dashboard/dashboard'), title: 'Dashboard' },
-      { route: ['jobs'], name: 'jobs', moduleId: PLATFORM.moduleName('jobs/jobs'), title: 'Jobs' },
-      { route: ['jobs/:jobId/runs', 'runs'], name: 'runs', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs' },
+      // nav routes
+      { route: ['', 'dashboard'], name: 'dashboard', moduleId: PLATFORM.moduleName('dashboard/dashboard'), title: 'Dashboard', nav: true, settings: { icon: 'fas fa-tachometer-alt' } },
+      { route: ['jobs'], name: 'jobs', moduleId: PLATFORM.moduleName('jobs/jobs'), title: 'Jobs', nav: true, settings: { icon: 'far fa-calendar-alt' } },
+      { route: ['runs'], name: 'runs', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs', nav: true, settings: { icon: 'fas fa-flag-checkered' } },
+      { route: ['settings'], name: 'settings', moduleId: PLATFORM.moduleName('settings/settings'), title: 'Settings', nav: true, settings: { icon: 'fas fa-cog' } },
+
+      // other routes
+      { route: ['jobs/:jobId/runs'], name: 'runs', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs' },
       { route: ['runs/:id'], name: 'rundetail', moduleId: PLATFORM.moduleName('rundetail/rundetail'), title: 'Run Detail' },
-      { route: ['settings'], name: 'settings', moduleId: PLATFORM.moduleName('settings/settings'), title: 'Settings' },
     ]);
+    
+    this.router = router;
   }
 
   activate() {

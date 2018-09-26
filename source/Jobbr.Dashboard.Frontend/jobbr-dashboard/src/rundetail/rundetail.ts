@@ -12,6 +12,10 @@ export class RunDetail {
   constructor(private apiClient: ApiClient) {
   }
 
+  bind(bindingContext: Object,overrideContext: Object) {
+    
+  }
+
   activate(params, routeConfig, navigationInstruction) {
     this.jobRunId = params.id;
 

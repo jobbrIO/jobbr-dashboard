@@ -8,55 +8,36 @@
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
   <require from="../resources/value-converters/fileSizeValueConverter"></require>
 
-  <div class="dashboard">
-    <div class="box box-no-title">
-      <div class="box-content">
-        <h2>
-          <i class="fas fa-server"></i> Jobbr Server</h2>
-        <ul class="flat-list">
-          <li>
-            <span class="icon">
-              <i class="fas fa-link"></i>
-            </span> http://
-            <span class="text-highlight">localhost:1337</span>
-          </li>
-          <li>
-            <span class="icon">
-              <i class="fas fa-clock"></i>
-            </span> Up for
-            <strong class="text-success">2 hours 4 minutes</strong>
-          </li>
-          <li>
-            <span class="icon">
-              <i class="fas fa-fighter-jet"></i>
-            </span>Max. concurrent Jobs:
-            <span class="text-highlight">4</span>
-          </li>
-        </ul>
+  <div class="dashboard container-fluid">
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-microchip mr-2"></i> CPU / Memory
+        </h3>
+        <cpu-graph></cpu-graph>
+        <memory-graph></memory-graph>
       </div>
     </div>
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-circle-notch ${jobRuns.length == 0 ? '' : 'fa-spin'} extra-spacing-right"></i>Scheduled &amp; Running Jobs
-        </h1>
-      </div>
-      <div class="box-content">
 
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-circle-notch ${jobRuns.length == 0 ? '' : 'fa-spin'} extra-spacing-right mr-2"></i>Scheduled &amp; Running Jobs
+        </h3>
         <p if.bind="jobRuns.length == 0">
           No scheduled / running jobs
         </p>
-
-        <table if.bind="jobRuns.length > 0">
+        <table class="table table-hover" if.bind="jobRuns.length != 0">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>State</th>
-              <th>Progress</th>
-              <th>Planned Start</th>
-              <th>Actual Start</th>
-              <th>Duration</th>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">State</th>
+              <th scope="col">Progress</th>
+              <th scope="col">Planned Start</th>
+              <th scope="col">Actual Start</th>
+              <th scope="col">Duration</th>
             </tr>
           </thead>
           <tbody>
@@ -70,8 +51,10 @@
               <td>
                 <span class="${run.state | jobRunStateToColor}">${run.state}</span>
               </td>
-              <td>${run.progress}
-                <span if.bind="run.progress">%</span>
+              <td>
+                <div if.bind="run.progress" class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ${run.progress}%">${run.progress}%</div>
+                </div>
               </td>
               <td>${run.plannedStartUtc | date}</td>
               <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc}
@@ -81,51 +64,22 @@
             </tr>
           </tbody>
         </table>
-
-        <!-- <button type="button" class="btn btn-primary">Primary</button>
-        <button type="button" class="btn btn-secondary">Secondary</button>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-danger">Danger</button>
-        <button type="button" class="btn btn-warning">Warning</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <button type="button" class="btn btn-light">Light</button>
-        <button type="button" class="btn btn-dark">Dark</button>
-        <br />
-        <br />
-        <div class="btn-group">
-          <button type="button" class="btn btn-danger">Action</button>
-          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item text-warning" href="#">
-              <i class="fas fa-pause"></i> disable all triggers</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </div> -->
       </div>
     </div>
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-microchip extra-spacing-right"></i>CPU / Memory</h1>
-      </div>
-      <div class="box-content">
-        <cpu-graph></cpu-graph>
-        <memory-graph></memory-graph>
+
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-hdd mr-2"></i> Storage
+        </h3>
       </div>
     </div>
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-hdd extra-spacing-right"></i>Storage</h1>
-      </div>
-      <div class="box-content">
 
-        <table>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th>Name</th>
@@ -141,8 +95,8 @@
             </tr>
           </tbody>
         </table>
-
       </div>
     </div>
+
   </div>
 </template>

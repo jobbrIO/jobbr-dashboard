@@ -3,41 +3,51 @@
   <require from="../resources/value-converters/dateValueConverter"></require>
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
   <require from="../resources/value-converters/coalesceValueConverter"></require>
-  <div>
-    <h2 if.bind="jobId">
-      <i class="fas fa-suitcase extra-spacing-right"></i> ${job.uniqueName}
-      <small>${job.type}</small>
-    </h2>
-    <h2 if.bind="!jobId">
-      <i class="fas fa-flag-checkered"></i> All runs
-    </h2>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12" if.bind="jobId">
+        <h3>
+          <i class="fas fa-suitcase mr-2"></i> ${job.uniqueName}
+        </h3>
+        <small>${job.type}</small>
+      </div>
+      <div class="col-sm-12" if.bind="!jobId">
+        <h3>
+          <i class="fas fa-flag-checkered mr-2"></i> All runs
+        </h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th if.bind="!jobId">Name</th>
+              <th>State</th>
+              <th>Progress</th>
+              <th>Planned Start</th>
+              <th>Actual Start</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="run of jobRuns">
+              <td><a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a></td>
+              <td if.bind="!jobId"><strong>${run.jobName}</strong></td>
+              <td><span class="${run.state | jobRunStateToColor}">${run.state}</span></td>
+              <td>${run.progress} <span if.bind="run.progress">%</span></td>
+              <td>${run.plannedStartUtc | date}</td>
+              <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc} <span if.bind="run.auctualStartUtc">later</span></td>
+              <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <div class="box box-table">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th if.bind="!jobId">Name</th>
-          <th>State</th>
-          <th>Progress</th>
-          <th>Planned Start</th>
-          <th>Actual Start</th>
-          <th>Duration</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr repeat.for="run of jobRuns">
-          <td><a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a></td>
-          <td if.bind="!jobId"><strong>${run.jobName}</strong></td>
-          <td><span class="${run.state | jobRunStateToColor}">${run.state}</span></td>
-          <td>${run.progress} <span if.bind="run.progress">%</span></td>
-          <td>${run.plannedStartUtc | date}</td>
-          <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc} <span if.bind="run.auctualStartUtc">later</span></td>
-          <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
 
 </template>

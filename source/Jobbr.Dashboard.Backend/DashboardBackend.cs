@@ -39,8 +39,8 @@ namespace Jobbr.Dashboard.Backend
                 throw new ArgumentException("Unable to start DashboardBackend when no BackendUrl is specified");
             }
 
-            var services = (ServiceProvider)ServicesFactory.Create();
-            var options = new StartOptions()
+            var services = (ServiceProvider) ServicesFactory.Create();
+            var options = new StartOptions
             {
                 Urls =
                 {

@@ -5,71 +5,62 @@
   <require from="../resources/value-converters/fileSizeValueConverter"></require>
   <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
+  <require from="../resources/value-converters/jobRunStateToHourGlassValueConverter"></require>
 
-  <div class="rundetail-grid">
-    <div class="box box-no-title">
-      <div class="box-content">
-        <h2>
-          <i class="fas fa-flag-checkered"></i> ${jobRun.jobTitle}
+  <div class="rundetail container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-flag-checkered"></i> ${job.uniqueName}
           <small>${job.type}</small>
-        </h2>
-        <ul class="flat-list">
+        </h3>
+        <ul>
           <li>
-            <span class="icon">
-              <i class="fas fa-hourglass-end"></i>
-            </span> State
+            <i class="fas ${jobRun.state | jobRunStateToHourGlass}"></i> State
             <strong class="${jobRun.state | jobRunStateToColor}">${jobRun.state}</strong>
           </li>
           <li>
-            <span class="icon">
-              <i class="fas fa-clock"></i>
-            </span> Start time
-            <strong class="text-highlight">${jobRun.auctualStartUtc | date}</strong>
+            <i class="fas fa-clock"></i> Start time
+            <strong class="text-highlight">${jobRun.actualStartUtc | date}</strong>
           </li>
           <li>
-            <span class="icon">
-              <i class="fas fa-bolt"></i>
-            </span> Trigger
-            <strong class="text-highlight">${trigger.triggerType}
-              <a class="text-success" if.bind="trigger.triggerType == 'Recurring'" href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a>
-            </strong>
+            <i class="fas fa-bolt"></i> Trigger
+            <a class="text-success" if.bind="trigger.triggerType == 'Recurring'" href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a>
           </li>
-
           <li>
-            <span class="icon">
-              <i class="fab fa-algolia"></i>
-            </span> Duration
+            <i class="fab fa-algolia"></i> Duration
             <strong class="text-highlight">${jobRun.actualEndUtc | timeSince:jobRun.actualStartUtc}</strong>
+          </li>
+          <li>
+            <i class="fas fa-user"></i> User
+            <strong>${jobRun.userId} <small>(${jobRun.userDisplayName})</small></strong>
           </li>
         </ul>
       </div>
     </div>
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-wrench extra-spacing-right"></i>Job Parameters</h1>
-      </div>
-      <div class="box-content">
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-wrench mr-2"></i> Job Parameters
+        </h3>
         <highlightjs if.bind="jobRun.jobParameter" code.bind="jobRun.jobParameter"></highlightjs>
+        <span hide.bind="jobRun.jobParameter">none</span>
       </div>
     </div>
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-wrench extra-spacing-right"></i>Instance Parameters</h1>
-      </div>
-      <div class="box-content">
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-wrench mr-2"></i> Instance Parameters
+        </h3>
         <highlightjs if.bind="jobRun.instanceParameter" code.bind="jobRun.instanceParameter"></highlightjs>
       </div>
     </div>
-    <div class="box artefacts">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-hdd extra-spacing-right"></i>Artefacts
-        </h1>
-      </div>
-      <div class="box-content">
-        <table>
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-hdd mr-2"></i> Artefacts
+        </h3>
+        <table class="table table-hover">
           <thead>
             <tr>
               <th>Filename</th>
@@ -88,4 +79,35 @@
       </div>
     </div>
   </div>
+
+  <!-- <div class="rundetail-grid">
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-wrench extra-spacing-right"></i>Job Parameters</h1>
+      </div>
+      <div class="box-content">
+
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-wrench extra-spacing-right"></i>Instance Parameters</h1>
+      </div>
+      <div class="box-content">
+        <highlightjs if.bind="jobRun.instanceParameter" code.bind="jobRun.instanceParameter"></highlightjs>
+      </div>
+    </div>
+    <div class="box artefacts">
+      <div class="box-title">
+        <h1>
+          <i class="fas fa-hdd extra-spacing-right"></i>Artefacts
+        </h1>
+      </div>
+      <div class="box-content">
+        
+      </div>
+    </div>
+  </div> -->
 </template>

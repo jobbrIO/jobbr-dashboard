@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using Jobbr.Dashboard.Backend;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
@@ -25,8 +24,20 @@ namespace Sample.Jobbr.Server
 
             jobbrBuilder.AddJobs(repo =>
             {
-                repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName) // why no assembly overload?
-                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1))
+                repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Priority = "High",
+                            Comment = "Heyho!"
+                        }
+                    });
+
+                repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
                     .WithParameter(new
                     {
                         Foo = "Bar",
