@@ -46,7 +46,10 @@ namespace Jobbr.Dashboard.Backend
             config.Formatters.JsonFormatter.SerializerSettings = jsonSerializerSettings;
 
             app.UseWebApi(config);
+
+#if DEBUG
             app.UseCors(CorsOptions.AllowAll);
+#endif
 
             var assemblyLocation = new FileInfo(typeof(Startup).Assembly.Location);
             var appPath = Path.Combine(assemblyLocation.Directory.Parent.Parent.FullName, "app");
