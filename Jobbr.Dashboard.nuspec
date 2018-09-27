@@ -10,15 +10,15 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Dashboard for Jobbr</description>
     <iconUrl>https://raw.githubusercontent.com/jobbrIO/artwork/master/build/icons/icon_detailed_256_dark.png</iconUrl>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright 2018</copyright>
     <dependencies>
-      <dependency id="Jobbr.ComponentModel.Management" version="[1,1.1)" />
+      <dependency id="Jobbr.ComponentModel.Management" version="[1.2,1.3)" />
       <dependency id="Jobbr.ComponentModel.Registration" version="[1,1.1)" />
     </dependencies>
   </metadata>
   <files>
-    <file src="ilmerged/Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
-    <file src="ilmerged/Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
     <file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\**" target="app" />
   </files>
 </package>
