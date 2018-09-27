@@ -57,10 +57,10 @@
                 </div>
               </td>
               <td>${run.plannedStartUtc | date}</td>
-              <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc}
-                <span if.bind="run.auctualStartUtc">later</span>
+              <td>${run.actualStartUtc | timeSince:run.plannedStartUtc}
+                <span if.bind="run.actualStartUtc">later</span>
               </td>
-              <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
+              <td>${run.actualEndUtc | timeSince:run.actualStartUtc}</td>
             </tr>
           </tbody>
         </table>
