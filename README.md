@@ -16,7 +16,7 @@ First of all you'll need a working jobserver by using the usual builder as shown
     Install-Package Jobbr.Dashboard
 
 ### Configuration
-Since you already have a configured server, the registration of the provider is quite easy. See Example below
+Since you already have a configured server, the registration of the provider is quite easy. See Example below. The dashboard requires the [jobbr-webapi](https://github.com/jobbrIO/jobbr-webapi) component to be installed.
 
 ```c#
 using Jobbr.Dashboard
@@ -25,12 +25,10 @@ using Jobbr.Dashboard
 
 var builder = new JobbrBuilder();
 
-const string baseAddress = "http://localhost:1337";
+const string baseAddress = "http://localhost:1337/";
 
-// the dashboard uses the [jobbr-webapi](https://github.com/jobbrIO/jobbr-webapi) component. therefore it is required to add to your jobbr builder:
 jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api"); // you must host it under /api (in future, this will be configurable)
 
-// add the dashboard component itself
 jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
 
 server.Start();
