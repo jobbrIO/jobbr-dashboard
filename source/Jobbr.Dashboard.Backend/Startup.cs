@@ -4,7 +4,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
 using Jobbr.Dashboard.Backend.Logging;
+#if DEBUG
 using Microsoft.Owin.Cors;
+#endif
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
@@ -51,6 +53,7 @@ namespace Jobbr.Dashboard.Backend
             app.UseWebApi(config);
 
 #if DEBUG
+            // developers only: support running the app from webpack (au run --watch)
             app.UseCors(CorsOptions.AllowAll);
 #endif
 
