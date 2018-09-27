@@ -1,5 +1,6 @@
 <template>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
+  <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
 
   <div class="job-parameters collapse collapse-${job.id}">
     <highlightjs code.bind="job.parameters" if.bind="job.parameters"></highlightjs>
@@ -20,10 +21,15 @@
         <tr repeat.for="trigger of job.trigger">
           <td>${trigger.id}</td>
           <td>
-            <span class="text-success">${trigger.active}</span>
+            <template if.bind="trigger.isActive">
+              <span class="text-success">active</span>
+            </template>
+            <template if.bind="!trigger.isActive">
+              <span class="text-danger">disabled</span>
+            </template>
           </td>
           <td>
-            <span class="text-highlight">${trigger.definition}</span>
+            <span class="text-highlight" if.bind="trigger.definition"><a href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a></span>
           </td>
           <td>${trigger.startDateTimeUtc | date}</td>
           <td>${trigger.endDateTimeUtc | date}</td>
