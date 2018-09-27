@@ -19,10 +19,8 @@ export class Dashboard {
   }
 
   private updateRunningJobRuns(): Promise<any> {
-    // api doesnt support that query currently. so we just get the last page of jobruns and filter the finished ones :)
     return this.apiClient.getRunningJobRuns().then(jobRuns => {
-      let filtered = jobRuns.items.filter(p => { return Dashboard.finishedStates.indexOf(p.state) == -1; });
-      this.jobRuns = filtered;
+      this.jobRuns = jobRuns.items;
     });
   }
 

@@ -66,6 +66,6 @@ export class ApiClient {
   }
 
   getRunningJobRuns(): Promise<PagedResult<JobRunDto>> {
-    return this.httpClient.fetch('/api/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200').then(r => r.json());
+    return this.httpClient.fetch('/api/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200&states=Scheduled,Preparing,Starting,Started,Connected,Initializing,Processing,Finishing,Collecting').then(r => r.json());
   }
 }

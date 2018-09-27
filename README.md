@@ -25,10 +25,13 @@ using Jobbr.Dashboard
 
 var builder = new JobbrBuilder();
 
-builder.AddDashboard(config =>
-{
-    config.BackendAddress = "http://localhost:1337/jobbr-dashboard";
-});
+const string baseAddress = "http://localhost:1337";
+
+// the dashboard uses the [jobbr-webapi](https://github.com/jobbrIO/jobbr-webapi) component. therefore it is required to add to your jobbr builder:
+jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api"); // you must host it under /api (in future, this will be configurable)
+
+// add the dashboard component itself
+jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
 
 server.Start();
 ```
