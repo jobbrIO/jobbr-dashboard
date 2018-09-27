@@ -80,8 +80,8 @@ namespace Sample.Jobbr.Server
                     });
             });
 
-            jobbrBuilder.AddWebApi(config => config.BackendAddress = baseAddress);
-            jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}dashboard");
+            jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api");
+            jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
             //jobbrBuilder.AddRavenDbStorage(config =>
             //{
             //    config.Url = "http://localhost:8080/";

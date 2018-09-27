@@ -26,46 +26,46 @@ export class ApiClient {
   }
 
   getCpuInfo(): Promise<number> {
-    return this.httpClient.fetch('/dashboard/system/cpu').then(r => r.json()).catch(e => console.log(e));
+    return this.httpClient.fetch('/system/cpu').then(r => r.json()).catch(e => console.log(e));
   }
 
   getMemoryInfo(): Promise<DashboardMemoryResponse> {
-    return this.httpClient.fetch('/dashboard/system/memory').then(r => r.json());
+    return this.httpClient.fetch('/system/memory').then(r => r.json());
   }
 
   getDiskInfo(): Promise<Array<DiskInfoDto>> {
-    return this.httpClient.fetch('/dashboard/system/disks').then(r => r.json());
+    return this.httpClient.fetch('/system/disks').then(r => r.json());
   }
 
   getAllJobs(): Promise<PagedResult<JobDto>> {
-    return this.httpClient.fetch('/jobs').then(r => r.json());
+    return this.httpClient.fetch('/api/jobs').then(r => r.json());
   }
 
   getJob(id: number): Promise<JobDto> {
-    return this.httpClient.fetch('/jobs/' + id).then(r => r.json());
+    return this.httpClient.fetch('/api/jobs/' + id).then(r => r.json());
   }
 
   getJobRunsByJobId(jobId: number): Promise<PagedResult<JobRunDto>> {
-    return this.httpClient.fetch('/jobs/' + jobId + '/runs?sort=-PlannedStartDateTimeUtc').then(r => r.json());
+    return this.httpClient.fetch('/api/jobs/' + jobId + '/runs?sort=-PlannedStartDateTimeUtc').then(r => r.json());
   }
 
   getJobRuns(): Promise<PagedResult<JobRunDto>> {
-    return this.httpClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc').then(r => r.json());
+    return this.httpClient.fetch('/api/jobruns/?sort=-PlannedStartDateTimeUtc').then(r => r.json());
   }
   
   getJobRun(id: number): Promise<JobRunDto> {
-    return this.httpClient.fetch('/jobruns/' + id).then(r => r.json());
+    return this.httpClient.fetch('/api/jobruns/' + id).then(r => r.json());
   }
 
   getTrigger(jobId: number, triggerId: number): Promise<JobTriggerDto> {
-    return this.httpClient.fetch('/jobs/' + jobId + '/triggers/' + triggerId).then(r => r.json());
+    return this.httpClient.fetch('/api/jobs/' + jobId + '/triggers/' + triggerId).then(r => r.json());
   }
 
   getJobDetails(jobId: number): Promise<JobDetailsDto> {
-    return this.httpClient.fetch('/jobs/' + jobId).then(r => r.json());
+    return this.httpClient.fetch('/api/jobs/' + jobId).then(r => r.json());
   }
 
   getRunningJobRuns(): Promise<PagedResult<JobRunDto>> {
-    return this.httpClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200').then(r => r.json());
+    return this.httpClient.fetch('/api/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200').then(r => r.json());
   }
 }

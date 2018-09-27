@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
+using Jobbr.Dashboard.Backend.Logging;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
@@ -14,6 +15,8 @@ namespace Jobbr.Dashboard.Backend
 {
     public class Startup
     {
+        private static readonly ILog Logger = LogProvider.For<Startup>();
+
         /// <summary>
         /// The dependency resolver from the JobbrServer which needs to be passed through the OWIN stack to WebAPI
         /// </summary>
@@ -66,7 +69,12 @@ namespace Jobbr.Dashboard.Backend
             else
             {
                 // app folder not found. most likely were not installed as nuget package. trying to run 
-                fileSystem = new PhysicalFileSystem("../../../Jobbr.Dashboard.Frontend/jobbr-dashboard/dist");
+                const string webpackDistPath = "../../../Jobbr.Dashboard.Frontend/jobbr-dashboard/dist";
+
+                fileSystem = new PhysicalFileSystem(webpackDistPath);
+                var fileInfo = new FileInfo(webpackDistPath);
+
+                Logger.Debug($"Using webpack folder to serve the app: {fileInfo.FullName}");
             }
 
             var options = new FileServerOptions
