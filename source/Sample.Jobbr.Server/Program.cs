@@ -1,4 +1,5 @@
 ﻿using System;
+using Jobbr.Dashboard.Backend;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
@@ -80,7 +81,7 @@ namespace Sample.Jobbr.Server
             });
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api");
-            //jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
+            jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
             //jobbrBuilder.AddRavenDbStorage(config =>
             //{
             //    config.Url = "http://localhost:8080/";
