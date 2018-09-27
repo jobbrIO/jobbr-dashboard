@@ -19,6 +19,10 @@
   <files>
     <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
     <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
-    <file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\**" target="app" />
+    <!--<file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\**" target="app" />-->
   </files>
+  <contentFiles>
+    <!-- Include Assets as Content -->
+    <files include="dashboard-app.zip" buildAction="EmbeddedResource" />
+  </contentFiles>
 </package>
