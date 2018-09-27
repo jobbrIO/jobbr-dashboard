@@ -15,14 +15,13 @@
       <dependency id="Jobbr.ComponentModel.Management" version="[1.2,1.3)" />
       <dependency id="Jobbr.ComponentModel.Registration" version="[1,1.1)" />
     </dependencies>
+    <contentFiles>
+      <files include="dashboard-app.zip" buildAction="EmbeddedResource" />  
+    </contentFiles>
   </metadata>
   <files>
     <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
     <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
-    <!--<file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\**" target="app" />-->
+    <file src="dashboard-app.zip" target="contentFiles" />
   </files>
-  <contentFiles>
-    <!-- Include Assets as Content -->
-    <files include="dashboard-app.zip" buildAction="EmbeddedResource" />
-  </contentFiles>
 </package>
