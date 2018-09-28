@@ -1,5 +1,6 @@
-﻿using System.IO;
+﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
@@ -7,11 +8,11 @@ using Jobbr.Dashboard.Backend.Logging;
 #if DEBUG
 using Microsoft.Owin.Cors;
 #endif
-using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using SharpFileSystem.SharpZipLib;
 
 namespace Jobbr.Dashboard.Backend
 {
@@ -26,79 +27,71 @@ namespace Jobbr.Dashboard.Backend
 
         public Startup(IJobbrServiceProvider serviceProvider)
         {
-            //if (serviceProvider == null)
-            //{
-            //    throw new ArgumentException("Please provide a service provider. See http://servercoredump.com/question/27246240/inject-current-user-owin-host-web-api-service for details", nameof(serviceProvider));
-            //}
-
-            //this.dependencyResolver = serviceProvider;
         }
 
         public void Configuration(IAppBuilder app)
         {
-            var config = new HttpConfiguration
-            {
-                //DependencyResolver = new DependencyResolverAdapter(this.dependencyResolver)
-            };
+            var config = new HttpConfiguration();
 
+            ConfigureWebApi(app, config);
+
+            ConfigureStaticFilesHosting(app);
+        }
+
+        private static void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
+        {
             config.MapHttpAttributeRoutes();
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
-            var jsonSerializerSettings = new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore };
+            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore };
             config.Formatters.JsonFormatter.SerializerSettings = jsonSerializerSettings;
 
             app.UseWebApi(config);
 
-#if DEBUG
-            // developers only: support running the app from webpack (au run --watch)
+#if DEBUG // developers only: support running the app from webpack (au run --watch)
             app.UseCors(CorsOptions.AllowAll);
 #endif
+        }
 
-            var assemblyLocation = new FileInfo(typeof(Startup).Assembly.Location);
-            var appPath = Path.Combine(assemblyLocation.Directory.Parent.Parent.FullName, "app");
+        private static void ConfigureStaticFilesHosting(IAppBuilder app)
+        {
+            const string appZipResource = "dashboard-app.zip";
 
-            var directory = new DirectoryInfo(appPath);
+            var appZipEmbeddedResourceName = Assembly.GetEntryAssembly().GetManifestResourceNames().FirstOrDefault(p => p.EndsWith(appZipResource));
 
-            IFileSystem fileSystem;
-
-            if (directory.Exists)
+            if (appZipEmbeddedResourceName == null)
             {
-                // looks like we are installed as nuget --> serve the files from the app folder
-                fileSystem = new PhysicalFileSystem(appPath);
+                throw new NullReferenceException("Could not find dashboard-app.zip in the entry assembly. Please make sure dashboard-app.zip is included in your jobbr server project and build action is set to Embedded Resource");
             }
-            else
-            {
-                // app folder not found. most likely were not installed as nuget package. trying to run 
-                const string webpackDistPath = "../../../Jobbr.Dashboard.Frontend/jobbr-dashboard/dist";
 
-                fileSystem = new PhysicalFileSystem(webpackDistPath);
-                var fileInfo = new FileInfo(webpackDistPath);
+            var stream = Assembly.GetEntryAssembly().GetManifestResourceStream(appZipEmbeddedResourceName);
+            var zipFileSystem = SharpZipLibFileSystem.Open(stream);
 
-                Logger.Debug($"Using webpack folder to serve the app: {fileInfo.FullName}");
-            }
+            var wrapper = new FileSystemWrapper(zipFileSystem);
 
             var options = new FileServerOptions
             {
                 EnableDefaultFiles = true,
-                FileSystem = fileSystem,
+                FileSystem = wrapper,
                 StaticFileOptions =
-                {
-                    FileSystem = fileSystem,
-                    ServeUnknownFileTypes = true
-                },
-                DefaultFilesOptions =
-                {
-                    DefaultFileNames = new[]
                     {
-                        "index.html"
+                        FileSystem = wrapper,
+                        ServeUnknownFileTypes = true
+                    },
+                DefaultFilesOptions =
+                    {
+                        DefaultFileNames = new[]
+                        {
+                            "index.html"
+                        }
                     }
-                }
             };
 
             app.UseFileServer(options);
         }
     }
 }
+
