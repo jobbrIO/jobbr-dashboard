@@ -23,6 +23,6 @@
   <files>
     <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
     <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
-    <file src="dashboard-app.zip" target="contentFiles/any/any/dashboard-app.zip" />
+    <file src="dashboard-app.zip" target="content" />
   </files>
 </package>

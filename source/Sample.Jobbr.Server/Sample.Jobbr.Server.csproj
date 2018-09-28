@@ -129,14 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="dashboard-app.zip" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Jobbr.Dashboard.Backend\Jobbr.Dashboard.Backend.csproj">
-      <Project>{dea0da38-db0f-4ee5-9a22-a47fd338fded}</Project>
-      <Name>Jobbr.Dashboard.Backend</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
