@@ -21,11 +21,11 @@
         </h3>
       </div>
     </div>
-    <div class="row mb-2">
+    <div class="row mb-2" if.bind="!jobId">
       <div class="col-md-12">
         <div class="btn-toolbar justify-content-end" role="toolbar">
           <job-run-states-drop-down selected.bind="states"></job-run-states-drop-down>
-          <div class="input-group ml-2" if.bind="!jobId">
+          <div class="input-group ml-2">
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="fas fa-search"></i></div>
             </div>
