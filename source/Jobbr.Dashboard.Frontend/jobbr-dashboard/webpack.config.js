@@ -45,17 +45,17 @@ module.exports = ({production, server, extractCss, coverage, analyze, karma} = {
     sourceMapFilename: production ? '[name].[chunkhash].bundle.map' : '[name].[hash].bundle.map',
     chunkFilename: production ? '[name].[chunkhash].chunk.js' : '[name].[hash].chunk.js'
   },
-  //   optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       commons: {
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendor',
-  //         chunks: 'all'
-  //       }
-  //     }
-  //   }
-  // },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    }
+  },
   performance: { hints: false },
   devServer: {
     contentBase: outDir,
