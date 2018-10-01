@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,6 +49,9 @@
     </Reference>
     <Reference Include="Jobbr.ComponentModel.Registration, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.ComponentModel.Registration.1.0.1\lib\net462\Jobbr.ComponentModel.Registration.dll</HintPath>
+    </Reference>
+    <Reference Include="Jobbr.Dashboard.Backend, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jobbr.Dashboard.0.0.13\lib\net462\Jobbr.Dashboard.Backend.dll</HintPath>
     </Reference>
     <Reference Include="Jobbr.Server, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.Server.1.2.1\lib\net462\Jobbr.Server.dll</HintPath>
@@ -132,4 +137,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Jobbr.Dashboard.0.0.13\Build\Jobbr.Dashboard.targets" Condition="Exists('..\packages\Jobbr.Dashboard.0.0.13\Build\Jobbr.Dashboard.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Jobbr.Dashboard.0.0.13\Build\Jobbr.Dashboard.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Jobbr.Dashboard.0.0.13\Build\Jobbr.Dashboard.targets'))" />
+  </Target>
 </Project>
