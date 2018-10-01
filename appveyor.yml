@@ -33,7 +33,7 @@ build:
 test: off
 
 after_build:
-  - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build
+  - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build --env prod
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist & 7z a -tzip dashboard-app.zip *.*
   - cmd: cd ..\..\..\..
   - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%" -Symbols
