@@ -35,6 +35,7 @@ test: off
 after_build:
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist & 7z a -t7z dashboard-app.zip *.*
+  - cmd: cd ..\..\..\..
   #- cmd: nuget install ILMerge -ExcludeVersion
   #- cmd: mkdir ilmerged
   #- cmd: ILMerge\tools\ILMerge.exe /out:ilmerged/Jobbr.Dashboard.Backend.dll source/Jobbr.Dashboard.Backend/bin/Release/*.dll /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /internalize:internalize_exclude.txt /allowDup
