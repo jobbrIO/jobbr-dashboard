@@ -1,5 +1,4 @@
 <template>
-  <!-- <require from="./dashboard.scss"></require> -->
   <require from="./cpu-graph/cpu-graph"></require>
   <require from="./memory-graph/memory-graph"></require>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
@@ -37,7 +36,6 @@
               <th scope="col">Progress</th>
               <th scope="col">Planned Start</th>
               <th scope="col">Actual Start</th>
-              <th scope="col">Duration</th>
             </tr>
           </thead>
           <tbody>
@@ -60,14 +58,11 @@
               <td>${run.actualStartUtc | timeSince:run.plannedStartUtc}
                 <span if.bind="run.actualStartUtc">later</span>
               </td>
-              <td>${run.actualEndUtc | timeSince:run.actualStartUtc}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-
-
 
     <div class="row">
       <div class="col-sm-12">
@@ -92,6 +87,44 @@
               <td>${disk.name}</td>
               <td class="text-success">${disk.freeSpace | fileSize}</td>
               <td>${disk.totalSpace | fileSize}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row mt-4" if.bind="lastFailedJobRuns.length > 0">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-exclamation-triangle extra-spacing-right mr-2 text-danger"></i>Last 5 failed jobs
+        </h3>
+        <table class="table table-hover" if.bind="lastFailedJobRuns.length != 0">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">State</th>
+              <th scope="col">Planned Start</th>
+              <th scope="col">Actual Start</th>
+              <th scope="col">Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="run of lastFailedJobRuns">
+              <td>
+                <a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a>
+              </td>
+              <td>
+                <strong>${run.jobName}</strong>
+              </td>
+              <td>
+                <span class="${run.state | jobRunStateToColor}">${run.state}</span>
+              </td>
+              <td>${run.plannedStartUtc | date}</td>
+              <td>${run.actualStartUtc | timeSince:run.plannedStartUtc}
+                <span if.bind="run.actualStartUtc">later</span>
+              </td>
+              <td>${run.actualEndUtc | timeSince:run.actualStartUtc}</td>
             </tr>
           </tbody>
         </table>

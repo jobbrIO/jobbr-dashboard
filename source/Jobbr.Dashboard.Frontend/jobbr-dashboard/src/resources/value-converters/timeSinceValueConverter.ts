@@ -41,8 +41,12 @@ export class TimeSinceValueConverter {
 
     interval = Math.floor(seconds / 60);
 
-    if (interval > 1) {
+    if (interval >= 1) {
       return interval + " minutes";
+    }
+
+    if (seconds <= 1) {
+      return "0." + Math.abs(fromDate.getTime() - date.getTime()) + " seconds";
     }
 
     return Math.floor(seconds) + " seconds";

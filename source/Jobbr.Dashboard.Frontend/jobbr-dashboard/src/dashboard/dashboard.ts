@@ -8,11 +8,15 @@ export class Dashboard {
   
   static finishedStates = ['Completed', 'Failed', 'Omitted', 'Deleted', 'Null'];
   static JobRunUpdateInterval = 1000;
+  static FailedJobRunUpdateInterval = 5000;
 
   public jobRuns: Array<JobRunDto>;
   public disks: Array<DiskInfoDto>;
 
-  private interval;
+  public lastFailedJobRuns: Array<JobRunDto>;
+
+  private jobRunsInterval;
+  private lastFailedJobRunsInterval;
 
   constructor(private apiClient: ApiClient) {
     apiClient.getDiskInfo().then(disks => this.disks = disks);
@@ -24,15 +28,29 @@ export class Dashboard {
     });
   }
 
-  attached() {
-    this.updateRunningJobRuns().then(() => {
-      this.interval = setInterval(() => this.updateRunningJobRuns(), Dashboard.JobRunUpdateInterval);
+  private updateLastFailedJobRuns(): Promise<any> {
+    return this.apiClient.getLastFailedJobRuns().then(jobRuns => {
+      this.lastFailedJobRuns = jobRuns.items;
     });
   }
 
+  attached() {
+    this.updateRunningJobRuns().then(() => {
+      this.jobRunsInterval = setInterval(() => this.updateRunningJobRuns(), Dashboard.JobRunUpdateInterval);
+    });
+
+    this.updateLastFailedJobRuns().then(() => {
+      this.lastFailedJobRunsInterval = setInterval(() => this.updateLastFailedJobRuns, Dashboard.FailedJobRunUpdateInterval);
+    })
+  }
+
   detached() {
-    if (this.interval) {
-      clearInterval(this.interval);
+    if (this.jobRunsInterval) {
+      clearInterval(this.jobRunsInterval);
+    }
+
+    if (this.lastFailedJobRunsInterval) {
+      clearInterval(this.lastFailedJobRunsInterval);
     }
   }
 }

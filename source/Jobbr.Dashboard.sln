@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{13DEFABC
 		..\appveyor.yml = ..\appveyor.yml
 		..\GitVersion.yml = ..\GitVersion.yml
 		..\Jobbr.Dashboard.nuspec = ..\Jobbr.Dashboard.nuspec
+		..\Jobbr.Dashboard.targets = ..\Jobbr.Dashboard.targets
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject

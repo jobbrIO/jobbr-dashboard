@@ -1,12 +1,26 @@
+import { JobRunDto } from './../resources/api/dtos';
 import { JobDto } from '../resources/api/dtos';
 import { ApiClient } from '../resources/api/api-client';
-import { autoinject } from 'aurelia-framework';
+import { autoinject, observable } from 'aurelia-framework';
+import { PagedResult } from '../resources/api/paged-result';
 
 @autoinject()
 export class Runs {
   public jobId: number;
-  public jobRuns;
+  public jobRuns: PagedResult<JobRunDto>;
   public job: JobDto;
+  public currentPage: number = 1;
+
+  @observable()
+  public query: string = '';
+
+  @observable()
+  public orderBy: string = '-PlannedStartDateTimeUtc';
+
+  @observable()
+  public states: Array<string> = [];
+
+  private activated: boolean = false;
 
   constructor(private apiClient: ApiClient) {
   }
@@ -14,11 +28,40 @@ export class Runs {
   activate(params, routeConfig, navigationInstruction) {
     this.jobId = params.jobId;
 
-    if (this.jobId) {
-      this.apiClient.getJobRunsByJobId(this.jobId).then(runs => this.jobRuns = runs.items);
-      this.apiClient.getJob(this.jobId).then(job => this.job = job);
-    } else {
-      this.apiClient.getJobRuns().then(runs => this.jobRuns = runs.items);
+    this.activated = true;
+
+    this.loadData();
+  }
+
+  loadData() {
+    if (this.activated) {
+      if (this.jobId) {
+        this.apiClient.getJobRunsByJobId(this.jobId, this.currentPage, this.orderBy, this.states).then(runs => this.jobRuns = runs);
+
+        if (!this.job) {
+          this.apiClient.getJob(this.jobId).then(job => this.job = job);
+        }
+      } else {
+        this.apiClient.getJobRuns(this.currentPage, this.orderBy, this.query, this.states).then(runs => this.jobRuns = runs);
+      }
     }
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+
+    this.loadData();
+  }
+
+  orderByChanged() {
+    this.loadData();
+  }
+
+  queryChanged() {
+    this.loadData();
+  }
+
+  statesChanged() {
+    this.loadData();
   }
 }

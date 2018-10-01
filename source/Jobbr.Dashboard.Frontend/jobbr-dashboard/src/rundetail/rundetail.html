@@ -70,7 +70,7 @@
           </thead>
           <tbody>
             <tr repeat.for="artefact of jobRun.artefacts">
-              <td><a href="http://localhost:1338/jobruns/${jobRun.jobRunId}/artefacts/${artefact.filename}">${artefact.filename}</a></td>
+              <td><a href="/api/jobruns/${jobRun.jobRunId}/artefacts/${artefact.filename}">${artefact.filename}</a></td>
               <td>${artefact.size | fileSize}</td>
               <td>${artefact.contentType}</td>
             </tr>

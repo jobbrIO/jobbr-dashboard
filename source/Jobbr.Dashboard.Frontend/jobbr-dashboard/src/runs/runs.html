@@ -3,6 +3,9 @@
   <require from="../resources/value-converters/dateValueConverter"></require>
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
   <require from="../resources/value-converters/coalesceValueConverter"></require>
+  <require from="../resources/elements/pager/pager"></require>
+  <require from="../resources/attributes/order-by"></require>
+  <require from="../resources/elements/jobrunstates-dropdown/JobRunStatesDropDown"></require>
 
   <div class="container-fluid">
     <div class="row">
@@ -18,36 +21,48 @@
         </h3>
       </div>
     </div>
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="btn-toolbar justify-content-end" role="toolbar">
+          <job-run-states-drop-down selected.bind="states"></job-run-states-drop-down>
+          <div class="input-group ml-2" if.bind="!jobId">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-search"></i></div>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" value.bind="query & debounce">
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-12">
-        <table class="table table-hover">
+        <table class="table table-hover table-jobruns">
           <thead>
             <tr>
-              <th>ID</th>
+              <th order-by="field: Id; order.two-way: orderBy">ID</th>
               <th if.bind="!jobId">Name</th>
-              <th>State</th>
-              <th>Progress</th>
-              <th>Planned Start</th>
-              <th>Actual Start</th>
+              <th order-by="field: State; order.two-way: orderBy">State</th>
+              <th order-by="field: Progress; order.two-way: orderBy">Progress</th>
+              <th order-by="field: PlannedStartDateTimeUtc; order.two-way: orderBy">Planned Start</th>
+              <th order-by="field: ActualStartDateTimeUtc; order.two-way: orderBy">Actual Start</th>
               <th>Duration</th>
             </tr>
           </thead>
           <tbody>
-            <tr repeat.for="run of jobRuns">
+            <tr repeat.for="run of jobRuns.items">
               <td><a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a></td>
-              <td if.bind="!jobId"><strong>${run.jobName}</strong></td>
+              <td if.bind="!jobId"><a href="javascript:void(0);" click.delegate="query = run.jobName"><strong>${run.jobName}</strong></a></td>
               <td><span class="${run.state | jobRunStateToColor}">${run.state}</span></td>
               <td>${run.progress} <span if.bind="run.progress">%</span></td>
               <td>${run.plannedStartUtc | date}</td>
-              <td>${run.auctualStartUtc | timeSince:run.plannedStartUtc} <span if.bind="run.auctualStartUtc">later</span></td>
-              <td>${run.auctualEndUtc | timeSince:run.auctualStartUtc}</td>
+              <td>${run.actualStartUtc | timeSince:run.plannedStartUtc} <span if.bind="run.actualStartUtc">later</span></td>
+              <td>${run.actualEndUtc | timeSince:run.actualStartUtc}</td>
             </tr>
           </tbody>
         </table>
+        <pager paged-result.bind="jobRuns" change-page.call="changePage(page)"></pager>
       </div>
     </div>
   </div>
-
-
 
 </template>

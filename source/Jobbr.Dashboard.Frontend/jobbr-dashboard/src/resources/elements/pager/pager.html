@@ -1,0 +1,16 @@
+<template>
+  <div class="d-flex justify-content-between">
+    <nav>
+      <ul class="pagination">
+        <li class="page-item ${pagedResult.page == 1 ? 'disabled' : ''}">
+          <span class="page-link" href="javascript:void(0);" click.delegate="previous()">Previous</span>
+        </li>
+        <li class="page-item ${pagedResult.page == pageNumber ? 'active' : ''}" repeat.for="pageNumber of pages"><a class="page-link" href="javascript:void(0);" click.delegate="selectPage(pageNumber)">${pageNumber}</a></li>
+        <li class="page-item ${pagedResult.page == lastPage ? 'disabled' : ''}">
+          <a class="page-link" href="javascript:void(0);" click.delegate="next()">Next</a>
+        </li>
+      </ul>
+    </nav>
+    <div>${pagedResult.totalItems} items</div>
+  </div>
+</template>

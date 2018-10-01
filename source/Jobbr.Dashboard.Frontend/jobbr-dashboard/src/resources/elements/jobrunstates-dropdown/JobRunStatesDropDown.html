@@ -1,0 +1,12 @@
+<template>
+  <div class="btn-group">
+    <button type="button" class="btn btn-${anythingSelected ? 'primary' : 'default'} dropdown-toggle" data-toggle="dropdown">
+      ${text}
+    </button>
+    <div class="dropdown-menu">
+      <a repeat.for="state of states" class="dropdown-item" href="javascript:void(0)" click.delegate="clickState(state)"><i if.bind="state.active" class="fas fa-check"></i> ${state.name}</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="javascript:void(0)" click.delegate="clearSelection()">Clear all</a>
+    </div>
+  </div>
+</template>

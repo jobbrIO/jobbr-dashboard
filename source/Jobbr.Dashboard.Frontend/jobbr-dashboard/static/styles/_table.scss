@@ -1,0 +1,23 @@
+table thead .sorting,
+table thead .sorting_asc,
+table thead .sorting_desc,
+table thead .sorting_asc_disabled,
+table thead .sorting_desc_disabled {
+	cursor: pointer;
+}
+
+table thead .sorting { background: url('../img/sort_both.png') no-repeat center right; }
+table thead .sorting_asc { background: url('../img/sort_asc.png') no-repeat center right; }
+table thead .sorting_desc { background: url('../img/sort_desc.png') no-repeat center right; }
+
+table thead .sorting_asc_disabled { background: url('../img/sort_asc_disabled.png') no-repeat center right; }
+table thead .sorting_desc_disabled { background: url('../img/sort_desc_disabled.png') no-repeat center right; }
+
+
+table.table-jobruns {
+  td:nth-child(2) {
+    a {
+      color: black;
+    }
+  }
+}
