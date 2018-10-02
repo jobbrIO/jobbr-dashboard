@@ -38,19 +38,23 @@ export class ApiClient {
   }
 
   getAllJobs(): Promise<PagedResult<JobDto>> {
-    return this.httpClient.fetch('/api/jobs').then(r => r.json());
+    return this.httpClient.fetch('/api/jobs?pageSize=10000').then(r => r.json());
   }
 
   getJob(id: number): Promise<JobDto> {
     return this.httpClient.fetch('/api/jobs/' + id).then(r => r.json());
   }
 
-  getJobRunsByJobId(jobId: number, page: number = 1, sort: string = '', states: Array<string> = null): Promise<PagedResult<JobRunDto>> {
+  getJobRunsByJobId(jobId: number, page: number = 1, sort: string = '', states: Array<string> = null, pageSize: number = null): Promise<PagedResult<JobRunDto>> {
     let url = '/api/jobs/' + jobId + '/runs?page=' + page + '&sort=' + sort;
 
     // todo: states not yet supported here by webapi
     if (states) {
       url = url += '&states=' + states.join(',');
+    }
+
+    if (pageSize) {
+      url = url += '&pageSize=' + pageSize;
     }
 
     return this.httpClient.fetch(url).then(r => r.json());

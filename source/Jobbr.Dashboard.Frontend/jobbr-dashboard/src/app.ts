@@ -24,6 +24,7 @@ export class App {
       // other routes
       { route: ['jobs/:jobId/runs'], name: 'runs', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs' },
       { route: ['runs/:id'], name: 'rundetail', moduleId: PLATFORM.moduleName('rundetail/rundetail'), title: 'Run Detail' },
+      { route: ['jobs/:id'], name: 'jobdetail', moduleId: PLATFORM.moduleName('jobs/job-details'), title: 'Job Detail' },
     ]);
     
     this.router = router;

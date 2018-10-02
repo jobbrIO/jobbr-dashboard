@@ -1,9 +1,47 @@
 <template>
-  <require from="../resources/elements/collapsable/collapsable"></require>
-  <require from="./job-details"></require>
+  <require from="../resources/value-converters/dateValueConverter"></require>
 
   <div class="container-fluid">
-    <div class="row" repeat.for="job of jobs">
+
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <h3>
+          <i class="fas fa-suitcase extra-spacing-right mr-2"></i> Jobs
+        </h3>
+        <p if.bind="jobs.totalItems == 0">
+          No jobs
+        </p>
+        <table class="table table-hover" if.bind="jobRuns.length != 0">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Created</th>
+              <th scope="col">Last update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="job of jobs.items">
+              <td>
+                <a route-href="route: jobdetail; params.bind: {id: job.id}">${job.id}</a>
+              </td>
+              <td>
+                <strong>${job.uniqueName}</strong>
+              </td>
+              <td>
+                ${job.type}
+              </td>
+              <td>${job.createdDateTimeUtc | date}</td>
+              <td>${job.updatedDateTimeUtc | date}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- <div class="row" repeat.for="job of jobs">
       <div class="col-sm-12">
         <a route-href="route: runs; params.bind: {jobId: job.id}">
           <h2>
@@ -19,7 +57,7 @@
         <job-details job-id.bind="job.id"></job-details>
 
       </div>
-    </div>
+    </div> -->
   </div>
 
 </template>

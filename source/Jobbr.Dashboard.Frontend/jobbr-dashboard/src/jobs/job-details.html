@@ -2,48 +2,84 @@
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
   <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
 
-  <div class="job-parameters collapse collapse-${job.id}">
-    <highlightjs code.bind="job.parameters" if.bind="job.parameters"></highlightjs>
-  </div>
-  <div class="job-triggers collapse collapse-${job.id}" if.bind="job">
-    <table class="trigger-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>state</th>
-          <th>definition</th>
-          <th>start</th>
-          <th>end</th>
-          <th>parameters</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr repeat.for="trigger of job.trigger">
-          <td>${trigger.id}</td>
-          <td>
-            <template if.bind="trigger.isActive">
-              <span class="text-success">active</span>
-            </template>
-            <template if.bind="!trigger.isActive">
-              <span class="text-danger">disabled</span>
-            </template>
-          </td>
-          <td>
-            <span class="text-highlight" if.bind="trigger.definition"><a href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a></span>
-          </td>
-          <td>${trigger.startDateTimeUtc | date}</td>
-          <td>${trigger.endDateTimeUtc | date}</td>
-          <td>
-            <span aubs-popover="custom-popover.bind: parametersPopover;"><i class="fas fa-search"></i></span>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>${job.uniqueName} <small>${job.type}</small></h3>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <table class="table table-hover trigger-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>State</th>
+              <th>Definition</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Parameters</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="trigger of job.trigger">
+              <td>${trigger.id}</td>
+              <td>
+                <template if.bind="trigger.isActive">
+                  <span class="badge badge-success">active</span>
+                </template>
+                <template if.bind="!trigger.isActive">
+                  <span class="badge badge-danger">disabled</span>
+                </template>
+              </td>
+              <td>
+                <span class="text-highlight" if.bind="trigger.definition"><a href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a></span>
+              </td>
+              <td>${trigger.startDateTimeUtc | date}</td>
+              <td>${trigger.endDateTimeUtc | date}</td>
+              <td>
+                <span aubs-popover="custom-popover.bind: parametersPopover;"><i class="fas fa-search"></i></span>
 
-            <div ref="parametersPopover">
-              <div class="popover-content">
-                <highlightjs code.bind="trigger.parameters" if.bind="trigger.parameters"></highlightjs>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <div ref="parametersPopover">
+                  <div class="popover-content">
+                    <highlightjs code.bind="trigger.parameters" if.bind="trigger.parameters"></highlightjs>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-warning">Disable</button>
+                  <button type="button" class="btn btn-sm btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"><i class="fa fa-pencil-alt"></i> Edit</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>Job Parameters</h4>
+      </div>
+      <div class="col-sm-12">
+        <highlightjs code.bind="job.parameters" if.bind="job.parameters"></highlightjs>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Last 10 runs</h3>
+      </div>
+      <div class="col-sm-12">
+        <compose view="../runs/_table.html"></compose>
+      </div>
+    </div>
   </div>
 </template>
