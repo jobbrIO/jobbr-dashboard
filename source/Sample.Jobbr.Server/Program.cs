@@ -1,5 +1,5 @@
 ﻿using System;
-using Jobbr.Dashboard.Backend;
+using Jobbr.Dashboard;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;

@@ -3,11 +3,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Web.Http;
 using Jobbr.Dashboard.Model;
+using Jobbr.Server.WebAPI;
 
 namespace Jobbr.Dashboard.Controller
 {
     public class SystemController : ApiController
     {
+        private readonly JobbrWebApiConfiguration webApiConfiguration;
         private static readonly PerformanceCounter Cpu;
         private static readonly PerformanceCounter Memory;
         private static readonly ulong TotalPhysicalMemory;

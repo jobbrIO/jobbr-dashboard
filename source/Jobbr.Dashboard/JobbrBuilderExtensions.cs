@@ -10,13 +10,13 @@ namespace Jobbr.Dashboard
             builder.AddDashboard(configuration => { });
         }
 
-        public static void AddDashboard(this IJobbrBuilder builder, Action<DashboardWebApiConfiguration> config)
+        public static void AddDashboard(this IJobbrBuilder builder, Action<DashboardConfiguration> config)
         {
-            var customConfig = new DashboardWebApiConfiguration();
+            var customConfig = new DashboardConfiguration();
 
             config(customConfig);
 
-            builder.Add<DashboardWebApiConfiguration>(customConfig);
+            builder.Add<DashboardConfiguration>(customConfig);
 
             builder.Register<IJobbrComponent>(typeof(DashboardBackend));
         }

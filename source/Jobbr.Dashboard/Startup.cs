@@ -11,8 +11,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using SharpFileSystem.SharpZipLib;
-#if DEBUG
-#endif
 
 namespace Jobbr.Dashboard
 {
@@ -27,33 +25,43 @@ namespace Jobbr.Dashboard
 
         public Startup(IJobbrServiceProvider serviceProvider)
         {
+            this.dependencyResolver = serviceProvider;
         }
 
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
 
+            config.DependencyResolver = new DependencyResolverAdapter(this.dependencyResolver);
+
             ConfigureWebApi(app, config);
 
             ConfigureStaticFilesHosting(app);
         }
 
-        private static void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
+        private void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
 
+            var dashboardConfig = (DashboardConfiguration)this.dependencyResolver.GetService(typeof(DashboardConfiguration));
+
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+
+            if (dashboardConfig.DisableCors == false)
+            {
+                config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+            }
 
             var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore };
             config.Formatters.JsonFormatter.SerializerSettings = jsonSerializerSettings;
 
             app.UseWebApi(config);
 
-#if DEBUG // developers only: support running the app from webpack (au run --watch)
-            app.UseCors(CorsOptions.AllowAll);
-#endif
+            if (dashboardConfig.DisableCors == false)
+            {
+                app.UseCors(CorsOptions.AllowAll);
+            }
         }
 
         private static void ConfigureStaticFilesHosting(IAppBuilder app)

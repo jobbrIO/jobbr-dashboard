@@ -1,7 +1,8 @@
 ﻿namespace Jobbr.Dashboard
 {
-    public class DashboardWebApiConfiguration
+    public class DashboardConfiguration
     {
         public string BackendAddress { get; set; }
+        public bool DisableCors { get; set; }
     }
 }

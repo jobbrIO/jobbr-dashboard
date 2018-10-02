@@ -18,12 +18,12 @@ namespace Jobbr.Dashboard
         /// </summary>
         private IDisposable webHost;
 
-        private readonly DashboardWebApiConfiguration configuration;
+        private readonly DashboardConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
         /// </summary>
-        public DashboardBackend(IJobbrServiceProvider dependencyResolver, DashboardWebApiConfiguration configuration)
+        public DashboardBackend(IJobbrServiceProvider dependencyResolver, DashboardConfiguration configuration)
         {
             this.dependencyResolver = dependencyResolver;
             this.configuration = configuration;
