@@ -7,8 +7,8 @@
     <ProjectGuid>{DEA0DA38-DB0F-4EE5-9A22-A47FD338FDED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jobbr.Dashboard.Backend</RootNamespace>
-    <AssemblyName>Jobbr.Dashboard.Backend</AssemblyName>
+    <RootNamespace>Jobbr.Dashboard</RootNamespace>
+    <AssemblyName>Jobbr.Dashboard</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -4,17 +4,17 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
-using Jobbr.Dashboard.Backend.Logging;
-#if DEBUG
+using Jobbr.Dashboard.Logging;
 using Microsoft.Owin.Cors;
-#endif
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using SharpFileSystem.SharpZipLib;
+#if DEBUG
+#endif
 
-namespace Jobbr.Dashboard.Backend
+namespace Jobbr.Dashboard
 {
     public class Startup
     {

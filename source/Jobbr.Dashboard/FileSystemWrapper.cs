@@ -6,7 +6,7 @@ using SharpFileSystem;
 using SharpFileSystem.IO;
 using IFileSystem = Microsoft.Owin.FileSystems.IFileSystem;
 
-namespace Jobbr.Dashboard.Backend
+namespace Jobbr.Dashboard
 {
     /// <summary>
     /// Bridge between SharpFileSystem.IFileSystem and Microsoft.Owin.FileSystems.IFileSystem

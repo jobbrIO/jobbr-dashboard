@@ -1,11 +1,11 @@
 ﻿using System;
 using Jobbr.ComponentModel.Registration;
-using Jobbr.Dashboard.Backend.Logging;
+using Jobbr.Dashboard.Logging;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Hosting.Services;
 using Microsoft.Owin.Hosting.Starter;
 
-namespace Jobbr.Dashboard.Backend
+namespace Jobbr.Dashboard
 {
     public class DashboardBackend : IJobbrComponent
     {

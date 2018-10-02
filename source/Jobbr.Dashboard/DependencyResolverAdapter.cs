@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http.Dependencies;
 using Jobbr.ComponentModel.Registration;
 
-namespace Jobbr.Dashboard.Backend
+namespace Jobbr.Dashboard
 {
     public class DependencyResolverAdapter : IDependencyResolver
     {

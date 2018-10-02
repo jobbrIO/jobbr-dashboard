@@ -1,4 +1,4 @@
-﻿namespace Jobbr.Dashboard.Backend.Model
+﻿namespace Jobbr.Dashboard.Model
 {
     public class DiskInfoDto
     {

@@ -30,10 +30,10 @@
 
 #pragma warning disable 1591
 
-namespace Jobbr.Dashboard.Backend.Logging
+namespace Jobbr.Dashboard.Logging
 {
     using System.Collections.Generic;
-    using Jobbr.Dashboard.Backend.Logging.LogProviders;
+    using Jobbr.Dashboard.Logging.LogProviders;
     using System;
     using System.Diagnostics;
 
@@ -518,7 +518,7 @@ namespace Jobbr.Dashboard.Backend.Logging
     }
 }
 
-namespace Jobbr.Dashboard.Backend.Logging.LogProviders
+namespace Jobbr.Dashboard.Logging.LogProviders
 {
     using System;
     using System.Collections.Generic;

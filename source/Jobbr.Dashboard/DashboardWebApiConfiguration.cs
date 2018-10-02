@@ -1,4 +1,4 @@
-﻿namespace Jobbr.Dashboard.Backend
+﻿namespace Jobbr.Dashboard
 {
     public class DashboardWebApiConfiguration
     {

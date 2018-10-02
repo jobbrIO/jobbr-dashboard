@@ -1,7 +1,7 @@
 ﻿using System;
 using Jobbr.ComponentModel.Registration;
 
-namespace Jobbr.Dashboard.Backend
+namespace Jobbr.Dashboard
 {
     public static class JobbrBuilderExtensions
     {

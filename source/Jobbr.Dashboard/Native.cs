@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Jobbr.Dashboard.Backend
+namespace Jobbr.Dashboard
 {
     internal static class NativeMethods
     {

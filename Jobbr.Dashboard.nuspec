@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.dll" target="lib\net462"/>
-    <file src="source\Jobbr.Dashboard.Backend\bin\Release\Jobbr.Dashboard.Backend.pdb" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard\bin\Release\Jobbr.Dashboard.dll" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard\bin\Release\Jobbr.Dashboard.pdb" target="lib\net462"/>
     <file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\dashboard-app.zip" target="Build" />
     <file src="Jobbr.Dashboard.targets" target="Build" />
   </files>

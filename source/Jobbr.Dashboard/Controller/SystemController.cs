@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Web.Http;
-using Jobbr.Dashboard.Backend.Model;
+using Jobbr.Dashboard.Model;
 
-namespace Jobbr.Dashboard.Backend.Controller
+namespace Jobbr.Dashboard.Controller
 {
     public class SystemController : ApiController
     {
