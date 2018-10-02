@@ -13,7 +13,7 @@ export class ApiClient {
   private apiClient: HttpClient; // client for accessing rest api provided by Jobbr.Server.WebApi
   private dashboardClient: HttpClient; // client for accessing rest api provided by Jobbr.Dashboard
 
-  public apiUrl: string;
+  private apiUrl: string;
 
   private initPromise: Promise<any>;
 
@@ -54,6 +54,10 @@ export class ApiClient {
         })
         .withBaseUrl(this.apiUrl);
     });
+  }
+
+  public getApiUrl(): Promise<string> {
+    return this.initPromise.then(() => this.apiUrl);
   }
 
   getCpuInfo(): Promise<number> {

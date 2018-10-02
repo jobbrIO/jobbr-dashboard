@@ -8,6 +8,7 @@ export class RunDetail {
   public jobRun: JobRunDto;
   public trigger: JobTriggerDto;
   public job: JobDto;
+  public apiUrl: string;
 
   constructor(private apiClient: ApiClient) {
   }
@@ -16,8 +17,10 @@ export class RunDetail {
     
   }
 
-  activate(params, routeConfig, navigationInstruction) {
+  async activate(params, routeConfig, navigationInstruction) {
     this.jobRunId = params.id;
+
+    this.apiUrl = await this.apiClient.getApiUrl();
 
     this.apiClient.getJobRun(this.jobRunId).then(jobRun => {
       this.jobRun = jobRun;
