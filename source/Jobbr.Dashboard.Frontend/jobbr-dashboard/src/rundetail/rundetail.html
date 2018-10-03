@@ -31,9 +31,14 @@
             <i class="fab fa-algolia"></i> Duration
             <strong class="text-highlight">${jobRun.actualEndUtc | timeSince:jobRun.actualStartUtc}</strong>
           </li>
-          <li>
+          <li if.bind="jobRun.userId || jobRun.userDisplayName">
             <i class="fas fa-user"></i> User
-            <strong>${jobRun.userId} <small>(${jobRun.userDisplayName})</small></strong>
+            <template containerless if.bind="jobRun.userId && jobRun.userDisplayName">
+              <strong>${jobRun.userId} <small>(${jobRun.userDisplayName})</small></strong>
+            </template>
+            <template containerless if.bind="jobRun.userId && !jobRun.userDisplayName">
+              ${jobRun.userDisplayName}
+            </template>
           </li>
         </ul>
       </div>
@@ -79,35 +84,4 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="rundetail-grid">
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-wrench extra-spacing-right"></i>Job Parameters</h1>
-      </div>
-      <div class="box-content">
-
-      </div>
-    </div>
-    <div class="box">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-wrench extra-spacing-right"></i>Instance Parameters</h1>
-      </div>
-      <div class="box-content">
-        <highlightjs if.bind="jobRun.instanceParameter" code.bind="jobRun.instanceParameter"></highlightjs>
-      </div>
-    </div>
-    <div class="box artefacts">
-      <div class="box-title">
-        <h1>
-          <i class="fas fa-hdd extra-spacing-right"></i>Artefacts
-        </h1>
-      </div>
-      <div class="box-content">
-        
-      </div>
-    </div>
-  </div> -->
 </template>

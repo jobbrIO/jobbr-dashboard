@@ -12,7 +12,7 @@ export class JobDetails {
 
   public jobRuns: PagedResult<JobRunDto>;
 
-  private job: JobDetailsDto;
+  public job: JobDetailsDto;
 
   constructor(
     private api: ApiClient
@@ -26,5 +26,13 @@ export class JobDetails {
     this.jobRuns = await this.api.getJobRunsByJobId(this.jobId, 1, "-ActualEndDateTimeUtc", null, 10);
   }
 
-  
+  public disableTrigger(trigger) {
+    trigger.isActive = false;
+    this.api.updateTrigger(trigger, this.jobId);
+  }
+
+  public enableTrigger(trigger) {
+    trigger.isActive = true;
+    this.api.updateTrigger(trigger, this.jobId);
+  }
 }

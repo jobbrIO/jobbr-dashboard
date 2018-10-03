@@ -2,7 +2,6 @@
   <require from="../resources/value-converters/dateValueConverter"></require>
 
   <div class="container-fluid">
-
     <div class="row mt-4">
       <div class="col-sm-12">
         <h3>
@@ -30,7 +29,7 @@
                 <strong>${job.uniqueName}</strong>
               </td>
               <td>
-                ${job.type}
+                <img src="../../static/img/vxclass_icon.gif" alt="class"> ${job.type}
               </td>
               <td>${job.createdDateTimeUtc | date}</td>
               <td>${job.updatedDateTimeUtc | date}</td>
@@ -39,25 +38,6 @@
         </table>
       </div>
     </div>
-
-
-    <!-- <div class="row" repeat.for="job of jobs">
-      <div class="col-sm-12">
-        <a route-href="route: runs; params.bind: {jobId: job.id}">
-          <h2>
-            <i class="fas fa-suitcase extra-spacing-right"></i> ${job.uniqueName}
-            <small>${job.type}</small>
-          </h2>
-        </a>
-
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse-${job.id}" aria-expanded="false">
-          <i class="fa fa-chevron-down" aria-hidden="true"></i> Details
-        </button>
-
-        <job-details job-id.bind="job.id"></job-details>
-
-      </div>
-    </div> -->
   </div>
 
 </template>

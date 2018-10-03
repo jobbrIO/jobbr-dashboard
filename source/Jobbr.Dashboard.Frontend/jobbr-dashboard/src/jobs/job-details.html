@@ -49,14 +49,15 @@
               </td>
               <td>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-warning">Disable</button>
-                  <button type="button" class="btn btn-sm btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                  <button if.bind="trigger.isActive" type="button" class="btn btn-sm btn-primary" click.delegate="disableTrigger(trigger)">Disable</button>
+                  <button if.bind="!trigger.isActive" type="button" class="btn btn-sm btn-primary" click.delegate="enableTrigger(trigger)">Enable</button>
+                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="#"><i class="fa fa-pencil-alt"></i> Edit</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                    <a class="dropdown-item text-danger disabled"><i class="fa fa-trash"></i> Delete</a>
                   </div>
                 </div>
               </td>
