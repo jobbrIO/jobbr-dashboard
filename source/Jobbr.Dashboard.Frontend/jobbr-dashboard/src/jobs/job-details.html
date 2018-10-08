@@ -71,7 +71,7 @@
         </table>
       </div>
     </div>
-    <div class="row">
+    <div class="row" if.bind="triggers.pageSize < triggers.totalItems">
       <div class="col-sm-12">
         <pager paged-result.bind="triggers" change-page.call="changeTriggersPage(page)"></pager>
       </div>

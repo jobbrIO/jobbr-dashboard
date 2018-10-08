@@ -1,5 +1,4 @@
-import { autoinject, bindable, bindingMode } from "aurelia-framework";
-import { isNumber } from "util";
+import { autoinject, bindable } from "aurelia-framework";
 import { PagedResult } from "../../api/paged-result";
 
 @autoinject()
@@ -11,9 +10,7 @@ export class Pager {
   private pages: Array<number> = [];
   private lastPage: number;
 
-  constructor(
-    private element: Element
-    ) {
+  constructor() {
   }
 
   pagedResultChanged(newValue: PagedResult<any>) {
