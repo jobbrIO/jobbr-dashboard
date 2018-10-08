@@ -1,6 +1,7 @@
 <template>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
   <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
+  <require from="../resources/elements/pager/pager"></require>
 
   <div class="container-fluid">
     <div class="row">
@@ -24,7 +25,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr repeat.for="trigger of job.trigger">
+            <tr repeat.for="trigger of triggers.items">
               <td>${trigger.id}</td>
               <td>
                 <template if.bind="trigger.isActive">
@@ -68,6 +69,11 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <pager paged-result.bind="triggers" change-page.call="changeTriggersPage(page)"></pager>
       </div>
     </div>
     <div class="row">

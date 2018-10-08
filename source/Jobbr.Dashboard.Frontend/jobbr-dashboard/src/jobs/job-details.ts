@@ -1,4 +1,4 @@
-import { JobDetailsDto, JobRunDto } from 'resources/api/dtos';
+import { JobDetailsDto, JobRunDto, JobTriggerDto } from 'resources/api/dtos';
 import { ApiClient } from 'resources/api/api-client';
 import { bindable } from 'aurelia-templating';
 import { autoinject } from "aurelia-framework";
@@ -12,6 +12,8 @@ export class JobDetails {
   public jobId: number;
 
   public jobRuns: PagedResult<JobRunDto>;
+  public triggers: PagedResult<JobTriggerDto>;
+  public triggersPage: number = 1;
 
   public job: JobDetailsDto;
 
@@ -26,6 +28,7 @@ export class JobDetails {
     
     this.job = await this.api.getJobDetails(this.jobId);
     this.jobRuns = await this.api.getJobRunsByJobId(this.jobId, 1, "-ActualEndDateTimeUtc", null, 10);
+    await this.loadTriggers();
   }
 
   public disableTrigger(trigger) {
@@ -36,5 +39,14 @@ export class JobDetails {
   public enableTrigger(trigger) {
     trigger.isActive = true;
     this.toastService.handleSave(this.api.updateTrigger(trigger, this.jobId));
+  }
+
+  public changeTriggersPage(page) {
+    this.triggersPage = page;
+    this.loadTriggers();
+  }
+
+  private async loadTriggers() {
+    this.triggers = await this.api.getTriggersByJobId(this.jobId, this.triggersPage);
   }
 }

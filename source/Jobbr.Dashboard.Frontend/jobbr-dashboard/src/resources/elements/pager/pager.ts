@@ -21,13 +21,15 @@ export class Pager {
     let endNumber = newValue.page + 5;
 
     let newPages = [];
+
+    this.lastPage = Math.ceil(newValue.totalItems / newValue.pageSize)
     
     for(let i = startNumber; i <= endNumber; ++i) {
       if (i < 1) {
         continue;
       }
 
-      if (newValue.pageSize * i > newValue.totalItems) {
+      if (i > this.lastPage) {
         break;
       }
 
@@ -35,12 +37,6 @@ export class Pager {
     }
 
     this.pages = newPages;
-
-    if (this.pages.length > 0) {
-      this.lastPage = newPages[newPages.length - 1];
-    } else {
-      this.lastPage = 1;
-    }
   }
 
   private selectPage(page: number) {

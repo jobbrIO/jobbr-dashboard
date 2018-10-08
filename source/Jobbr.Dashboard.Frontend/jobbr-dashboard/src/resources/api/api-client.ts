@@ -103,27 +103,31 @@ export class ApiClient {
       url = url += '&states=' + states.join(',');
     }
 
-    return this.initPromise.then(() =>  this.apiClient.fetch(url).then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch(url).then(r => r.json()));
   }
 
   getLastFailedJobRuns() {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobruns/?sort=-ActualEndDateTimeUtc&pageSize=5&states=Failed').then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobruns/?sort=-ActualEndDateTimeUtc&pageSize=5&states=Failed').then(r => r.json()));
   }
   
   getJobRun(id: number): Promise<JobRunDto> {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobruns/' + id).then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobruns/' + id).then(r => r.json()));
+  }
+
+  getTriggersByJobId(jobId: number, page: number = 1): Promise<PagedResult<JobTriggerDto>> {
+    return this.initPromise.then(() => this.apiClient.fetch('/jobs/' + jobId + '/triggers/?pageSize=5&page=' + page).then(r => r.json()));
   }
 
   getTrigger(jobId: number, triggerId: number): Promise<JobTriggerDto> {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobs/' + jobId + '/triggers/' + triggerId).then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobs/' + jobId + '/triggers/' + triggerId).then(r => r.json()));
   }
 
   getJobDetails(jobId: number): Promise<JobDetailsDto> {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobs/' + jobId).then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobs/' + jobId).then(r => r.json()));
   }
 
   getRunningJobRuns(): Promise<PagedResult<JobRunDto>> {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200&states=Scheduled,Preparing,Starting,Started,Connected,Initializing,Processing,Finishing,Collecting').then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200&states=Scheduled,Preparing,Starting,Started,Connected,Initializing,Processing,Finishing,Collecting').then(r => r.json()));
   }
   
   updateTrigger(trigger, jobId): Promise<any> {

@@ -27,7 +27,7 @@ var builder = new JobbrBuilder();
 
 const string baseAddress = "http://localhost:1337/";
 
-jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api"); // you must host it under /api (in future, this will be configurable)
+jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api"); // you must host it under /api same-origin (in future, this will be configurable)
 
 jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
 
