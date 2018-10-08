@@ -15,6 +15,7 @@
             <tr>
               <th>ID</th>
               <th>State</th>
+              <th>Type</th>
               <th>Definition</th>
               <th>Start</th>
               <th>End</th>
@@ -32,6 +33,9 @@
                 <template if.bind="!trigger.isActive">
                   <span class="badge badge-danger">disabled</span>
                 </template>
+              </td>
+              <td>
+                <span class="badge badge-info">${trigger.triggerType}</span>
               </td>
               <td>
                 <span class="text-highlight" if.bind="trigger.definition"><a href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a></span>
@@ -55,9 +59,9 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#"><i class="fa fa-pencil-alt"></i> Edit</a>
+                    <a class="dropdown-item" route-href="route: triggerdetail; params.bind: { jobId: job.id, triggerId: trigger.id }"><i class="fa fa-pencil-alt"></i> Edit</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger disabled"><i class="fa fa-trash"></i> Delete</a>
+                    <a class="dropdown-item text-danger disabled"><i class="fa fa-trash"></i> <s>Delete</s></a>
                   </div>
                 </div>
               </td>
@@ -68,13 +72,20 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
+        <a class="btn btn-primary btn-sm" route-href="route: triggerdetail; params.bind: { jobId: job.id, triggerId: 'new' }">
+          <i class="fas fa-plus"></i> Create Trigger
+        </a>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-12">
         <h4>Job Parameters</h4>
       </div>
       <div class="col-sm-12">
         <highlightjs code.bind="job.parameters" if.bind="job.parameters"></highlightjs>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
       <div class="col-sm-12">
         <h3>Last 10 runs</h3>
       </div>

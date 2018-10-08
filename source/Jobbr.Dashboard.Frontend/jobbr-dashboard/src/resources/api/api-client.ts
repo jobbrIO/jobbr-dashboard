@@ -20,7 +20,8 @@ export class ApiClient {
   constructor() {
     this.dashboardClient = new HttpClient();
     this.dashboardClient.configure(config => {
-      config.useStandardConfiguration()
+      config
+      .useStandardConfiguration()
       .withDefaults({
         credentials: 'same-origin',
         headers: {
@@ -44,7 +45,7 @@ export class ApiClient {
 
     this.apiClient.configure(config => {
       config
-        //.useStandardConfiguration()
+        .useStandardConfiguration()
         .withDefaults({
           credentials: 'same-origin',
           headers: {
@@ -130,7 +131,16 @@ export class ApiClient {
       this.apiClient.fetch('/jobs/' + jobId + '/triggers/' + trigger.id, {
         method: 'patch',
         body: json(trigger)
-      });
+      }).catch(e => console.log(e));
+    });
+  }
+
+  createTrigger(trigger, jobId): Promise<any> {
+    return this.initPromise.then(() => {
+      this.apiClient.fetch('/jobs/' + jobId + '/triggers/', {
+        method: 'post',
+        body: json(trigger)
+      }).catch(e => console.log(e));
     });
   }
 }

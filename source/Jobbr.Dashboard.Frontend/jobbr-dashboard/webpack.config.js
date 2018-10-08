@@ -114,6 +114,7 @@ module.exports = ({production, server, extractCss, coverage, analyze, karma} = {
   plugins: [
     ...when(!karma, new DuplicatePackageCheckerPlugin()),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.DefinePlugin({ 'process.env': { LATER_COV: false } }),
     new AureliaPlugin(),
     new ProvidePlugin({
       'Promise': 'bluebird',

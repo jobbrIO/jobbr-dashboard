@@ -26,6 +26,7 @@
           <li>
             <i class="fas fa-bolt"></i> Trigger
             <a class="text-success" if.bind="trigger.triggerType == 'Recurring'" href="https://crontab.guru/#${trigger.definition | definitionToUrl}" target="_blank">${trigger.definition}</a>
+            <span class="badge badge-info">${trigger.triggerType}</span>
           </li>
           <li>
             <i class="fab fa-algolia"></i> Duration

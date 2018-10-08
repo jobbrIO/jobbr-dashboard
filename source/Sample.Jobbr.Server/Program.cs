@@ -34,7 +34,8 @@ namespace Sample.Jobbr.Server
                             Priority = "High",
                             Comment = "Heyho!"
                         }
-                    });
+                    })
+                    .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
 
                 repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
                     .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")

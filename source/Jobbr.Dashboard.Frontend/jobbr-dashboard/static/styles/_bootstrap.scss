@@ -17,3 +17,7 @@
 @import '../../node_modules/bootstrap/scss/_card.scss';
 @import '../../node_modules/bootstrap/scss/_transitions.scss';
 @import '../../node_modules/bootstrap/scss/_popover.scss';
+
+input.flatpickr[readonly] {
+  background-color: white;
+}

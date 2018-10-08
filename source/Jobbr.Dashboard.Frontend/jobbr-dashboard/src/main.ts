@@ -1,6 +1,8 @@
 /// <reference types="aurelia-loader-webpack/src/webpack-hot-interface"/>
 // we want font-awesome to load as soon as possible to show the fa-spinner
-import {Aurelia} from 'aurelia-framework'
+import 'whatwg-fetch';
+import 'element-closest';
+import {Aurelia} from 'aurelia-framework';
 import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
@@ -22,6 +24,7 @@ export function configure(aurelia: Aurelia) {
     .feature(PLATFORM.moduleName('resources/index'))
     .feature(PLATFORM.moduleName('plugins/aurelia-chart/index'))
     .plugin(PLATFORM.moduleName('aurelia-animator-css'))
+    .plugin(PLATFORM.moduleName('aurelia-validation'))
     .plugin(PLATFORM.moduleName('aurelia-bootstrap'), config => config.options.version = 4); // bootstrap v4
 
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.

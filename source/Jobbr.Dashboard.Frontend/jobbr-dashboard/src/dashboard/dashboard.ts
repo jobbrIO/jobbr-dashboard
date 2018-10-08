@@ -7,7 +7,7 @@ import { JobRunDto } from 'resources/api/dtos';
 export class Dashboard {
   
   static finishedStates = ['Completed', 'Failed', 'Omitted', 'Deleted', 'Null'];
-  static JobRunUpdateInterval = 1000;
+  static JobRunUpdateInterval = 3000;
   static FailedJobRunUpdateInterval = 5000;
 
   public jobRuns: Array<JobRunDto>;

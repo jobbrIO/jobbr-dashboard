@@ -3,6 +3,7 @@ import { ApiClient } from 'resources/api/api-client';
 import { bindable } from 'aurelia-templating';
 import { autoinject } from "aurelia-framework";
 import { PagedResult } from 'resources/api/paged-result';
+import { ToastService } from 'resources/services/toast';
 
 @autoinject()
 export class JobDetails {
@@ -15,7 +16,8 @@ export class JobDetails {
   public job: JobDetailsDto;
 
   constructor(
-    private api: ApiClient
+    private api: ApiClient,
+    private toastService: ToastService
     ) {
   }
 
@@ -28,11 +30,11 @@ export class JobDetails {
 
   public disableTrigger(trigger) {
     trigger.isActive = false;
-    this.api.updateTrigger(trigger, this.jobId);
+    this.toastService.handleSave(this.api.updateTrigger(trigger, this.jobId));
   }
 
   public enableTrigger(trigger) {
     trigger.isActive = true;
-    this.api.updateTrigger(trigger, this.jobId);
+    this.toastService.handleSave(this.api.updateTrigger(trigger, this.jobId));
   }
 }

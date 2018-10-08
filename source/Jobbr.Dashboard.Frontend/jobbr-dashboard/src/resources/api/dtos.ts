@@ -42,7 +42,7 @@ export class JobRunArtefactDto {
 
 export class JobTriggerDto {
   id: number;
-  type: string;
+  triggerType: string;
   isActive: boolean;
   parameters: string;
   comment: string;
