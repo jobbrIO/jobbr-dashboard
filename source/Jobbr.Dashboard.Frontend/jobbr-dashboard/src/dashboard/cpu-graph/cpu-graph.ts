@@ -18,10 +18,10 @@ export class CpuGraphCustomElement {
   attached() {
     this.smoothie = new SmoothieChart({
       grid: {
-        strokeStyle: '#39434f', 
+        strokeStyle: '#39434f',
         fillStyle: '#22252B',
         lineWidth: 1,
-        millisPerLine: 1000, 
+        millisPerLine: 1000,
         verticalSections: 5,
       },
       labels: { fillStyle: '#ffc533' },
@@ -34,7 +34,7 @@ export class CpuGraphCustomElement {
     let canvas = <HTMLCanvasElement>document.getElementById("cpu-canvas");
 
     this.smoothie.streamTo(canvas, 1000);
-    
+
     var line = new TimeSeries();
 
     this.timeoutId = setInterval(() => {
@@ -43,14 +43,19 @@ export class CpuGraphCustomElement {
       });
     }, 1000);
 
-    this.smoothie.addTimeSeries(line, { 
+    this.smoothie.addTimeSeries(line, {
       strokeStyle: 'rgb(0, 255, 0)',
-      fillStyle: 'rgba(0, 255, 0, 0.1)', 
-      lineWidth: 1 });
+      fillStyle: 'rgba(0, 255, 0, 0.1)',
+      lineWidth: 1
+    });
   }
 
   detached() {
-    clearTimeout(this.timeoutId);
-    this.smoothie.stop();
+    try {
+      clearTimeout(this.timeoutId);
+      this.smoothie.stop();
+    } catch {
+      // ignore: when navigating really fast, because it has not started yet and there is no api to see if it started
+    }
   }
 }

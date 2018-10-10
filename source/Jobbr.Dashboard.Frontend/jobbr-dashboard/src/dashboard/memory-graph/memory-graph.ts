@@ -52,7 +52,11 @@ export class MemoryGraphCustomElement {
   }
 
   detached() {
+    try {
     clearTimeout(this.timeoutId);
     this.smoothie.stop();
+    } catch {
+      // ignore: when navigating really fast, because it has not started yet and there is no api to see if it started
+    }
   }
 }

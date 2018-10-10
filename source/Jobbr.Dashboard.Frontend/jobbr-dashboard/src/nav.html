@@ -1,15 +1,13 @@
 <template>
   <require from="./resources/value-converters/dateValueConverter"></require>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="/">
-      Jobbr
-    </a>
+    <img src="../static/img/logo/Jobbr_Hell_FaviconArtboard 5 copy 2.png" height="36" class="mr-2" />
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse collapse" id="navbar">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" repeat.for="route of router.navigation" class="${row.isActive ? 'active' : ''}">
+        <li class="nav-item" repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
           <a class="nav-link" href.bind="route.href"><i class="${route.settings.icon}"></i> ${route.title}</a>
         </li>
       </ul>
