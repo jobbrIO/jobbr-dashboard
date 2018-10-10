@@ -14,17 +14,11 @@ import 'jquery';
 import 'popper.js';
 
 import 'bootstrap';
-// import '../node_modules/bootstrap/js/src/button';
-// import '../node_modules/bootstrap/js/src/dropdown';
-// import '../node_modules/bootstrap/js/src/collapse';
-// import '../node_modules/bootstrap/js/src/popover';
 
-import '../static/styles/styles.scss';
+import './styles/styles.scss';
 
 import 'velocity-animate';
 import "velocity-animate/velocity.ui";
-
-
 
 export function configure(aurelia: Aurelia) {
   aurelia.use

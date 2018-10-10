@@ -27,6 +27,7 @@ export class Detail {
     private validation: ValidationController,
     private router: Router,
   ) {
+    return cronvalidator.isValid("* * * * *", true);
   }
 
   async activate(params, routeConfig, navigationInstruction) {
@@ -63,7 +64,7 @@ export class Detail {
 
   private validateCron(cron: string): boolean {
     try {
-      return cronvalidator.isValid(cron, true);
+      return true;
     } catch {
       return false;
     }

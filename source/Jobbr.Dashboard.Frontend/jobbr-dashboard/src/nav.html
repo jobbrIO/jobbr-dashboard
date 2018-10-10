@@ -1,7 +1,9 @@
 <template>
   <require from="./resources/value-converters/dateValueConverter"></require>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="/">JobbR</a>
+    <a class="navbar-brand" href="/">
+      Jobbr
+    </a>
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,7 +13,7 @@
           <a class="nav-link" href.bind="route.href"><i class="${route.settings.icon}"></i> ${route.title}</a>
         </li>
       </ul>
-      <div class="text-light">UTC: ${now}</div>
+      <div class="text-light"><i class="far fa-clock"></i> UTC: ${now}</div>
     </div>
   </nav>
 </template>
