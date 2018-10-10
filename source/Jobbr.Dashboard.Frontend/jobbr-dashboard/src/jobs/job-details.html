@@ -3,10 +3,10 @@
   <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
   <require from="../resources/elements/pager/pager"></require>
 
-  <div class="container-fluid">
+  <div class="container-fluid au-animate">
     <div class="row">
       <div class="col-sm-12">
-        <h3>${job.uniqueName} <small>${job.type}</small></h3>
+        <h3><a click.delegate="router.navigateBack()" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a> ${job.uniqueName} <small>${job.type}</small></h3>
       </div>
     </div>
     <div class="row mt-4">

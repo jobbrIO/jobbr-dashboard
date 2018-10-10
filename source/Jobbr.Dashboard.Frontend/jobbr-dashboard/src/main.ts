@@ -6,9 +6,9 @@ Bluebird.config({ warnings: { wForgottenReturn: false }, longStackTraces: false 
 
 import 'whatwg-fetch';
 import 'element-closest';
-import {Aurelia} from 'aurelia-framework';
+import { Aurelia } from 'aurelia-framework';
 import environment from './environment';
-import {PLATFORM} from 'aurelia-pal';
+import { PLATFORM } from 'aurelia-pal';
 
 import 'jquery';
 import 'popper.js';
@@ -21,14 +21,20 @@ import 'bootstrap';
 
 import '../static/styles/styles.scss';
 
+import 'velocity-animate';
+import "velocity-animate/velocity.ui";
+
 
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .feature(PLATFORM.moduleName('resources/index'))
-    .feature(PLATFORM.moduleName('plugins/aurelia-chart/index'))
     .plugin(PLATFORM.moduleName('aurelia-animator-css'))
+    .plugin(PLATFORM.moduleName('aurelia-animator-velocity'), config => {
+      config.enterAnimation = { properties: "transition.slideRightIn", options: { easing: "easeIn", duration: 200 } };
+      config.leaveAnimation = { properties: "fadeOut", options: { easing: "easeIn", duration: 0 } };
+    })
     .plugin(PLATFORM.moduleName('aurelia-validation'))
     .plugin(PLATFORM.moduleName('aurelia-bootstrap'), config => config.options.version = 4); // bootstrap v4
 

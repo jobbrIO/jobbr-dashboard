@@ -4,6 +4,7 @@ import { bindable } from 'aurelia-templating';
 import { autoinject } from "aurelia-framework";
 import { PagedResult } from 'resources/api/paged-result';
 import { ToastService } from 'resources/services/toast';
+import { Router } from 'aurelia-router';
 
 @autoinject()
 export class JobDetails {
@@ -19,7 +20,8 @@ export class JobDetails {
 
   constructor(
     private api: ApiClient,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
     ) {
   }
 

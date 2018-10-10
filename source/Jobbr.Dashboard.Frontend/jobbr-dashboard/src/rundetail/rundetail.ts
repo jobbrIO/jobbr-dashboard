@@ -1,6 +1,7 @@
 import { JobDto, JobRunDto, JobTriggerDto } from '../resources/api/dtos';
 import { ApiClient } from '../resources/api/api-client';
 import { autoinject } from 'aurelia-framework';
+import { Router } from 'aurelia-router';
 
 @autoinject
 export class RunDetail {
@@ -10,11 +11,10 @@ export class RunDetail {
   public job: JobDto;
   public apiUrl: string;
 
-  constructor(private apiClient: ApiClient) {
-  }
-
-  bind(bindingContext: Object,overrideContext: Object) {
-    
+  constructor (
+    private apiClient: ApiClient,
+    private router: Router,
+    ) {
   }
 
   async activate(params, routeConfig, navigationInstruction) {
