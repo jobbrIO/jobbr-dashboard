@@ -24,56 +24,56 @@ namespace Sample.Jobbr.Server
 
             jobbrBuilder.AddJobs(repo =>
             {
-                repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
-                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
-                    .WithParameter(new
-                    {
-                        Foo = "Bar",
-                        Nested = new
-                        {
-                            Priority = "High",
-                            Comment = "Heyho!"
-                        }
-                    })
-                    .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
+                //repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
+                //    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
+                //    .WithParameter(new
+                //    {
+                //        Foo = "Bar",
+                //        Nested = new
+                //        {
+                //            Priority = "High",
+                //            Comment = "Heyho!"
+                //        }
+                //    })
+                //    .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
 
-                repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
-                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
-                    .WithParameter(new
-                    {
-                        Foo = "Bar",
-                        Nested = new
-                        {
-                            Priority = "High",
-                            Comment = "Heyho!"
-                        }
-                    });
+                //repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
+                //    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
+                //    .WithParameter(new
+                //    {
+                //        Foo = "Bar",
+                //        Nested = new
+                //        {
+                //            Priority = "High",
+                //            Comment = "Heyho!"
+                //        }
+                //    });
 
-                repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
-                    .WithTrigger("0 * * * *", parameters: new {Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot"})
-                    .WithParameter(new
-                    {
-                        Foo = "Bar",
-                        Nested = new
-                        {
-                            Equipment = "Nuke",
-                        }
-                    });
+                //repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
+                //    .WithTrigger("0 * * * *", parameters: new {Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot"})
+                //    .WithParameter(new
+                //    {
+                //        Foo = "Bar",
+                //        Nested = new
+                //        {
+                //            Equipment = "Nuke",
+                //        }
+                //    });
 
 
-                repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
-                    .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
-                    .WithParameter(new
-                    {
-                        Foo = "Bar",
-                        Nested = new
-                        {
-                            Equipment = "Nuke",
-                        }
-                    });
+                //repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
+                //    .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
+                //    .WithParameter(new
+                //    {
+                //        Foo = "Bar",
+                //        Nested = new
+                //        {
+                //            Equipment = "Nuke",
+                //        }
+                //    });
 
                 repo.Define(typeof(FailingJob).Name, typeof(FailingJob).FullName)
-                    .WithTrigger("*/5 * * * *", parameters: new {SomeProperty = "foobar"})
+                    .WithTrigger("*/2 * * * *", parameters: new {SomeProperty = "foobar"})
                     .WithParameter(new
                     {
                         Bla = "Blub",
@@ -82,7 +82,11 @@ namespace Sample.Jobbr.Server
             });
 
             jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api");
-            jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
+            jobbrBuilder.AddDashboard(config =>
+            {
+                config.BackendAddress = $"{baseAddress}";
+                config.SoftDeleteJobRunOnRetry = true;
+            });
             //jobbrBuilder.AddRavenDbStorage(config =>
             //{
             //    config.Url = "http://localhost:8080/";
@@ -90,13 +94,13 @@ namespace Sample.Jobbr.Server
             //});
             jobbrBuilder.AddMsSqlStorage(config =>
             {
-                config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard;Connect Timeout=5;Integrated Security=True";
+                config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
                 config.CreateTablesIfNotExists = true;
             });
 
             using (var jobbr = jobbrBuilder.Create())
             {
-                jobbr.Start(5000);
+                jobbr.Start(20000);
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Jobbr is running. Press Enter to quit");

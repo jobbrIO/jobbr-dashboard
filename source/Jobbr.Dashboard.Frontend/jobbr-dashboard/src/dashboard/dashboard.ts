@@ -1,3 +1,4 @@
+import { ToastService } from 'resources/services/toast';
 import { DiskInfoDto } from 'resources/api/dtos';
 import { ApiClient } from 'resources/api/api-client';
 import { autoinject } from 'aurelia-framework';
@@ -7,7 +8,7 @@ import { JobRunDto } from 'resources/api/dtos';
 export class Dashboard {
   
   static finishedStates = ['Completed', 'Failed', 'Omitted', 'Deleted', 'Null'];
-  static JobRunUpdateInterval = 3000;
+  static JobRunUpdateInterval = 2000;
   static FailedJobRunUpdateInterval = 5000;
 
   public jobRuns: Array<JobRunDto>;
@@ -18,7 +19,7 @@ export class Dashboard {
   private jobRunsInterval;
   private lastFailedJobRunsInterval;
 
-  constructor(private apiClient: ApiClient) {
+  constructor (private apiClient: ApiClient, private toastService: ToastService) {
     apiClient.getDiskInfo().then(disks => this.disks = disks);
   }
 
@@ -52,5 +53,12 @@ export class Dashboard {
     if (this.lastFailedJobRunsInterval) {
       clearInterval(this.lastFailedJobRunsInterval);
     }
+  }
+
+  public retryJobRun(jobRun: JobRunDto): Promise<any> {
+    return this.apiClient.retryJobRun(jobRun).then(async () => {
+      this.toastService.info('OK', 'Retrying jobrun...');
+      await this.updateLastFailedJobRuns();
+    });
   }
 }

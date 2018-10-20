@@ -14,6 +14,7 @@ export class ApiClient {
   private dashboardClient: HttpClient; // client for accessing rest api provided by Jobbr.Dashboard
 
   private apiUrl: string;
+  private softDeleteJobRunOnRetry: boolean;
 
   private initPromise: Promise<any>;
 
@@ -21,20 +22,21 @@ export class ApiClient {
     this.dashboardClient = new HttpClient();
     this.dashboardClient.configure(config => {
       config
-      .useStandardConfiguration()
-      .withDefaults({
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json',
-          'X-Requested-With': 'Fetch'
-        }
-      })
-      .withBaseUrl(window.location.origin.replace(this.WebpackUrl, this.TestJobbrUrl));
+        .useStandardConfiguration()
+        .withDefaults({
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'Fetch'
+          }
+        })
+        .withBaseUrl(window.location.origin.replace(this.WebpackUrl, this.TestJobbrUrl));
     });
 
     this.initPromise = this.dashboardClient.fetch('/config').then(async r => {
       let json = await r.json();
       this.apiUrl = json['api'];
+      this.softDeleteJobRunOnRetry = json['softDeleteJobRunOnRetry'];
 
       this.initApiClient();
     });
@@ -66,7 +68,7 @@ export class ApiClient {
   }
 
   getMemoryInfo(): Promise<DashboardMemoryResponse> {
-    return this.initPromise.then(() =>  this.dashboardClient.fetch('/system/memory').then(r => r.json()));
+    return this.initPromise.then(() => this.dashboardClient.fetch('/system/memory').then(r => r.json()));
   }
 
   getDiskInfo(): Promise<Array<DiskInfoDto>> {
@@ -74,11 +76,11 @@ export class ApiClient {
   }
 
   getAllJobs(): Promise<PagedResult<JobDto>> {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobs?pageSize=10000').then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobs?pageSize=10000').then(r => r.json()));
   }
 
   getJob(id: number): Promise<JobDto> {
-    return this.initPromise.then(() =>  this.apiClient.fetch('/jobs/' + id).then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch('/jobs/' + id).then(r => r.json()));
   }
 
   getJobRunsByJobId(jobId: number, page: number = 1, sort: string = '', states: Array<string> = null, pageSize: number = null): Promise<PagedResult<JobRunDto>> {
@@ -93,7 +95,7 @@ export class ApiClient {
       url = url += '&pageSize=' + pageSize;
     }
 
-    return this.initPromise.then(() =>  this.apiClient.fetch(url).then(r => r.json()));
+    return this.initPromise.then(() => this.apiClient.fetch(url).then(r => r.json()));
   }
 
   getJobRuns(page: number = 1, sort: string = '', query: string = '', states: Array<string> = null): Promise<PagedResult<JobRunDto>> {
@@ -109,7 +111,7 @@ export class ApiClient {
   getLastFailedJobRuns() {
     return this.initPromise.then(() => this.apiClient.fetch('/jobruns/?sort=-ActualEndDateTimeUtc&pageSize=5&states=Failed').then(r => r.json()));
   }
-  
+
   getJobRun(id: number): Promise<JobRunDto> {
     return this.initPromise.then(() => this.apiClient.fetch('/jobruns/' + id).then(r => r.json()));
   }
@@ -129,13 +131,13 @@ export class ApiClient {
   getRunningJobRuns(): Promise<PagedResult<JobRunDto>> {
     return this.initPromise.then(() => this.apiClient.fetch('/jobruns/?sort=-PlannedStartDateTimeUtc&pageSize=200&states=Scheduled,Preparing,Starting,Started,Connected,Initializing,Processing,Finishing,Collecting').then(r => r.json()));
   }
-  
+
   updateTrigger(trigger, jobId): Promise<any> {
     return this.initPromise.then(() => {
       this.apiClient.fetch('/jobs/' + jobId + '/triggers/' + trigger.id, {
         method: 'patch',
         body: json(trigger)
-      }).catch(e => console.log(e));
+      });
     });
   }
 
@@ -144,7 +146,27 @@ export class ApiClient {
       this.apiClient.fetch('/jobs/' + jobId + '/triggers/', {
         method: 'post',
         body: json(trigger)
-      }).catch(e => console.log(e));
+      });
+    });
+  }
+
+  retryJobRun(jobRun: JobRunDto): Promise<any> {
+    return this.initPromise.then(async () => {
+      await this.getTrigger(jobRun.jobId, jobRun.triggerId).then(async oldTrigger => {
+        let trigger = new JobTriggerDto();
+        trigger.triggerType = 'Instant';
+        trigger.parameters = jobRun.instanceParameter;
+        trigger.comment = oldTrigger.comment;
+        trigger.delayedMinutes = 0;
+        trigger.userId = oldTrigger.userId;
+        trigger.userDisplayName = oldTrigger.userDisplayName;
+
+        await this.createTrigger(trigger, jobRun.jobId).then(async () => {
+          if (this.softDeleteJobRunOnRetry) {
+            await this.apiClient.fetch('/jobruns/' + jobRun.jobRunId, { method: 'delete' });
+          }
+        });
+      })
     });
   }
 }

@@ -6,15 +6,30 @@
   <require from="../resources/value-converters/definitionToUrlValueConverter"></require>
   <require from="../resources/elements/hightlightjs/highlightjs"></require>
   <require from="../resources/value-converters/jobRunStateToHourGlassValueConverter"></require>
+  <require from="../resources/attributes/loading"></require>
 
   <div class="rundetail container-fluid au-animate">
+    <div class="row mb-4" if.bind="jobRun.deleted">
+      <div class="col-sm-12">
+        <div class="alert alert-danger" role="alert">
+          <i class="fas fa-exclamation-triangle"></i> This jobrun has been deleted
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-12">
-        <h3>
-          <a click.delegate="router.navigateBack()" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a>
-          <i class="fas fa-flag-checkered"></i> ${job.uniqueName}
-          <small>${job.type}</small>
-        </h3>
+        <div class="d-flex justify-content-between">
+          <h3>
+            <a click.delegate="router.navigateBack()" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a>
+            <i class="fas fa-flag-checkered"></i> ${job.uniqueName}
+            <small>${job.type}</small>
+          </h3>
+          <div>
+            <button if.bind="jobRun.state == 'Failed' && !jobRun.deleted" type="button" class="btn btn-primary btn-sm" loading="func.call: retryJobRun(jobRun); spin-only: true">
+              <i class="spin-loading fas fa-redo"></i> Retry
+            </button>
+          </div>
+        </div>
         <ul>
           <li>
             <i class="fas ${jobRun.state | jobRunStateToHourGlass}"></i> State

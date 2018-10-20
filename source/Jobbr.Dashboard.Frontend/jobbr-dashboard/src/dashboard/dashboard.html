@@ -6,6 +6,7 @@
   <require from="../resources/value-converters/dateValueConverter"></require>
   <require from="../resources/value-converters/jobRunStateToColorValueConverter"></require>
   <require from="../resources/value-converters/fileSizeValueConverter"></require>
+  <require from="../resources/attributes/loading"></require>
 
   <div class="dashboard container-fluid au-animate">
 
@@ -107,6 +108,7 @@
               <th scope="col">Planned Start</th>
               <th scope="col">Actual Start</th>
               <th scope="col">Duration</th>
+              <th scope="col">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
@@ -125,6 +127,7 @@
                 <span if.bind="run.actualStartUtc">later</span>
               </td>
               <td>${run.actualEndUtc | timeSince:run.actualStartUtc}</td>
+              <td><button type="button" class="btn btn-primary btn-sm" loading="func.call: retryJobRun(run); spin-only: true"><i class="spin-loading fas fa-redo"></i></button></td>
             </tr>
           </tbody>
         </table>

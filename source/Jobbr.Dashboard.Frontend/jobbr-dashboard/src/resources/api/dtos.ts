@@ -19,6 +19,7 @@ export class DiskInfoDto {
 }
 
 export class JobRunDto {
+  jobRunId: number;
   jobId: number;
   triggerId: number;
   jobParameter: string;
@@ -27,9 +28,9 @@ export class JobRunDto {
   state: string;
   progress: number;
   plannedStartUtc: string;
-  auctualStartUtc: string;
+  actualStartUtc: string;
   estimatedEndUtc: string;
-  auctualEndUtc: string;
+  actualEndUtc: string;
   artefacts: Array<JobRunArtefactDto>;
   jobTitle: string;
 }

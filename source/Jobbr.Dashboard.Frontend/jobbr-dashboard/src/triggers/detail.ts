@@ -5,7 +5,7 @@ import { autoinject, observable } from "aurelia-framework";
 import * as prettyCron from 'prettycron';
 import { ValidationRules, ValidationController } from 'aurelia-validation';
 import { Router } from 'aurelia-router';
-import * as cronvalidator from 'sancronos-validator';
+
 
 @autoinject()
 export class Detail {
@@ -27,7 +27,7 @@ export class Detail {
     private validation: ValidationController,
     private router: Router,
   ) {
-    return cronvalidator.isValid("* * * * *", true);
+    //return cronvalidator.isValid("* * * * *", true);
   }
 
   async activate(params, routeConfig, navigationInstruction) {

@@ -6,10 +6,12 @@ namespace Jobbr.Dashboard.Controller
     public class ConfigController : ApiController
     {
         private readonly JobbrWebApiConfiguration webApiConfiguration;
+        private readonly DashboardConfiguration dashboardConfiguration;
 
-        public ConfigController(JobbrWebApiConfiguration webApiConfiguration)
+        public ConfigController(JobbrWebApiConfiguration webApiConfiguration, DashboardConfiguration dashboardConfiguration)
         {
             this.webApiConfiguration = webApiConfiguration;
+            this.dashboardConfiguration = dashboardConfiguration;
         }
 
         [HttpGet]
@@ -19,6 +21,7 @@ namespace Jobbr.Dashboard.Controller
             return this.Ok(new
             {
                 Api = webApiConfiguration.BackendAddress,
+                dashboardConfiguration.SoftDeleteJobRunOnRetry
             });
         }
     }
