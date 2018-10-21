@@ -27,7 +27,6 @@ export class Detail {
     private validation: ValidationController,
     private router: Router,
   ) {
-    //return cronvalidator.isValid("* * * * *", true);
   }
 
   async activate(params, routeConfig, navigationInstruction) {
@@ -58,16 +57,8 @@ export class Detail {
     ValidationRules
       .ensure((c: Detail) => c.parameters).satisfies((v) => this.isValidJsonString(v))
       .ensure(c => c.definition).required().when(p => p.trigger.triggerType == 'Recurring')
-      .ensure(c => c.definition).satisfies((v) => this.validateCron(v)).when(p => p.trigger.triggerType == 'Recurring')
+      .ensure(c => c.definition).satisfies((v) => this.api.validateCron(v)).when(p => p.trigger.triggerType == 'Recurring')
       .on(this);
-  }
-
-  private validateCron(cron: string): boolean {
-    try {
-      return true;
-    } catch {
-      return false;
-    }
   }
 
   private isValidJsonString(str): boolean {

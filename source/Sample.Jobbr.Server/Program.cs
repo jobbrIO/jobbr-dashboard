@@ -19,58 +19,58 @@ namespace Sample.Jobbr.Server
             {
                 config.JobRunDirectory = "c:/temp";
                 config.JobRunnerExecutable = "../../../Sample.JobRunner/bin/Debug/Sample.JobRunner.exe";
-                config.MaxConcurrentProcesses = 1;
+                config.MaxConcurrentProcesses = 2;
             });
 
             jobbrBuilder.AddJobs(repo =>
             {
-                //repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
-                //    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
-                //    .WithParameter(new
-                //    {
-                //        Foo = "Bar",
-                //        Nested = new
-                //        {
-                //            Priority = "High",
-                //            Comment = "Heyho!"
-                //        }
-                //    })
-                //    .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
+                repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Priority = "High",
+                            Comment = "Heyho!"
+                        }
+                    })
+                    .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
 
-                //repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
-                //    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
-                //    .WithParameter(new
-                //    {
-                //        Foo = "Bar",
-                //        Nested = new
-                //        {
-                //            Priority = "High",
-                //            Comment = "Heyho!"
-                //        }
-                //    });
+                repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
+                    .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Priority = "High",
+                            Comment = "Heyho!"
+                        }
+                    });
 
-                //repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
-                //    .WithTrigger("0 * * * *", parameters: new {Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot"})
-                //    .WithParameter(new
-                //    {
-                //        Foo = "Bar",
-                //        Nested = new
-                //        {
-                //            Equipment = "Nuke",
-                //        }
-                //    });
+                repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
+                    .WithTrigger("0 * * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Equipment = "Nuke",
+                        }
+                    });
 
 
-                //repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
-                //    .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
-                //    .WithParameter(new
-                //    {
-                //        Foo = "Bar",
-                //        Nested = new
-                //        {
-                //            Equipment = "Nuke",
-                //        }
-                //    });
+                repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
+                    .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
+                    .WithParameter(new
+                    {
+                        Foo = "Bar",
+                        Nested = new
+                        {
+                            Equipment = "Nuke",
+                        }
+                    });
 
                 repo.Define(typeof(FailingJob).Name, typeof(FailingJob).FullName)
                     .WithTrigger("*/2 * * * *", parameters: new {SomeProperty = "foobar"})

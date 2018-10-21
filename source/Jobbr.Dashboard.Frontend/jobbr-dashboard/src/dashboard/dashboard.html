@@ -45,7 +45,7 @@
                 <a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a>
               </td>
               <td>
-                <strong>${run.jobName}</strong>
+                <strong><a class="text-body" route-href="route: jobdetail; params.bind: { id: run.jobId}">${run.jobName}</a></strong>
               </td>
               <td>
                 <span class="${run.state | jobRunStateToColor}">${run.state}</span>
@@ -117,7 +117,7 @@
                 <a route-href="route: rundetail; params.bind: {id: run.jobRunId}">${run.jobRunId}</a>
               </td>
               <td>
-                <strong>${run.jobName}</strong>
+                <strong><a class="text-body" route-href="route: jobdetail; params.bind: { id: run.jobId}">${run.jobName}</a></strong>
               </td>
               <td>
                 <span class="${run.state | jobRunStateToColor}">${run.state}</span>

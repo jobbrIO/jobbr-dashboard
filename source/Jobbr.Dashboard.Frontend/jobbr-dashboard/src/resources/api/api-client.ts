@@ -83,8 +83,8 @@ export class ApiClient {
     return this.initPromise.then(() => this.apiClient.fetch('/jobs/' + id).then(r => r.json()));
   }
 
-  getJobRunsByJobId(jobId: number, page: number = 1, sort: string = '', states: Array<string> = null, pageSize: number = null): Promise<PagedResult<JobRunDto>> {
-    let url = '/jobs/' + jobId + '/runs?page=' + page + '&sort=' + sort;
+  getJobRunsByJobId(jobId: number, page: number = 1, sort: string = '', states: Array<string> = null, pageSize: number = null, showDeleted: boolean = false): Promise<PagedResult<JobRunDto>> {
+    let url = '/jobs/' + jobId + '/runs?page=' + page + '&sort=' + sort + '&showDeleted=' + showDeleted;
 
     // todo: states not yet supported here by webapi
     if (states) {
@@ -98,8 +98,8 @@ export class ApiClient {
     return this.initPromise.then(() => this.apiClient.fetch(url).then(r => r.json()));
   }
 
-  getJobRuns(page: number = 1, sort: string = '', query: string = '', states: Array<string> = null): Promise<PagedResult<JobRunDto>> {
-    let url = '/jobruns/?page=' + page + '&sort=' + sort + '&query=' + query;
+  getJobRuns(page: number = 1, sort: string = '', query: string = '', states: Array<string> = null, showDeleted: boolean = false): Promise<PagedResult<JobRunDto>> {
+    let url = '/jobruns/?page=' + page + '&sort=' + sort + '&query=' + query + '&showDeleted=' + showDeleted;
 
     if (states) {
       url = url += '&states=' + states.join(',');
@@ -167,6 +167,15 @@ export class ApiClient {
           }
         });
       })
+    });
+  }
+
+  public validateCron(cron: string): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      await this.initPromise;
+
+      let response = await this.dashboardClient.fetch('/cron/' + encodeURI(cron), { method: 'get'}).then(r => r.json());
+      return resolve(response.parseSuccess);
     });
   }
 }

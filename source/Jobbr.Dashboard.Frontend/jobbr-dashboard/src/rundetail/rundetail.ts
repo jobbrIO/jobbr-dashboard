@@ -41,4 +41,10 @@ export class RunDetail {
       this.load();
     });
   }
+
+  public refresh(): Promise<any> {
+    return this.apiClient.getJobRun(this.jobRunId).then(jobRun => {
+      this.jobRun = jobRun;
+    });
+  }
 }

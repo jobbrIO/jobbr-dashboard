@@ -20,9 +20,16 @@ export class Runs {
   @observable()
   public states: Array<string> = [];
 
+  @observable()
+  public showDeleted: boolean;
+
   private activated: boolean = false;
 
   constructor(private apiClient: ApiClient) {
+  }
+
+  showDeletedChanged() {
+    this.loadData();
   }
 
   activate(params, routeConfig, navigationInstruction) {
@@ -36,13 +43,13 @@ export class Runs {
   loadData() {
     if (this.activated) {
       if (this.jobId) {
-        this.apiClient.getJobRunsByJobId(this.jobId, this.currentPage, this.orderBy, this.states).then(runs => this.jobRuns = runs);
+        this.apiClient.getJobRunsByJobId(this.jobId, this.currentPage, this.orderBy, this.states, 50, this.showDeleted).then(runs => this.jobRuns = runs);
 
         if (!this.job) {
           this.apiClient.getJob(this.jobId).then(job => this.job = job);
         }
       } else {
-        this.apiClient.getJobRuns(this.currentPage, this.orderBy, this.query, this.states).then(runs => this.jobRuns = runs);
+        this.apiClient.getJobRuns(this.currentPage, this.orderBy, this.query, this.states, this.showDeleted).then(runs => this.jobRuns = runs);
       }
     }
   }
