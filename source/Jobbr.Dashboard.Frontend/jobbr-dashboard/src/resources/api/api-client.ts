@@ -170,6 +170,10 @@ export class ApiClient {
     });
   }
 
+  public deleteJobRun(id: number): Promise<any> {
+    return this.apiClient.fetch('/jobruns/' + id, { method: 'delete' });
+  }
+
   public validateCron(cron: string): Promise<boolean> {
     return new Promise(async (resolve) => {
       await this.initPromise;

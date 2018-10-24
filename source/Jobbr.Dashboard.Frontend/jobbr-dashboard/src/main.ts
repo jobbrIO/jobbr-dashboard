@@ -20,6 +20,8 @@ import './styles/styles.scss';
 import 'velocity-animate';
 import "velocity-animate/velocity.ui";
 
+import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
 export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
