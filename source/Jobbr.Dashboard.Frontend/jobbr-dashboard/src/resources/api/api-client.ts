@@ -178,7 +178,7 @@ export class ApiClient {
     return new Promise(async (resolve) => {
       await this.initPromise;
 
-      let response = await this.dashboardClient.fetch('/cron/' + encodeURI(cron), { method: 'get'}).then(r => r.json());
+      let response = await this.dashboardClient.fetch('/cron/?cron=' + encodeURI(cron), { method: 'get'}).then(r => r.json());
       return resolve(response.parseSuccess);
     });
   }

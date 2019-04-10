@@ -6,7 +6,7 @@ namespace Jobbr.Dashboard.Controller
     public class CronController : ApiController
     {
         [HttpGet]
-        [Route("cron/{cron}")]
+        [Route("cron/")]
         public IHttpActionResult Validate(string cron)
         {
             var parsed = CrontabSchedule.TryParse(cron);
