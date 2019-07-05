@@ -52,9 +52,6 @@
     <Reference Include="Jobbr.ComponentModel.Registration, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.ComponentModel.Registration.1.0.1\lib\net462\Jobbr.ComponentModel.Registration.dll</HintPath>
     </Reference>
-    <Reference Include="Jobbr.Server, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jobbr.Server.1.4.0\lib\net462\Jobbr.Server.dll</HintPath>
-    </Reference>
     <Reference Include="Jobbr.Server.WebAPI, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.Server.WebAPI.1.5.0\lib\net45\Jobbr.Server.WebAPI.dll</HintPath>
     </Reference>
