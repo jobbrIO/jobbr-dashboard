@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 using Jobbr.Dashboard;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
@@ -13,11 +14,17 @@ namespace Sample.Jobbr.Server
         public static void Main(string[] args)
         {
             const string baseAddress = "http://localhost:1338/";
+            const string jobRunDirectory = "C:/temp";
 
-            var jobbrBuilder = new JobbrBuilder();
+            if (Directory.Exists(jobRunDirectory) == false)
+            {
+	            Directory.CreateDirectory(jobRunDirectory);
+            }
+
+			var jobbrBuilder = new JobbrBuilder();
             jobbrBuilder.AddForkedExecution(config =>
             {
-                config.JobRunDirectory = "c:/temp";
+                config.JobRunDirectory = jobRunDirectory;
                 config.JobRunnerExecutable = "../../../Sample.JobRunner/bin/Debug/Sample.JobRunner.exe";
                 config.MaxConcurrentProcesses = 2;
             });
