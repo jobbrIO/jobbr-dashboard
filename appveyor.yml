@@ -1,7 +1,4 @@
-image: Visual Studio 2017
-
-environment:
-  nodejs_version: "8"
+image: Visual Studio 2019
 
 branches:
   only:
@@ -10,9 +7,14 @@ branches:
     - /release/.*/
     - /hotfix/.*/
     - /feature/.*/
+    - /bugfix/.*/
+
+environment:
+  nodejs_version: "8"
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
 
 install:
-  - choco install gitversion.portable --version 4.0.0
+  - choco install gitversion.portable --version 5.10.3 -y
   - ps: Install-Product node $env:nodejs_version
   - npm install source/Jobbr.Dashboard.Frontend/jobbr-dashboard --prefix source/Jobbr.Dashboard.Frontend/jobbr-dashboard
 
@@ -44,6 +46,6 @@ deploy:
 - provider: NuGet
   server: https://nuget.org
   api_key:
-    secure: dmAor9/81YJtHhqccxBN1aHyDgLVB96KSqRlqnaiFxqF5ROMgz3jCivW8ROvv4N3
+    secure: anKLNUxe1pn63rrNVCigoQVfA/fWML9gEpE1UHRLK/LDmQX4SM9WwzDx0kliHKWC
   on:
     appveyor_repo_tag: true
