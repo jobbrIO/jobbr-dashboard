@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Sample.Jobbr.Server</RootNamespace>
     <AssemblyName>Sample.Jobbr.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -51,7 +51,7 @@
       <HintPath>..\packages\Jobbr.ComponentModel.Registration.1.0.1\lib\net462\Jobbr.ComponentModel.Registration.dll</HintPath>
     </Reference>
     <Reference Include="Jobbr.Server, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jobbr.Server.1.6.0-rc.2\lib\net462\Jobbr.Server.dll</HintPath>
+      <HintPath>..\packages\Jobbr.Server.1.6.0\lib\net462\Jobbr.Server.dll</HintPath>
     </Reference>
     <Reference Include="Jobbr.Server.ForkedExecution, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jobbr.Execution.Forked.1.1.1\lib\net462\Jobbr.Server.ForkedExecution.dll</HintPath>
