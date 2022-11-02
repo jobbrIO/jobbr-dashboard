@@ -1,0 +1,22 @@
+.runs-table {
+  margin: 24px;
+  width: 800px;
+  background-color: $background-color;
+
+  tr:nth-child(odd) {
+    background-color: #272A31;
+  }
+
+  tr:nth-child(even) {
+    background-color: #22252B;
+  }
+
+  th {
+    text-transform: capitalize;
+  }
+  
+  th,
+  td {
+    padding: 6px;
+  }
+}

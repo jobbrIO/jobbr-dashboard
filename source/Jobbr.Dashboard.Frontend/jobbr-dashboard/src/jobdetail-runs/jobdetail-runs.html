@@ -1,0 +1,48 @@
+<template>
+  <require from="../resources/elements/pager/pager"></require>
+  <require from="../resources/elements/jobrunstates-dropdown/JobRunStatesDropDown"></require>
+
+  <div class="container-fluid au-animate">
+    <div class="row mb-4" if.bind="job.id">
+      <div class="col-md-auto">
+        <h3>
+          <a route-href="route: jobdetail; params.bind: { id: job.id }" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a>
+          <i class="fas fa-suitcase mr-2"></i> ${job.uniqueName}
+        </h3>
+      </div>
+      <div class="col-md-6">
+        <h3>
+          <small>${job.type}</small>
+        </h3>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="btn-toolbar" role="toolbar">
+          <button type="button" class="btn btn-primary mr-2" click.delegate="loadData()"><i class="fas fa-sync-alt"></i></button>
+          <job-run-states-drop-down if.bind="!jobId" selected.bind="states"></job-run-states-drop-down>
+          <!-- damn! switch not supported in ie (neither edge wtf!) -->
+          <!-- <div class="btn-group ml-auto">
+            <span class="pt-2 pr-2">Show deleted</span>
+            <span class="switch">
+              <input type="checkbox" class="switch" id="switch-normal" checked.bind="showDeleted">
+              <label for="switch-normal"></label>
+            </span>
+          </div> -->
+          <div class="ml-auto">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-outline-warning ${showDeleted ? 'active' : ''}" click.delegate="showDeleted = !showDeleted" title="Show deleted toggle"><i class="fa fa-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <compose view="./_table.html"></compose>
+        <pager paged-result.bind="jobRuns" change-page.call="changePage(page)"></pager>
+      </div>
+    </div>
+  </div>
+
+</template>

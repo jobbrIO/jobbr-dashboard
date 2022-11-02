@@ -31,6 +31,7 @@ export class App {
       { route: ['jobs/:jobId/runs'], name: 'runs', moduleId: PLATFORM.moduleName('runs/runs'), title: 'Runs' },
       { route: ['runs/:id'], name: 'rundetail', moduleId: PLATFORM.moduleName('rundetail/rundetail'), title: 'Run Detail' },
       { route: ['jobs/:id'], name: 'jobdetail', moduleId: PLATFORM.moduleName('jobs/job-details'), title: 'Job Detail' },
+      { route: ['jobs/:id/runs'], name: 'jobdetail-runs', moduleId: PLATFORM.moduleName('jobdetail-runs/jobdetail-runs'), title: 'Job Detail - Runs' },
       { route: ['jobs/:jobId/triggers/:triggerId'], name: 'triggerdetail', moduleId: PLATFORM.moduleName('triggers/detail'), title: 'Trigger Detail' },
     ]);
     

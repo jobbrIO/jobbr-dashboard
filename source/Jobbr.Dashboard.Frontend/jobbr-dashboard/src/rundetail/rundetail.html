@@ -20,7 +20,7 @@
       <div class="col-sm-12">
         <div class="d-flex justify-content-between">
           <h3>
-            <a click.delegate="router.navigateBack()" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a>
+            <a if.bind="jobRun" route-href="route: jobdetail; params.bind: { id: jobRun.jobId}" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a>
             <i class="fas fa-flag-checkered"></i> ${job.uniqueName}
             <small>${job.type}</small>
           </h3>
