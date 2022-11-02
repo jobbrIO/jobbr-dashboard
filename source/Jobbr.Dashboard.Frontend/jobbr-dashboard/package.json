@@ -32,7 +32,7 @@
     "aurelia-animator-velocity": "^1.2.0",
     "aurelia-binding": "^2.3.0",
     "aurelia-bootstrap": "^0.1.20",
-    "aurelia-cli": "^0.35.1",
+    "aurelia-cli": "^3.0.1",
     "aurelia-pal": "^1.8.2",
     "aurelia-protractor-plugin": "^1.0.6",
     "aurelia-templating-binding": "^1.5.1",
