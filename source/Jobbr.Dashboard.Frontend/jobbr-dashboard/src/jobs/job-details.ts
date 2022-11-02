@@ -15,21 +15,24 @@ export class JobDetails {
   public jobRuns: PagedResult<JobRunDto>;
   public triggers: PagedResult<JobTriggerDto>;
   public triggersPage: number = 1;
+  public showLinkToFullList = false;
 
   public job: JobDetailsDto;
 
   constructor(
     private api: ApiClient,
-    private toastService: ToastService,
-    private router: Router,
-    ) {
+    private toastService: ToastService
+  ) {
   }
 
   async activate(params, routeConfig, navigationInstruction) {
     this.jobId = params.id;
-    
+
     this.job = await this.api.getJobDetails(this.jobId);
     this.jobRuns = await this.api.getJobRunsByJobId(this.jobId, 1, "-ActualEndDateTimeUtc", null, 10);
+
+    this.showLinkToFullList = this.jobRuns.pageSize < this.jobRuns.totalItems;
+
     await this.loadTriggers();
   }
 

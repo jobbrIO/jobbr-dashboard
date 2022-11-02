@@ -6,7 +6,7 @@
   <div class="container-fluid au-animate">
     <div class="row">
       <div class="col-sm-12">
-        <h3><a click.delegate="router.navigateBack()" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a> ${job.uniqueName} <small>${job.type}</small></h3>
+        <h3><a route-href="route: jobs" href="javascript:void(0);"><i class="fas fa-angle-left"></i></a> ${job.uniqueName} <small>${job.type}</small></h3>
       </div>
     </div>
     <div class="row mt-4">
@@ -97,6 +97,11 @@
       </div>
       <div class="col-sm-12">
         <compose view="../runs/_table.html"></compose>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center mb-2" show.bind="showLinkToFullList">
+        <a class="btn btn-primary" route-href="route: jobdetail-runs; params.bind: { id: job.id }">Show full list</a>
       </div>
     </div>
   </div>

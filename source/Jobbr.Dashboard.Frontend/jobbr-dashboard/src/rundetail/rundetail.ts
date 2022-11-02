@@ -47,4 +47,10 @@ export class RunDetail {
       this.jobRun = jobRun;
     });
   }
+
+  public delete(jobRun: JobRunDto): Promise<any> {
+    return this.apiClient.deleteJobRun(jobRun.jobRunId).then(() => {
+      this.refresh();
+    });
+  }
 }
