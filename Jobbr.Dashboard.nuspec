@@ -6,11 +6,11 @@
     <authors>Jobbr</authors>
     <owners>Jobbr</owners>
     <projectUrl>http://github.com/jobbrIO/jobbr-dashboard</projectUrl>
-    <licenseUrl>https://raw.githubusercontent.com/jobbrIO/jobbr-dashboard/develop/LICENSE</licenseUrl>
+    <license type="expression">GPL-3.0-only</license>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Dashboard for Jobbr</description>
-    <iconUrl>https://raw.githubusercontent.com/jobbrIO/artwork/master/build/icons/icon_detailed_256_dark.png</iconUrl>
-    <copyright>Copyright 2018</copyright>
+    <copyright>Copyright 2022</copyright>
+    <icon>images\icon.png</icon>
     <dependencies>
       <dependency id="Microsoft.Owin.Host.HttpListener" version="[3,4)"/>
       <dependency id="Jobbr.ComponentModel.Management" version="[1.6,1.7)" />
@@ -19,9 +19,10 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="source\Jobbr.Dashboard\bin\Release\Jobbr.Dashboard.dll" target="lib\net462"/>
-    <file src="source\Jobbr.Dashboard\bin\Release\Jobbr.Dashboard.pdb" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard\bin\Release\net462\Jobbr.Dashboard.dll" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard\bin\Release\net462\Jobbr.Dashboard.pdb" target="lib\net462"/>
     <file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\dashboard-app.zip" target="Build" />
     <file src="Jobbr.Dashboard.targets" target="Build" />
+    <file src="source\icon.png" target="images/"/>
   </files>
 </package>
