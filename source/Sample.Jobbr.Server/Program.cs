@@ -25,7 +25,7 @@ namespace Sample.Jobbr.Server
             jobbrBuilder.AddForkedExecution(config =>
             {
                 config.JobRunDirectory = jobRunDirectory;
-                config.JobRunnerExecutable = "../../../Sample.JobRunner/bin/Debug/Sample.JobRunner.exe";
+                config.JobRunnerExecutable = "../../../../Sample.JobRunner/bin/Debug/net462/Sample.JobRunner.exe";
                 config.MaxConcurrentProcesses = 2;
             });
 

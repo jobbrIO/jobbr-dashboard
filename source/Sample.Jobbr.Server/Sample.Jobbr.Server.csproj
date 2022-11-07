@@ -33,4 +33,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Jobbr.Dashboard\Jobbr.Dashboard.csproj" />
   </ItemGroup>
+  <Import Project="..\..\Jobbr.Dashboard.targets" />
 </Project>

@@ -12,6 +12,6 @@ export class HighlightjsCustomElement {
 
   attached() {
     let codeElement = this.element.getElementsByTagName('code')[0];
-    hljs.highlightBlock(codeElement);
+    hljs.highlightElement(codeElement);
   }
 }
