@@ -73,7 +73,7 @@
     "mini-css-extract-plugin": "^0.4.4",
     "minimatch": "^3.1.2",
     "minimist": "^1.2.7",
-    "node-sass": "^4.14.1",
+    "node-sass": "^8.0.0",
     "nps": "^5.10.0",
     "nps-utils": "1.7.0",
     "opn": "^5.4.0",
