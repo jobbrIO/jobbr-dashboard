@@ -34,8 +34,8 @@
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="7.0.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Include="Jobbr.ComponentModel.ArtefactStorage" Version="1.1.1" />
-    <PackageReference Include="Jobbr.ComponentModel.Execution" Version="1.1.1" />
-    <PackageReference Include="Jobbr.ComponentModel.Registration" Version="1.0.3" />
+    <PackageReference Include="Jobbr.ComponentModel.ArtefactStorage" Version="3.0.0-rc.1" />
+    <PackageReference Include="Jobbr.ComponentModel.Execution" Version="3.0.0-rc.1" />
+    <PackageReference Include="Jobbr.ComponentModel.Registration" Version="3.0.0-rc.2" />
   </ItemGroup>
 </Project>

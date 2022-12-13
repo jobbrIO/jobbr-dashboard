@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{BF69F1FD-4FE4-48AE-937F-03B123211277}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AssemblyTitle>Sample.JobRunner</AssemblyTitle>
     <Product>Sample.JobRunner</Product>
@@ -20,7 +20,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Jobbr.Runtime.ForkedExecution" Version="1.2.0" />
+    <PackageReference Include="Jobbr.Runtime.ForkedExecution" Version="3.0.0-rc.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sample.Jobbr.Server\Sample.Jobbr.Server.csproj" />
