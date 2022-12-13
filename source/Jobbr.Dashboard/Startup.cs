@@ -6,8 +6,6 @@ using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.StaticFiles;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Owin;
 using SharpFileSystem.SharpZipLib;
 
@@ -46,9 +44,6 @@ namespace Jobbr.Dashboard
             {
                 config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             }
-
-            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore };
-            config.Formatters.JsonFormatter.SerializerSettings = jsonSerializerSettings;
 
             app.UseWebApi(config);
 
