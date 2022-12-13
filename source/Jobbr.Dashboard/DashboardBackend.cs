@@ -1,6 +1,6 @@
 ﻿using System;
 using Jobbr.ComponentModel.Registration;
-using Jobbr.Dashboard.Logging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Hosting.Services;
 using Microsoft.Owin.Hosting.Starter;
@@ -9,24 +9,20 @@ namespace Jobbr.Dashboard
 {
     public class DashboardBackend : IJobbrComponent
     {
-        private static readonly ILog Logger = LogProvider.For<DashboardBackend>();
+        private readonly ILogger _logger;
+        private readonly IJobbrServiceProvider _dependencyResolver;
+        private readonly DashboardConfiguration _configuration;
 
-        private readonly IJobbrServiceProvider dependencyResolver;
-
-        /// <summary>
-        /// The webhost that serves for the OWIN WebAPI component
-        /// </summary>
-        private IDisposable webHost;
-
-        private readonly DashboardConfiguration configuration;
+        private IDisposable _webHost;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
         /// </summary>
-        public DashboardBackend(IJobbrServiceProvider dependencyResolver, DashboardConfiguration configuration)
+        public DashboardBackend(ILoggerFactory loggerFactory, IJobbrServiceProvider dependencyResolver, DashboardConfiguration configuration)
         {
-            this.dependencyResolver = dependencyResolver;
-            this.configuration = configuration;
+            _dependencyResolver = dependencyResolver;
+            _configuration = configuration;
+            _logger = loggerFactory.CreateLogger<DashboardBackend>();
         }
 
         /// <summary>
@@ -34,7 +30,7 @@ namespace Jobbr.Dashboard
         /// </summary>
         public void Start()
         {
-            if (string.IsNullOrWhiteSpace(this.configuration.BackendAddress))
+            if (string.IsNullOrWhiteSpace(_configuration.BackendAddress))
             {
                 throw new ArgumentException("Unable to start DashboardBackend when no BackendUrl is specified");
             }
@@ -44,33 +40,33 @@ namespace Jobbr.Dashboard
             {
                 Urls =
                 {
-                    this.configuration.BackendAddress
+                    _configuration.BackendAddress
                 },
                 AppStartup = typeof(Startup).FullName
             };
 
             // Pass through the IJobbrServiceProvider to allow Startup-Classes to let them inject this dependency
-            services.Add(typeof(IJobbrServiceProvider), () => this.dependencyResolver);
+            services.Add(typeof(IJobbrServiceProvider), () => _dependencyResolver);
 
             var hostingStarter = services.GetService<IHostingStarter>();
-            this.webHost = hostingStarter.Start(options);
-
-            Logger.InfoFormat($"Started OWIN-Host for DashboardBackend at '{this.configuration.BackendAddress}'.");
+            _webHost = hostingStarter.Start(options);
+            
+            _logger.LogInformation("Started OWIN-Host for DashboardBackend at '{backendAddress}'", _configuration.BackendAddress);
         }
 
         public void Stop()
         {
-            Logger.InfoFormat("Stopping OWIN-Host for Web-Endpoints'");
+            _logger.LogInformation("Stopping OWIN-Host for Web-Endpoints");
 
-            this.webHost?.Dispose();
+            _webHost?.Dispose();
 
-            this.webHost = null;
+            _webHost = null;
         }
 
         public void Dispose()
         {
-            this.webHost.Dispose();
-            this.webHost = null;
+            _webHost.Dispose();
+            _webHost = null;
         }
     }
 }

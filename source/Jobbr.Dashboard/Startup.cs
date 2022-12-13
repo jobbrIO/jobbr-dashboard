@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Jobbr.ComponentModel.Registration;
-using Jobbr.Dashboard.Logging;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
@@ -16,23 +15,18 @@ namespace Jobbr.Dashboard
 {
     public class Startup
     {
-        private static readonly ILog Logger = LogProvider.For<Startup>();
-
-        /// <summary>
-        /// The dependency resolver from the JobbrServer which needs to be passed through the OWIN stack to WebAPI
-        /// </summary>
-        private readonly IJobbrServiceProvider dependencyResolver;
+        private readonly IJobbrServiceProvider _dependencyResolver;
 
         public Startup(IJobbrServiceProvider serviceProvider)
         {
-            this.dependencyResolver = serviceProvider;
+            _dependencyResolver = serviceProvider;
         }
 
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
 
-            config.DependencyResolver = new DependencyResolverAdapter(this.dependencyResolver);
+            config.DependencyResolver = new DependencyResolverAdapter(_dependencyResolver);
 
             ConfigureWebApi(app, config);
 
@@ -43,7 +37,7 @@ namespace Jobbr.Dashboard
         {
             config.MapHttpAttributeRoutes();
 
-            var dashboardConfig = (DashboardConfiguration)this.dependencyResolver.GetService(typeof(DashboardConfiguration));
+            var dashboardConfig = (DashboardConfiguration)_dependencyResolver.GetService(typeof(DashboardConfiguration));
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
