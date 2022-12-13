@@ -6,6 +6,9 @@ using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
 using Jobbr.Server.WebAPI;
 using Jobbr.Storage.MsSql;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Sample.Jobbr.Server
 {
@@ -21,7 +24,10 @@ namespace Sample.Jobbr.Server
 	            Directory.CreateDirectory(jobRunDirectory);
             }
 
-			var jobbrBuilder = new JobbrBuilder();
+            var app = CreateHostBuilder(args).Build();
+            // var loggerFactory = app.Services.GetService<ILoggerFactory>();
+
+            var jobbrBuilder = new JobbrBuilder(new NullLoggerFactory());
             jobbrBuilder.AddForkedExecution(config =>
             {
                 config.JobRunDirectory = jobRunDirectory;
@@ -29,9 +35,9 @@ namespace Sample.Jobbr.Server
                 config.MaxConcurrentProcesses = 2;
             });
 
-            jobbrBuilder.AddJobs(repo =>
+            jobbrBuilder.AddJobs(new NullLoggerFactory(), repo =>
             {
-                repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
+                repo.Define(nameof(MinutelyJob), typeof(MinutelyJob).FullName)
                     .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
                     .WithParameter(new
                     {
@@ -44,7 +50,7 @@ namespace Sample.Jobbr.Server
                     })
                     .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
 
-                repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
+                repo.Define(nameof(MinutelyJob) + "-2", typeof(MinutelyJob).FullName)
                     .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
                     .WithParameter(new
                     {
@@ -56,7 +62,7 @@ namespace Sample.Jobbr.Server
                         }
                     });
 
-                repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
+                repo.Define(nameof(HourlyJob), typeof(HourlyJob).FullName)
                     .WithTrigger("0 * * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
                     .WithParameter(new
                     {
@@ -68,7 +74,7 @@ namespace Sample.Jobbr.Server
                     });
 
 
-                repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
+                repo.Define(nameof(DailyJob), typeof(DailyJob).FullName)
                     .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
                     .WithParameter(new
                     {
@@ -79,7 +85,7 @@ namespace Sample.Jobbr.Server
                         }
                     });
 
-                repo.Define(typeof(FailingJob).Name, typeof(FailingJob).FullName)
+                repo.Define(nameof(FailingJob), typeof(FailingJob).FullName)
                     .WithTrigger("*/2 * * * *", parameters: new {SomeProperty = "foobar"})
                     .WithParameter(new
                     {
@@ -101,7 +107,7 @@ namespace Sample.Jobbr.Server
             //});
             jobbrBuilder.AddMsSqlStorage(config =>
             {
-                config.ConnectionString = "Data Source=localhost\\MSSQLSERVER01;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
+                config.ConnectionString = "Data Source=localhost\\MSSQLSERVER01;Initial Catalog=JobbrDemo;Connect Timeout=5;Integrated Security=True";
                 config.CreateTablesIfNotExists = true;
             });
 
@@ -115,5 +121,13 @@ namespace Sample.Jobbr.Server
                 Console.ReadLine();
             }
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                });
     }
 }
