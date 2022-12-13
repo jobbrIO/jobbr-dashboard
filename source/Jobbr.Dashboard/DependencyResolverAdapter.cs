@@ -11,7 +11,7 @@ namespace Jobbr.Dashboard
 
         public DependencyResolverAdapter(IJobbrServiceProvider serviceProvider)
         {
-            this._serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public void Dispose()
@@ -20,17 +20,17 @@ namespace Jobbr.Dashboard
 
         public object GetService(Type serviceType)
         {
-            return this._serviceProvider.GetService(serviceType);
+            return _serviceProvider.GetService(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return this._serviceProvider.GetServices(serviceType);
+            return _serviceProvider.GetServices(serviceType);
         }
 
         public IDependencyScope BeginScope()
         {
-            return new DependencyResolverAdapter(this._serviceProvider.GetChild());
+            return new DependencyResolverAdapter(_serviceProvider.GetChild());
         }
     }
 }
