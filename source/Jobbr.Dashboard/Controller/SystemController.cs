@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Jobbr.Dashboard.Model;
-using Jobbr.Server.WebAPI;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
+    [ApiController]
     public class SystemController : ControllerBase
     {
-        private readonly JobbrWebApiConfiguration webApiConfiguration;
         private static readonly PerformanceCounter Cpu;
         private static readonly PerformanceCounter Memory;
         private static readonly ulong TotalPhysicalMemory;
@@ -25,17 +25,15 @@ namespace Jobbr.Dashboard.Controller
                 TotalPhysicalMemory = memStatus.ullTotalPhys;
             }
         }
-
-        [HttpGet]
-        [Route("system/cpu")]
-        public IActionResult GetCpuLoad()
+        
+        [HttpGet("system/cpu")]
+        public async Task<IActionResult> GetCpuLoad()
         {
             return Ok(Cpu.NextValue());
         }
 
-        [HttpGet]
-        [Route("system/memory")]
-        public IActionResult GetMemoryUsage()
+        [HttpGet("system/memory")]
+        public async Task<IActionResult> GetMemoryUsage()
         {
             var totalPhysicalMemory = TotalPhysicalMemory / (double) 1024 / (double) 1024;
             var freeMemory = (double)Memory.NextValue();
@@ -47,9 +45,8 @@ namespace Jobbr.Dashboard.Controller
             });
         }
 
-        [HttpGet]
-        [Route("system/disks")]
-        public IActionResult GetDiskUsage()
+        [HttpGet("system/disks")]
+        public async Task<IActionResult> GetDiskUsage()
         {
             var driveInfos = new List<DiskInfoDto>();
 
@@ -70,10 +67,9 @@ namespace Jobbr.Dashboard.Controller
 
             return Ok(driveInfos);
         }
-
-        [HttpGet]
-        [Route("signalr/trigger")]
-        public IActionResult TriggerSignalR()
+        
+        [HttpGet("signalr/trigger")]
+        public async Task<IActionResult> TriggerSignalR()
         {
             return Ok();
         }   

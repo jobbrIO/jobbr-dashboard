@@ -24,7 +24,7 @@ namespace Jobbr.Dashboard
 
         public MemoryStatusEx()
         {
-            this.dwLength = (uint)Marshal.SizeOf(typeof(MemoryStatusEx));
+            dwLength = (uint)Marshal.SizeOf(typeof(MemoryStatusEx));
         }
     }
 }

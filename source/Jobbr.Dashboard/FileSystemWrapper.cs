@@ -13,25 +13,25 @@ namespace Jobbr.Dashboard
     /// </summary>
     public class FileSystemWrapper : IFileSystem
     {
-        private readonly SharpFileSystem.IFileSystem fileSystem;
+        private readonly SharpFileSystem.IFileSystem _fileSystem;
 
         public FileSystemWrapper(SharpFileSystem.IFileSystem fileSystem)
         {
-            this.fileSystem = fileSystem;
+            _fileSystem = fileSystem;
         }
 
         public bool TryGetFileInfo(string subpath, out IFileInfo fileInfo)
         {
             var path = FileSystemPath.Parse(subpath);
 
-            if (this.fileSystem.Exists(path))
+            if (_fileSystem.Exists(path))
             {
-                fileInfo = new FileInfo(path, this.fileSystem);
+                fileInfo = new FileInfo(path, _fileSystem);
 
                 return true;
             }
 
-            fileInfo = new FileInfo(FileSystemPath.Root.AppendFile("index.html"), this.fileSystem);
+            fileInfo = new FileInfo(FileSystemPath.Root.AppendFile("index.html"), _fileSystem);
 
             return true;
         }
@@ -40,19 +40,19 @@ namespace Jobbr.Dashboard
         {
             var path = FileSystemPath.Parse(subpath);
 
-            if (this.fileSystem.Exists(path) == false)
+            if (_fileSystem.Exists(path) == false)
             {
                 contents = null;
                 return false;
             }
 
-            var entitiesFromDirectory = this.fileSystem.GetEntities(path);
+            var entitiesFromDirectory = _fileSystem.GetEntities(path);
 
             var list = new List<IFileInfo>(entitiesFromDirectory.Count);
 
             foreach (var entity in entitiesFromDirectory)
             {
-                list.Add(new FileInfo(entity, this.fileSystem));
+                list.Add(new FileInfo(entity, _fileSystem));
             }
 
             contents = list;
@@ -62,31 +62,31 @@ namespace Jobbr.Dashboard
 
         private class FileInfo : IFileInfo
         {
-            private readonly SharpFileSystem.IFileSystem fileSystem;
+            private readonly SharpFileSystem.IFileSystem _fileSystem;
             private static readonly DateTime AssemblyLastModified = DateTime.UtcNow;
-            private FileSystemPath entity;
+            private FileSystemPath _entity;
 
             public FileInfo(FileSystemPath entity, SharpFileSystem.IFileSystem fileSystem)
             {
-                this.fileSystem = fileSystem;
-                this.entity = entity;
+                _fileSystem = fileSystem;
+                _entity = entity;
 
-                using (var stream = this.fileSystem.OpenFile(entity, FileAccess.Read))
+                using (var stream = _fileSystem.OpenFile(entity, FileAccess.Read))
                 {
-                    this.Length = stream.ReadAllBytes().Length;
+                    Length = stream.ReadAllBytes().Length;
                 }
             }
 
             public Stream CreateReadStream()
             {
-                return this.fileSystem.OpenFile(entity, FileAccess.Read);
+                return _fileSystem.OpenFile(_entity, FileAccess.Read);
             }
 
             public long Length { get; }
             public string PhysicalPath => null;
-            public string Name => this.entity.EntityName;
+            public string Name => _entity.EntityName;
             public DateTime LastModified => AssemblyLastModified;
-            public bool IsDirectory => this.entity.IsDirectory;
+            public bool IsDirectory => _entity.IsDirectory;
         }
     }
 }

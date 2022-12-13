@@ -1,27 +1,28 @@
-﻿using Jobbr.Server.WebAPI;
+﻿using System.Threading.Tasks;
+using Jobbr.Server.WebAPI;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
+    [ApiController]
     public class ConfigController : ControllerBase
     {
-        private readonly JobbrWebApiConfiguration webApiConfiguration;
-        private readonly DashboardConfiguration dashboardConfiguration;
+        private readonly JobbrWebApiConfiguration _webApiConfiguration;
+        private readonly DashboardConfiguration _dashboardConfiguration;
 
         public ConfigController(JobbrWebApiConfiguration webApiConfiguration, DashboardConfiguration dashboardConfiguration)
         {
-            this.webApiConfiguration = webApiConfiguration;
-            this.dashboardConfiguration = dashboardConfiguration;
+            _webApiConfiguration = webApiConfiguration;
+            _dashboardConfiguration = dashboardConfiguration;
         }
 
-        [HttpGet]
-        [Route("config")]
-        public IActionResult Get()
+        [HttpGet("config")]
+        public async Task<IActionResult> Get()
         {
             return Ok(new
             {
-                Api = webApiConfiguration.BackendAddress,
-                dashboardConfiguration.SoftDeleteJobRunOnRetry
+                Api = _webApiConfiguration.BackendAddress,
+                _dashboardConfiguration.SoftDeleteJobRunOnRetry
             });
         }
     }
