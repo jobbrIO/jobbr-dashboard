@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{BF69F1FD-4FE4-48AE-937F-03B123211277}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AssemblyTitle>Sample.JobRunner</AssemblyTitle>
     <Product>Sample.JobRunner</Product>

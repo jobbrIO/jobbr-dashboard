@@ -1,13 +1,13 @@
-﻿using System.Web.Http;
+﻿using Microsoft.AspNetCore.Mvc;
 using NCrontab;
 
 namespace Jobbr.Dashboard.Controller
 {
-    public class CronController : ApiController
+    public class CronController : ControllerBase
     {
         [HttpGet]
         [Route("cron/")]
-        public IHttpActionResult Validate(string cron)
+        public IActionResult Validate(string cron)
         {
             var parsed = CrontabSchedule.TryParse(cron);
 
