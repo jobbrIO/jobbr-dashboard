@@ -101,7 +101,7 @@ namespace Sample.Jobbr.Server
             //});
             jobbrBuilder.AddMsSqlStorage(config =>
             {
-                config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
+                config.ConnectionString = "Data Source=localhost\\MSSQLSERVER01;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
                 config.CreateTablesIfNotExists = true;
             });
 

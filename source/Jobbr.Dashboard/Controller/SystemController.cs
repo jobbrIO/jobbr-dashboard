@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Web.Http;
 using Jobbr.Dashboard.Model;
 using Jobbr.Server.WebAPI;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
-    public class SystemController : ApiController
+    public class SystemController : ControllerBase
     {
         private readonly JobbrWebApiConfiguration webApiConfiguration;
         private static readonly PerformanceCounter Cpu;
@@ -28,14 +28,14 @@ namespace Jobbr.Dashboard.Controller
 
         [HttpGet]
         [Route("system/cpu")]
-        public IHttpActionResult GetCpuLoad()
+        public IActionResult GetCpuLoad()
         {
             return Ok(Cpu.NextValue());
         }
 
         [HttpGet]
         [Route("system/memory")]
-        public IHttpActionResult GetMemoryUsage()
+        public IActionResult GetMemoryUsage()
         {
             var totalPhysicalMemory = TotalPhysicalMemory / (double) 1024 / (double) 1024;
             var freeMemory = (double)Memory.NextValue();
@@ -49,7 +49,7 @@ namespace Jobbr.Dashboard.Controller
 
         [HttpGet]
         [Route("system/disks")]
-        public IHttpActionResult GetDiskUsage()
+        public IActionResult GetDiskUsage()
         {
             var driveInfos = new List<DiskInfoDto>();
 
@@ -73,7 +73,7 @@ namespace Jobbr.Dashboard.Controller
 
         [HttpGet]
         [Route("signalr/trigger")]
-        public IHttpActionResult TriggerSignalR()
+        public IActionResult TriggerSignalR()
         {
             return Ok();
         }   

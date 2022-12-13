@@ -1,9 +1,9 @@
-﻿using System.Web.Http;
-using Jobbr.Server.WebAPI;
+﻿using Jobbr.Server.WebAPI;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
-    public class ConfigController : ApiController
+    public class ConfigController : ControllerBase
     {
         private readonly JobbrWebApiConfiguration webApiConfiguration;
         private readonly DashboardConfiguration dashboardConfiguration;
@@ -16,9 +16,9 @@ namespace Jobbr.Dashboard.Controller
 
         [HttpGet]
         [Route("config")]
-        public IHttpActionResult Get()
+        public IActionResult Get()
         {
-            return this.Ok(new
+            return Ok(new
             {
                 Api = webApiConfiguration.BackendAddress,
                 dashboardConfiguration.SoftDeleteJobRunOnRetry
