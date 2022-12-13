@@ -59,7 +59,6 @@ namespace Jobbr.Dashboard
             _logger.LogInformation("Stopping OWIN-Host for Web-Endpoints");
 
             _webHost?.Dispose();
-
             _webHost = null;
         }
 
