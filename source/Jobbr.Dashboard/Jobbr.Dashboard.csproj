@@ -20,9 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Jobbr.Server.WebAPI" Version="2.2.0" />
-    <PackageReference Include="LibLog" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Owin" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
@@ -31,7 +28,6 @@
     <PackageReference Include="Microsoft.Owin.Hosting" Version="4.2.2" />
     <PackageReference Include="Microsoft.Owin.StaticFiles" Version="4.2.2" />
     <PackageReference Include="NCrontab" Version="3.3.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SharpFileSystem.SevenZip" Version="1.0.0.37" />
     <PackageReference Include="SharpFileSystem.SharpZipLib" Version="1.0.0.37" />
     <PackageReference Include="SharpZipLib" Version="1.4.1" />
