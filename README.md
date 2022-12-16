@@ -47,3 +47,4 @@ This software is licenced under GPLv3. See [LICENSE](LICENSE), and the related l
 This application was built by the following developers:
 * [Michael Schnyder](https://github.com/michaelschnyder)
 * [Oliver Zürcher](https://github.com/olibanjoli)
+* [Roope Kivioja](https://github.com/RKivioja)
