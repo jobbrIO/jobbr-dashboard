@@ -6,9 +6,9 @@ using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
 using Jobbr.Server.WebAPI;
 using Jobbr.Storage.MsSql;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Sample.Jobbr.Server
 {
@@ -25,17 +25,17 @@ namespace Sample.Jobbr.Server
             }
 
             var app = CreateHostBuilder(args).Build();
-            // var loggerFactory = app.Services.GetService<ILoggerFactory>();
+            var loggerFactory = app.Services.GetService<ILoggerFactory>();
 
-            var jobbrBuilder = new JobbrBuilder(new NullLoggerFactory());
+            var jobbrBuilder = new JobbrBuilder(loggerFactory);
             jobbrBuilder.AddForkedExecution(config =>
             {
                 config.JobRunDirectory = jobRunDirectory;
-                config.JobRunnerExecutable = "../../../../Sample.JobRunner/bin/Debug/net462/Sample.JobRunner.exe";
+                config.JobRunnerExecutable = "../../../../Sample.JobRunner/bin/Debug/net6.0/Sample.JobRunner.exe";
                 config.MaxConcurrentProcesses = 2;
             });
 
-            jobbrBuilder.AddJobs(new NullLoggerFactory(), repo =>
+            jobbrBuilder.AddJobs(loggerFactory, repo =>
             {
                 repo.Define(nameof(MinutelyJob), typeof(MinutelyJob).FullName)
                     .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
@@ -110,6 +110,8 @@ namespace Sample.Jobbr.Server
                 config.ConnectionString = "Data Source=localhost\\MSSQLSERVER01;Initial Catalog=JobbrDemo;Connect Timeout=5;Integrated Security=True";
                 config.CreateTablesIfNotExists = true;
             });
+
+            jobbrBuilder.Register<IServiceCollection>(typeof(ServiceCollection));
 
             using (var jobbr = jobbrBuilder.Create())
             {
