@@ -19,7 +19,7 @@
     "jquery": "^3.6.1",
     "npm": "^6.14.17",
     "popper.js": "^1.14.4",
-    "smoothie": "^1.35.0"
+    "smoothie": "^1.36.1"
   },
   "peerDependencies": {},
   "devDependencies": {
