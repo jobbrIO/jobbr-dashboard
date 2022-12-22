@@ -16,7 +16,7 @@ namespace Sample.Jobbr.Server
     {
         public static void Main(string[] args)
         {
-            const string baseAddress = "http://localhost:1338/";
+            const string baseAddress = "http://localhost";
             const string jobRunDirectory = "C:/temp";
 
             if (Directory.Exists(jobRunDirectory) == false)
@@ -94,10 +94,10 @@ namespace Sample.Jobbr.Server
                     });
             });
 
-            jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api");
+            jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}:1339/api");
             jobbrBuilder.AddDashboard(config =>
             {
-                config.BackendAddress = $"{baseAddress}";
+                config.BackendAddress = $"{baseAddress}:1338";
                 config.SoftDeleteJobRunOnRetry = true;
             });
             //jobbrBuilder.AddRavenDbStorage(config =>
@@ -107,11 +107,9 @@ namespace Sample.Jobbr.Server
             //});
             jobbrBuilder.AddMsSqlStorage(config =>
             {
-                config.ConnectionString = "Data Source=localhost\\MSSQLSERVER01;Initial Catalog=JobbrDemo;Connect Timeout=5;Integrated Security=True";
+                config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
                 config.CreateTablesIfNotExists = true;
             });
-
-            jobbrBuilder.Register<IServiceCollection>(typeof(ServiceCollection));
 
             using (var jobbr = jobbrBuilder.Create())
             {

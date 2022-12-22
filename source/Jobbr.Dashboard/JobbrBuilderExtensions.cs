@@ -18,7 +18,7 @@ namespace Jobbr.Dashboard
 
             builder.Add<DashboardConfiguration>(customConfig);
 
-            builder.Register<IJobbrComponent>(typeof(DashboardBackend));
+            builder.RegisterForCollection<IJobbrComponent>(typeof(DashboardBackend));
         }
     }
 }

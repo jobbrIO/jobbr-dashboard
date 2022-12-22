@@ -12,15 +12,14 @@
     <copyright>Copyright 2022</copyright>
     <icon>images\icon.png</icon>
     <dependencies>
-      <dependency id="Microsoft.Owin.Host.HttpListener" version="[3,4]"/>
-      <dependency id="Jobbr.ComponentModel.Management" version="[1.6,1.7)" />
-      <dependency id="Jobbr.ComponentModel.Registration" version="[1,1.1)" />
-      <dependency id="Jobbr.Server.WebAPI" version="[1.5,2)" />
+      <dependency id="Jobbr.ComponentModel.Management" version="[2.9,3.1)" />
+      <dependency id="Jobbr.ComponentModel.Registration" version="[2.9,3.1)" />
+      <dependency id="Jobbr.Server.WebAPI" version="[2.9,3.1)" />
     </dependencies>
   </metadata>
   <files>
-    <file src="source\Jobbr.Dashboard\bin\Release\net462\Jobbr.Dashboard.dll" target="lib\net462"/>
-    <file src="source\Jobbr.Dashboard\bin\Release\net462\Jobbr.Dashboard.pdb" target="lib\net462"/>
+    <file src="source\Jobbr.Dashboard\bin\Release\net6.0\Jobbr.Dashboard.dll" target="lib\net6.0"/>
+    <file src="source\Jobbr.Dashboard\bin\Release\net6.0\Jobbr.Dashboard.pdb" target="lib\net6.0"/>
     <file src="source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist\dashboard-app.zip" target="Build" />
     <file src="Jobbr.Dashboard.targets" target="Build" />
     <file src="source\icon.png" target="images/"/>

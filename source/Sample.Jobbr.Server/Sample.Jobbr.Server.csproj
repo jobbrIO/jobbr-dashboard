@@ -16,16 +16,11 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Jobbr.ComponentModel.JobStorage" Version="3.0.0-rc.1" />
     <PackageReference Include="Jobbr.ComponentModel.Management" Version="3.0.0-rc.1" />
-    <PackageReference Include="Jobbr.Execution.Forked" Version="3.0.0-rc.4" />
+    <PackageReference Include="Jobbr.Execution.Forked" Version="3.0.0-rc.5" />
     <PackageReference Include="Jobbr.Server" Version="3.0.0-rc.5" />
-    <PackageReference Include="Jobbr.Server.WebAPI" Version="2.2.0" />
+    <PackageReference Include="Jobbr.Server.WebAPI" Version="3.0.0-rc.5" />
     <PackageReference Include="Jobbr.Storage.MsSql" Version="3.0.0-rc.3" />
     <PackageReference Include="Jobbr.ComponentModel.ArtefactStorage" Version="3.0.0-rc.1" />
     <PackageReference Include="Jobbr.ComponentModel.Execution" Version="3.0.0-rc.1" />
