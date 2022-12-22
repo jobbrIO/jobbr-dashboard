@@ -10,33 +10,33 @@ namespace Jobbr.Dashboard.Controller
     [ApiController]
     public class SystemController : ControllerBase
     {
-        private static readonly PerformanceCounter Cpu;
-        private static readonly PerformanceCounter Memory;
-        private static readonly ulong TotalPhysicalMemory;
+        private static readonly PerformanceCounter _cpu;
+        private static readonly PerformanceCounter _memory;
+        private static readonly ulong _totalPhysicalMemory;
 
         static SystemController()
         {
-            Cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            Memory = new PerformanceCounter("Memory", "Available MBytes", string.Empty);
+            _cpu = new PerformanceCounter("Processor", "% Processor Time", "Total");
+            _memory = new PerformanceCounter("Memory", "Available MBytes", string.Empty);
 
             var memStatus = new MemoryStatusEx();
             if (NativeMethods.GlobalMemoryStatusEx(memStatus))
             {
-                TotalPhysicalMemory = memStatus.ullTotalPhys;
+                _totalPhysicalMemory = memStatus.ullTotalPhys;
             }
         }
         
         [HttpGet("system/cpu")]
         public async Task<IActionResult> GetCpuLoad()
         {
-            return Ok(Cpu.NextValue());
+            return Ok(_cpu.NextValue());
         }
 
         [HttpGet("system/memory")]
         public async Task<IActionResult> GetMemoryUsage()
         {
-            var totalPhysicalMemory = TotalPhysicalMemory / (double) 1024 / (double) 1024;
-            var freeMemory = (double)Memory.NextValue();
+            var totalPhysicalMemory = _totalPhysicalMemory / (double) 1024 / (double) 1024;
+            var freeMemory = (double)_memory.NextValue();
 
             return Ok(new
             {

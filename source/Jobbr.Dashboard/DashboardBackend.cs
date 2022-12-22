@@ -1,18 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-using Jobbr.ComponentModel.Registration;
+﻿using Jobbr.ComponentModel.Registration;
 using Jobbr.Dashboard.Controller;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using SimpleInjector;
+using System;
+using System.Threading.Tasks;
 
 namespace Jobbr.Dashboard
 {
     public class DashboardBackend : IJobbrComponent
     {
         private readonly ILogger _logger;
-        private readonly IServiceCollection _serviceCollection;
+        private readonly InstanceProducer[] _serviceCollection;
         private readonly DashboardConfiguration _configuration;
 
         private IDisposable _webHost;
@@ -21,11 +22,11 @@ namespace Jobbr.Dashboard
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
         /// </summary>
-        public DashboardBackend(ILoggerFactory loggerFactory, IServiceCollection serviceCollection, DashboardConfiguration configuration)
+        public DashboardBackend(ILoggerFactory loggerFactory, Container serviceCollection, DashboardConfiguration configuration)
         {
             _logger = loggerFactory.CreateLogger<DashboardBackend>();
 
-            _serviceCollection = serviceCollection;
+            _serviceCollection = serviceCollection.GetCurrentRegistrations();
             _configuration = configuration;
         }
 
@@ -49,7 +50,7 @@ namespace Jobbr.Dashboard
 
             foreach (var service in _serviceCollection)
             {
-                builder.Services.Add(service);
+                builder.Services.Add(new ServiceDescriptor(service.ServiceType, service.GetInstance()));
             }
 
             // Controllers with endpoints need to be added manually due discovery issues.
@@ -61,7 +62,7 @@ namespace Jobbr.Dashboard
 
             _webApp = builder.Build();
             _webApp.MapControllers();
-            
+
             var manifestEmbeddedProvider = new ManifestEmbeddedFileProvider(typeof(DashboardBackend).Assembly);
 
             _webApp.UseFileServer(new FileServerOptions
