@@ -94,6 +94,7 @@ namespace Jobbr.Dashboard
         {
             _logger.LogInformation("Stopping web host for Web-Endpoints");
 
+            // TODO _webHost is null - see unit test
             _webHost?.Dispose();
             _webHost = null;
         }
