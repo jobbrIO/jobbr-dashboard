@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Jobbr.Dashboard;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
@@ -9,6 +7,8 @@ using Jobbr.Storage.MsSql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace Sample.Jobbr.Server
 {
@@ -21,7 +21,7 @@ namespace Sample.Jobbr.Server
 
             if (Directory.Exists(jobRunDirectory) == false)
             {
-	            Directory.CreateDirectory(jobRunDirectory);
+                Directory.CreateDirectory(jobRunDirectory);
             }
 
             var app = CreateHostBuilder(args).Build();
@@ -86,7 +86,7 @@ namespace Sample.Jobbr.Server
                     });
 
                 repo.Define(nameof(FailingJob), typeof(FailingJob).FullName)
-                    .WithTrigger("*/2 * * * *", parameters: new {SomeProperty = "foobar"})
+                    .WithTrigger("*/2 * * * *", parameters: new { SomeProperty = "foobar" })
                     .WithParameter(new
                     {
                         Bla = "Blub",

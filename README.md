@@ -29,11 +29,11 @@ using Jobbr.Dashboard
 
 var builder = new JobbrBuilder();
 
-const string baseAddress = "http://localhost:1337/";
+const string baseAddress = "http://localhost";
 
-jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api"); // you must host it under /api same-origin (in future, this will be configurable)
+jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}:1338"); // you must host it under a different port (in future, this will be configurable)
 
-jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}");
+jobbrBuilder.AddDashboard(config => config.BackendAddress = $"{baseAddress}:1337");
 
 server.Start();
 ```
