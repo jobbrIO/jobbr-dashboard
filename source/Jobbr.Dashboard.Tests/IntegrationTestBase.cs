@@ -10,7 +10,7 @@ public class IntegrationTestBase
     public string WebapiAddress { get; private set; }
     public string BackendAddress { get; private set; }
 
-    protected JobbrServer GivenRunningServerWithDashboard()
+    protected JobbrServer CreateTestJobServer()
     {
         WebapiAddress = $"http://localhost:{TcpPortHelper.NextFreeTcpPort()}";
         BackendAddress = $"http://localhost:{TcpPortHelper.NextFreeTcpPort()}";

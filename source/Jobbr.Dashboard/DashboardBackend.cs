@@ -39,8 +39,7 @@ namespace Jobbr.Dashboard
 
             if (string.IsNullOrWhiteSpace(_configuration.BackendAddress))
             {
-                _logger.LogError("Unable to start DashboardBackend when no backend URL is specified.");
-                throw new ArgumentException("Unable to start DashboardBackend when no backend URL is specified.");
+                throw new ArgumentException("Unable to start DashboardBackend when no backend URL is specified.", nameof(_configuration.BackendAddress));
             }
 
             var builder = WebApplication.CreateBuilder();
@@ -50,7 +49,7 @@ namespace Jobbr.Dashboard
                 builder.Services.Add(new ServiceDescriptor(service.ServiceType, service.GetInstance()));
             }
 
-            // Controllers with endpoints need to be added manually due discovery issues.
+            // Controllers with endpoints need to be added manually due to discovery issues.
             // https://stackoverflow.com/q/73777145
             var mvcBuilder = builder.Services.AddControllers();
             mvcBuilder.AddApplicationPart(typeof(ConfigController).Assembly);
@@ -91,7 +90,7 @@ namespace Jobbr.Dashboard
         {
             _logger.LogInformation("Stopping web host for Web-Endpoints");
 
-            Task.Run(async () => await _webApp.StopAsync());
+            Task.FromResult(_webApp.StopAsync());
         }
 
         public void Dispose()

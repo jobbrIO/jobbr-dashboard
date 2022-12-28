@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,24 +13,32 @@ namespace Jobbr.Dashboard.Tests
         [TestMethod]
         public async Task RegisteredAsComponent_JobbrIsStarted_ConfigurationIsAvailable()
         {
-            using (GivenRunningServerWithDashboard())
+            // Arrange
+            using (CreateTestJobServer())
             {
                 var client = new HttpClient();
+
+                // Act
                 var result = await client.GetAsync($"{BackendAddress}/config");
 
-                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+                // Assert
+                result.StatusCode.ShouldBe(HttpStatusCode.OK);
             }
         }
 
         [TestMethod]
         public async Task RegisteredAsComponent_JobbrIsStarted_CanLoadSomeJobs()
         {
-            using (GivenRunningServerWithDashboard())
+            // Arrange
+            using (CreateTestJobServer())
             {
                 var client = new HttpClient();
 
+                // Act
                 var result = await client.GetAsync($"{WebapiAddress}/jobs");
-                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+
+                // Assert
+                result.StatusCode.ShouldBe(HttpStatusCode.OK);
             }
         }
     }

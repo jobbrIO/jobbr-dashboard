@@ -1,6 +1,7 @@
 ﻿using Jobbr.Server.WebAPI;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
 using System;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -13,13 +14,13 @@ namespace Jobbr.Dashboard.Tests
     [TestClass]
     public class DashboardBackendTests
     {
-        private LoggerFactory _loggerFactory;
+        private NullLoggerFactory _loggerFactory;
         private Container _serviceContainer;
 
         [TestInitialize]
         public void Startup()
         {
-            _loggerFactory = new LoggerFactory();
+            _loggerFactory = new NullLoggerFactory();
             _serviceContainer = new Container();
             _serviceContainer.Register<JobbrWebApiConfiguration>();
             _serviceContainer.Register<DashboardConfiguration>();
@@ -41,7 +42,7 @@ namespace Jobbr.Dashboard.Tests
             var response = await new HttpClient().GetAsync(config.BackendAddress + "/config");
 
             // Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
+            response.IsSuccessStatusCode.ShouldBeTrue();
         }
 
         [TestMethod]
@@ -58,19 +59,10 @@ namespace Jobbr.Dashboard.Tests
             host.Start();
             host.Stop();
 
-            try
-            {
-                // Act
-                await new HttpClient().GetAsync(config.BackendAddress + "/config");
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException is SocketException == false)
-                {
-                    // Assert
-                    Assert.Fail("Exception thrown was " + ex.InnerException + ", which is not the expected exception");
-                }
-            }
+            // Act
+            // Assert
+            var ex = await Should.ThrowAsync<Exception>(() => new HttpClient().GetAsync(config.BackendAddress + "/config"));
+            ex.InnerException.ShouldBeOfType<SocketException>();
         }
 
 
@@ -106,19 +98,8 @@ namespace Jobbr.Dashboard.Tests
             host.Start();
             host.Dispose();
 
-            try
-            {
-                // Act
-                await new HttpClient().GetAsync(config.BackendAddress + "/config");
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException is SocketException == false)
-                {
-                    // Assert
-                    Assert.Fail("Exception thrown was " + ex.InnerException + ", which is not the expected exception");
-                }
-            }
+            var ex = await Should.ThrowAsync<Exception>(() => new HttpClient().GetAsync(config.BackendAddress + "/config"));
+            ex.InnerException.ShouldBeOfType<SocketException>();
         }
     }
 }
