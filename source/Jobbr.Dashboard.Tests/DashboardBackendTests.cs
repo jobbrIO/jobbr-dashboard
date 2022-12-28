@@ -10,17 +10,14 @@ using Container = SimpleInjector.Container;
 
 namespace Jobbr.Dashboard.Tests
 {
-
     [TestClass]
     public class DashboardBackendTests
     {
-        private NullLoggerFactory _loggerFactory;
         private Container _serviceContainer;
 
         [TestInitialize]
         public void Startup()
         {
-            _loggerFactory = new NullLoggerFactory();
             _serviceContainer = new Container();
             _serviceContainer.Register<JobbrWebApiConfiguration>();
             _serviceContainer.Register<DashboardConfiguration>();
@@ -35,7 +32,7 @@ namespace Jobbr.Dashboard.Tests
                 BackendAddress = $"http://localhost:{TcpPortHelper.NextFreeTcpPort()}"
             };
 
-            var host = new DashboardBackend(_loggerFactory, _serviceContainer, config);
+            var host = new DashboardBackend(new NullLoggerFactory(), _serviceContainer, config);
             host.Start();
 
             // Act
@@ -54,7 +51,7 @@ namespace Jobbr.Dashboard.Tests
                 BackendAddress = $"http://localhost:{TcpPortHelper.NextFreeTcpPort()}"
             };
 
-            var host = new DashboardBackend(_loggerFactory, _serviceContainer, config);
+            var host = new DashboardBackend(new NullLoggerFactory(), _serviceContainer, config);
 
             host.Start();
             host.Stop();
@@ -76,7 +73,7 @@ namespace Jobbr.Dashboard.Tests
                 BackendAddress = $"http://localhost:{TcpPortHelper.NextFreeTcpPort()}"
             };
 
-            var host = new DashboardBackend(_loggerFactory, _serviceContainer, config);
+            var host = new DashboardBackend(new NullLoggerFactory(), _serviceContainer, config);
 
             // Act
             // Assert
@@ -93,7 +90,7 @@ namespace Jobbr.Dashboard.Tests
                 BackendAddress = $"http://localhost:{TcpPortHelper.NextFreeTcpPort()}"
             };
 
-            var host = new DashboardBackend(_loggerFactory, _serviceContainer, config);
+            var host = new DashboardBackend(new NullLoggerFactory(), _serviceContainer, config);
 
             host.Start();
             host.Dispose();
