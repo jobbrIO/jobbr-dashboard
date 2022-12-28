@@ -1,6 +1,7 @@
 ﻿using Jobbr.ComponentModel.Registration;
 using Jobbr.Dashboard.Controller;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
@@ -12,10 +13,10 @@ namespace Jobbr.Dashboard
 {
     public class DashboardBackend : IJobbrComponent
     {
+        private IWebHost _webHost;
         private readonly ILogger _logger;
         private readonly InstanceProducer[] _serviceContainer;
         private readonly DashboardConfiguration _configuration;
-        private WebApplication _webApp;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
@@ -32,7 +33,7 @@ namespace Jobbr.Dashboard
         /// </summary>
         public void Start()
         {
-            if (_webApp != null)
+            if (_webHost != null)
             {
                 throw new InvalidOperationException("The server has already been started.");
             }
@@ -42,46 +43,59 @@ namespace Jobbr.Dashboard
                 throw new ArgumentException("Unable to start DashboardBackend when no backend URL is specified.", nameof(_configuration.BackendAddress));
             }
 
-            var builder = WebApplication.CreateBuilder();
-
-            foreach (var service in _serviceContainer)
-            {
-                builder.Services.Add(new ServiceDescriptor(service.ServiceType, service.GetInstance()));
-            }
-
-            // Controllers with endpoints need to be added manually due to discovery issues.
-            // https://stackoverflow.com/q/73777145
-            var mvcBuilder = builder.Services.AddControllers();
-            mvcBuilder.AddApplicationPart(typeof(ConfigController).Assembly);
-            mvcBuilder.AddApplicationPart(typeof(CronController).Assembly);
-            mvcBuilder.AddApplicationPart(typeof(SystemController).Assembly);
-
-            _webApp = builder.Build();
-            _webApp.MapControllers();
-
-            var manifestEmbeddedProvider = new ManifestEmbeddedFileProvider(typeof(DashboardBackend).Assembly);
-
-            _webApp.UseFileServer(new FileServerOptions
-            {
-                EnableDefaultFiles = true,
-                FileProvider = manifestEmbeddedProvider,
-                DefaultFilesOptions =
+            _webHost = new WebHostBuilder()
+                .UseKestrel()
+                .UseUrls(new Uri(_configuration.BackendAddress).GetLeftPart(UriPartial.Authority))
+                .ConfigureServices(services =>
                 {
-                    DefaultFileNames = new []
+                    foreach (var instanceProducer in _serviceContainer)
                     {
-                        "index.html"
+                        services.Add(
+                            new ServiceDescriptor(instanceProducer.ServiceType, instanceProducer.GetInstance()));
                     }
-                }
-            });
-            _webApp.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = manifestEmbeddedProvider,
-                ServeUnknownFileTypes = true
-            });
-            _webApp.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-            _webApp.Urls.Add(_configuration.BackendAddress);
 
-            Task.Run(async () => await _webApp.StartAsync());
+                    // Controllers with endpoints need to be added manually due to discovery issues.
+                    // https://stackoverflow.com/q/73777145
+                    services.AddControllers()
+                        .AddApplicationPart(typeof(ConfigController).Assembly)
+                        .AddApplicationPart(typeof(CronController).Assembly)
+                        .AddApplicationPart(typeof(SystemController).Assembly);
+                })
+                .Configure(app =>
+                {
+                    var manifestEmbeddedProvider = new ManifestEmbeddedFileProvider(typeof(DashboardBackend).Assembly);
+
+                    app.UseFileServer(new FileServerOptions
+                    {
+                        EnableDefaultFiles = true,
+                        FileProvider = manifestEmbeddedProvider,
+                        DefaultFilesOptions =
+                        {
+                            DefaultFileNames = new []
+                            {
+                                "index.html"
+                            }
+                        }
+                    });
+
+                    app.UseStaticFiles(new StaticFileOptions
+                    {
+                        FileProvider = manifestEmbeddedProvider,
+                        ServeUnknownFileTypes = true
+                    });
+
+                    app.UseRouting();
+
+                    app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+                    app.UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapControllers();
+                    });
+                })
+                .Build();
+
+            _webHost.Start();
 
             _logger.LogInformation("Started web host for DashboardBackend at '{backendAddress}'", _configuration.BackendAddress);
         }
@@ -90,7 +104,7 @@ namespace Jobbr.Dashboard
         {
             _logger.LogInformation("Stopping web host for Web-Endpoints");
 
-            Task.FromResult(_webApp.StopAsync());
+            Task.FromResult(_webHost.StopAsync());
         }
 
         public void Dispose()
@@ -107,8 +121,8 @@ namespace Jobbr.Dashboard
         {
             if (disposing)
             {
-                Task.Run(async () => await _webApp.StopAsync());
-                Task.Run(async () => await _webApp.DisposeAsync());
+                Task.Run(async () => await _webHost.StopAsync());
+                _webHost?.Dispose();
             }
         }
     }
