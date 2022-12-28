@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Jobbr.Server.WebAPI;
+﻿using Jobbr.Server.WebAPI;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
@@ -17,7 +16,7 @@ namespace Jobbr.Dashboard.Controller
         }
 
         [HttpGet("config")]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return Ok(new
             {

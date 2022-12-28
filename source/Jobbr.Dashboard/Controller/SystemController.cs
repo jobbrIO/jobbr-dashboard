@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Jobbr.Dashboard.Model;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
-using Jobbr.Dashboard.Model;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
@@ -25,17 +24,17 @@ namespace Jobbr.Dashboard.Controller
                 _totalPhysicalMemory = memStatus.ullTotalPhys;
             }
         }
-        
+
         [HttpGet("system/cpu")]
-        public async Task<IActionResult> GetCpuLoad()
+        public IActionResult GetCpuLoad()
         {
             return Ok(_cpu.NextValue());
         }
 
         [HttpGet("system/memory")]
-        public async Task<IActionResult> GetMemoryUsage()
+        public IActionResult GetMemoryUsage()
         {
-            var totalPhysicalMemory = _totalPhysicalMemory / (double) 1024 / (double) 1024;
+            var totalPhysicalMemory = _totalPhysicalMemory / (double)1024 / (double)1024;
             var freeMemory = (double)_memory.NextValue();
 
             return Ok(new
@@ -46,7 +45,7 @@ namespace Jobbr.Dashboard.Controller
         }
 
         [HttpGet("system/disks")]
-        public async Task<IActionResult> GetDiskUsage()
+        public IActionResult GetDiskUsage()
         {
             var driveInfos = new List<DiskInfoDto>();
 
@@ -57,21 +56,21 @@ namespace Jobbr.Dashboard.Controller
                 {
                     Name = drive.Name,
                     FreeSpace = drive.AvailableFreeSpace,
-                    FreeSpacePercentage = (drive.TotalFreeSpace / (double) drive.TotalSize) * 100,
+                    FreeSpacePercentage = (drive.TotalFreeSpace / (double)drive.TotalSize) * 100,
                     TotalSpace = drive.TotalSize,
                     Type = drive.DriveType.ToString()
                 };
-                
+
                 driveInfos.Add(dto);
             }
 
             return Ok(driveInfos);
         }
-        
+
         [HttpGet("signalr/trigger")]
-        public async Task<IActionResult> TriggerSignalR()
+        public IActionResult TriggerSignalR()
         {
             return Ok();
-        }   
+        }
     }
 }

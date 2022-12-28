@@ -13,20 +13,17 @@ namespace Jobbr.Dashboard
     public class DashboardBackend : IJobbrComponent
     {
         private readonly ILogger _logger;
-        private readonly InstanceProducer[] _serviceCollection;
+        private readonly InstanceProducer[] _serviceContainer;
         private readonly DashboardConfiguration _configuration;
-
-        private IDisposable _webHost;
         private WebApplication _webApp;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
         /// </summary>
-        public DashboardBackend(ILoggerFactory loggerFactory, Container serviceCollection, DashboardConfiguration configuration)
+        public DashboardBackend(ILoggerFactory loggerFactory, Container serviceContainer, DashboardConfiguration configuration)
         {
             _logger = loggerFactory.CreateLogger<DashboardBackend>();
-
-            _serviceCollection = serviceCollection.GetCurrentRegistrations();
+            _serviceContainer = serviceContainer.GetCurrentRegistrations();
             _configuration = configuration;
         }
 
@@ -48,7 +45,7 @@ namespace Jobbr.Dashboard
 
             var builder = WebApplication.CreateBuilder();
 
-            foreach (var service in _serviceCollection)
+            foreach (var service in _serviceContainer)
             {
                 builder.Services.Add(new ServiceDescriptor(service.ServiceType, service.GetInstance()));
             }
@@ -85,7 +82,7 @@ namespace Jobbr.Dashboard
             _webApp.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             _webApp.Urls.Add(_configuration.BackendAddress);
 
-            Task.FromResult(_webApp.StartAsync());
+            Task.Run(async () => await _webApp.StartAsync());
 
             _logger.LogInformation("Started web host for DashboardBackend at '{backendAddress}'", _configuration.BackendAddress);
         }
@@ -94,16 +91,26 @@ namespace Jobbr.Dashboard
         {
             _logger.LogInformation("Stopping web host for Web-Endpoints");
 
-            // TODO _webHost is null - see unit test
-            _webHost?.Dispose();
-            _webHost = null;
+            Task.Run(async () => await _webApp.StopAsync());
         }
 
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            _webHost.Dispose();
-            _webHost = null;
+            Dispose(true);
+        }
+
+        /// <summary>
+        /// Conditional web host dispose.
+        /// </summary>
+        /// <param name="disposing">If true, dispose.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Task.Run(async () => await _webApp.StopAsync());
+                Task.Run(async () => await _webApp.DisposeAsync());
+            }
         }
     }
 }
