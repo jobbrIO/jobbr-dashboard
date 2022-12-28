@@ -32,7 +32,4 @@
     <ProjectReference Include="..\Jobbr.Dashboard\Jobbr.Dashboard.csproj" />
   </ItemGroup>
   <Import Project="..\..\Jobbr.Dashboard.targets" />
-  <ItemGroup>
-    <EmbeddedResource Remove="C:\repos\jobbr-dashboard\dashboard-app.zip" />
-  </ItemGroup>
 </Project>
