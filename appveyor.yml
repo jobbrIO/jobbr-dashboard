@@ -24,7 +24,8 @@ assembly_info:
 before_build:
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build --env prod
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist & 7z a -tzip dashboard-app.zip *.*
-  - cmd: copy dashboard-app.zip ..\..\..\..\dashboard-app.zip
+  - cmd: copy dashboard-app.zip ..\..\..\..\dashboard-app.zip  
+  - cmd: copy dashboard-app.zip Jobbr.Dashboard\..\..\..\dashboard-app.zip
   - cmd: cd ..\..\..\..
   - nuget restore source/Jobbr.Dashboard.sln
   - ps: C:\ProgramData\chocolatey\lib\GitVersion.Portable\tools\GitVersion.exe /l console /output buildserver /updateAssemblyInfo
