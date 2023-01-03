@@ -94,7 +94,7 @@
     "wait-on": "^6.0.1",
     "webpack": "4.29.6",
     "webpack-bundle-analyzer": "^4.7.0",
-    "webpack-dev-server": "^3.11.3",
+    "webpack-dev-server": "^4.11.1",
     "whatwg-fetch": "^3.0.0"
   },
   "resolutions": {
