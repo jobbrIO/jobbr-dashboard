@@ -3,7 +3,6 @@ using Jobbr.Dashboard.Controller;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using System;
@@ -63,12 +62,10 @@ namespace Jobbr.Dashboard
                 })
                 .Configure(app =>
                 {
-                    var manifestEmbeddedProvider = new ManifestEmbeddedFileProvider(typeof(DashboardBackend).Assembly);
-
                     app.UseFileServer(new FileServerOptions
                     {
                         EnableDefaultFiles = true,
-                        FileProvider = manifestEmbeddedProvider,
+                        FileProvider = new ZipContentTypeProvider(),
                         DefaultFilesOptions =
                         {
                             DefaultFileNames = new []
@@ -80,7 +77,7 @@ namespace Jobbr.Dashboard
 
                     app.UseStaticFiles(new StaticFileOptions
                     {
-                        FileProvider = manifestEmbeddedProvider,
+                        FileProvider = new ZipContentTypeProvider(),
                         ServeUnknownFileTypes = true
                     });
 
