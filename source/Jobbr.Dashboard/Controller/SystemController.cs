@@ -15,7 +15,7 @@ namespace Jobbr.Dashboard.Controller
 
         static SystemController()
         {
-            _cpu = new PerformanceCounter("Processor", "% Processor Time", "Total");
+            _cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             _memory = new PerformanceCounter("Memory", "Available MBytes", string.Empty);
 
             var memStatus = new MemoryStatusEx();
