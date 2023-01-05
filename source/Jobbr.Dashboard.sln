@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{13DEFABC-C2B3-4EA5-AB28-51E053D928FE}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,13 +12,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{13DEFABC
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Dashboard.Tests", "Jobbr.Dashboard.Tests\Jobbr.Dashboard.Tests.csproj", "{243A321C-D8CD-447D-AD25-C831E17ADF76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jobbr.Dashboard.Tests", "Jobbr.Dashboard.Tests\Jobbr.Dashboard.Tests.csproj", "{243A321C-D8CD-447D-AD25-C831E17ADF76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Jobbr.Server", "Sample.Jobbr.Server\Sample.Jobbr.Server.csproj", "{CF3E365B-B695-445E-B474-A15774B693E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Jobbr.Server", "Sample.Jobbr.Server\Sample.Jobbr.Server.csproj", "{CF3E365B-B695-445E-B474-A15774B693E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.JobRunner", "Sample.JobRunner\Sample.JobRunner.csproj", "{BF69F1FD-4FE4-48AE-937F-03B123211277}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.JobRunner", "Sample.JobRunner\Sample.JobRunner.csproj", "{BF69F1FD-4FE4-48AE-937F-03B123211277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Dashboard", "Jobbr.Dashboard\Jobbr.Dashboard.csproj", "{DEA0DA38-DB0F-4EE5-9A22-A47FD338FDED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jobbr.Dashboard", "Jobbr.Dashboard\Jobbr.Dashboard.csproj", "{DEA0DA38-DB0F-4EE5-9A22-A47FD338FDED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submodules", "submodules", "{3BDCECAC-E578-4A64-A831-1283295900BC}"
+	ProjectSection(SolutionItems) = preProject
+		submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\Jobbr.DevSupport.StyleCopAnalyzer.targets = submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\Jobbr.DevSupport.StyleCopAnalyzer.targets
+		submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\JobbrRuleSet.ruleset = submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\JobbrRuleSet.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
