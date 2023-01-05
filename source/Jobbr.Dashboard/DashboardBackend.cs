@@ -1,21 +1,25 @@
-﻿using Jobbr.ComponentModel.Registration;
+﻿using System;
+using System.Threading.Tasks;
+using Jobbr.ComponentModel.Registration;
 using Jobbr.Dashboard.Controller;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
-using System;
-using System.Threading.Tasks;
 
 namespace Jobbr.Dashboard
 {
+    /// <summary>
+    /// The dashboard server backend.
+    /// </summary>
     public class DashboardBackend : IJobbrComponent
     {
-        private IWebHost _webHost;
         private readonly ILogger _logger;
         private readonly InstanceProducer[] _serviceContainer;
         private readonly DashboardConfiguration _configuration;
+
+        private IWebHost _webHost;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
@@ -68,7 +72,7 @@ namespace Jobbr.Dashboard
                         FileProvider = new ZipContentTypeProvider(),
                         DefaultFilesOptions =
                         {
-                            DefaultFileNames = new []
+                            DefaultFileNames = new[]
                             {
                                 "index.html"
                             }
@@ -97,6 +101,9 @@ namespace Jobbr.Dashboard
             _logger.LogInformation("Started web host for DashboardBackend at '{backendAddress}'", _configuration.BackendAddress);
         }
 
+        /// <summary>
+        /// Stop web host.
+        /// </summary>
         public void Stop()
         {
             _logger.LogInformation("Stopping web host for Web-Endpoints");
@@ -104,6 +111,9 @@ namespace Jobbr.Dashboard
             Task.FromResult(_webHost.StopAsync());
         }
 
+        /// <summary>
+        /// Dispose web host.
+        /// </summary>
         public void Dispose()
         {
             GC.SuppressFinalize(this);

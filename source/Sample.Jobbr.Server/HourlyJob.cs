@@ -4,8 +4,14 @@ using System.Threading;
 
 namespace Sample.Jobbr.Server
 {
+    /// <summary>
+    /// Job that is run hourly.
+    /// </summary>
     public class HourlyJob
     {
+        /// <summary>
+        /// Run job.
+        /// </summary>
         public void Run()
         {
             const int iterations = 20;

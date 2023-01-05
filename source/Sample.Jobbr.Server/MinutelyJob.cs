@@ -21,7 +21,7 @@ namespace Sample.Jobbr.Server
             File.AppendAllText("log.txt", "blub");
             File.AppendAllText("bla.json", "asdf");
 
-            //throw new Exception("shit happens");
+            // throw new Exception("shit happens");
         }
     }
 }
