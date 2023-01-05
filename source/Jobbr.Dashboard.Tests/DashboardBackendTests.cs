@@ -1,11 +1,11 @@
-﻿using Jobbr.Server.WebAPI;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shouldly;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Jobbr.Server.WebAPI;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
 using Container = SimpleInjector.Container;
 
 namespace Jobbr.Dashboard.Tests
@@ -61,7 +61,6 @@ namespace Jobbr.Dashboard.Tests
             var ex = await Should.ThrowAsync<Exception>(() => new HttpClient().GetAsync(config.BackendAddress + "/config"));
             ex.InnerException.ShouldBeOfType<SocketException>();
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]

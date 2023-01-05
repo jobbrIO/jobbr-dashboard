@@ -14,6 +14,7 @@ environment:
   IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
 
 install:
+  - git submodule update --init --recursive
   - choco install gitversion.portable --version 5.10.3 -y
   - ps: Install-Product node $env:nodejs_version
   - npm install source/Jobbr.Dashboard.Frontend/jobbr-dashboard --prefix source/Jobbr.Dashboard.Frontend/jobbr-dashboard

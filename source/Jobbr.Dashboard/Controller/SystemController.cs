@@ -1,41 +1,52 @@
-﻿using Jobbr.Dashboard.Model;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Jobbr.Dashboard.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
+    /// <summary>
+    /// System controller.
+    /// </summary>
     [ApiController]
     public class SystemController : ControllerBase
     {
-        private static readonly PerformanceCounter _cpu;
-        private static readonly PerformanceCounter _memory;
-        private static readonly ulong _totalPhysicalMemory;
+        private static readonly PerformanceCounter Cpu;
+        private static readonly PerformanceCounter Memory;
+        private static readonly ulong TotalPhysicalMemory;
 
         static SystemController()
         {
-            _cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            _memory = new PerformanceCounter("Memory", "Available MBytes", string.Empty);
+            Cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            Memory = new PerformanceCounter("Memory", "Available MBytes", string.Empty);
 
             var memStatus = new MemoryStatusEx();
             if (NativeMethods.GlobalMemoryStatusEx(memStatus))
             {
-                _totalPhysicalMemory = memStatus.ullTotalPhys;
+                TotalPhysicalMemory = memStatus.ullTotalPhys;
             }
         }
 
+        /// <summary>
+        /// Get current CPU load.
+        /// </summary>
+        /// <returns>Current CPU load as a float.</returns>
         [HttpGet("system/cpu")]
         public IActionResult GetCpuLoad()
         {
-            return Ok(_cpu.NextValue());
+            return Ok(Cpu.NextValue());
         }
 
+        /// <summary>
+        /// Get current memory usage.
+        /// </summary>
+        /// <returns>Total physical memory and free memory.</returns>
         [HttpGet("system/memory")]
         public IActionResult GetMemoryUsage()
         {
-            var totalPhysicalMemory = _totalPhysicalMemory / (double)1024 / (double)1024;
-            var freeMemory = (double)_memory.NextValue();
+            var totalPhysicalMemory = TotalPhysicalMemory / 1024D / 1024;
+            var freeMemory = (double)Memory.NextValue();
 
             return Ok(new
             {
@@ -44,19 +55,22 @@ namespace Jobbr.Dashboard.Controller
             });
         }
 
+        /// <summary>
+        /// Get hard drive usage.
+        /// </summary>
+        /// <returns>Drive information.</returns>
         [HttpGet("system/disks")]
         public IActionResult GetDiskUsage()
         {
             var driveInfos = new List<DiskInfoDto>();
 
-            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var drive in DriveInfo.GetDrives())
             {
                 var dto = new DiskInfoDto
                 {
                     Name = drive.Name,
                     FreeSpace = drive.AvailableFreeSpace,
-                    FreeSpacePercentage = (drive.TotalFreeSpace / (double)drive.TotalSize) * 100,
+                    FreeSpacePercentage = drive.TotalFreeSpace / (double)drive.TotalSize * 100,
                     TotalSpace = drive.TotalSize,
                     Type = drive.DriveType.ToString()
                 };
@@ -67,6 +81,10 @@ namespace Jobbr.Dashboard.Controller
             return Ok(driveInfos);
         }
 
+        /// <summary>
+        /// Trigger Signal R test endpoint.
+        /// </summary>
+        /// <returns>Empty Ok.</returns>
         [HttpGet("signalr/trigger")]
         public IActionResult TriggerSignalR()
         {
