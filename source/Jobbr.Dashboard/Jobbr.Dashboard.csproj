@@ -34,4 +34,5 @@
   <ImportGroup>
     <Import Project="..\submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\Jobbr.DevSupport.StyleCopAnalyzer.targets" />
   </ImportGroup>
+  <Import Project="..\..\Jobbr.Dashboard.targets" />
 </Project>
