@@ -32,4 +32,7 @@
     <ProjectReference Include="..\Jobbr.Dashboard\Jobbr.Dashboard.csproj" />
   </ItemGroup>
   <Import Project="..\..\Jobbr.Dashboard.targets" />
+  <ImportGroup>
+    <Import Project="..\submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\Jobbr.DevSupport.StyleCopAnalyzer.targets" />
+  </ImportGroup>
 </Project>
