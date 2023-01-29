@@ -19,9 +19,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Jobbr.ComponentModel.JobStorage" Version="3.0.0-rc.2" />
-    <PackageReference Include="Jobbr.Execution.Forked" Version="3.0.0-rc.6" />
-    <PackageReference Include="Jobbr.Server" Version="3.0.0-rc.7" />
-    <PackageReference Include="Jobbr.Storage.MsSql" Version="3.0.0-rc.5" />
+    <PackageReference Include="Jobbr.Execution.Forked" Version="3.0.0-rc.7" />
+    <PackageReference Include="Jobbr.Server" Version="3.0.0-rc.8" />
+    <PackageReference Include="Jobbr.Storage.MsSql" Version="3.0.0-rc.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jobbr.Dashboard\Jobbr.Dashboard.csproj" />
