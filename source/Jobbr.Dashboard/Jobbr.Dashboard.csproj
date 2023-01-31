@@ -23,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Jobbr.Server.WebAPI" Version="3.0.0-rc.7" />
     <PackageReference Include="NCrontab" Version="3.3.1" />
+    <PackageReference Include="SharpCoreFileSystem" Version="1.0.6" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.1" />
     <PackageReference Include="Jobbr.ComponentModel.ArtefactStorage" Version="3.0.0-rc.1" />
     <PackageReference Include="Jobbr.ComponentModel.Execution" Version="3.0.0-rc.1" />
