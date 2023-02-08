@@ -8,7 +8,6 @@ using Microsoft.Extensions.Primitives;
 using SharpFileSystem;
 using SharpFileSystem.FileSystems;
 using SharpFileSystem.IO;
-using Directory = System.IO.Directory;
 using File = System.IO.File;
 
 namespace Jobbr.Dashboard;
@@ -20,7 +19,7 @@ internal class ZipFileContentProvider : IFileProvider, IDisposable
 
     public ZipFileContentProvider(string zipFileName)
     {
-        var zipPath = Path.Combine(Directory.GetCurrentDirectory(), zipFileName);
+        var zipPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, zipFileName);
 
         // Share file access across multiple instances
         if (_fileStream == null)
