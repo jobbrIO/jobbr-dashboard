@@ -36,16 +36,19 @@ public class DashboardBackend : IJobbrComponent
 
         const string appZipResource = "dashboard-app.zip";
 
-        var dashboardZipEmbeddedResourceName = Assembly.GetEntryAssembly()?.GetManifestResourceNames().FirstOrDefault(p => p.EndsWith(appZipResource));
+        var assembly = Assembly.GetExecutingAssembly();
+        var dashboardZipEmbeddedResourceName = assembly.GetManifestResourceNames().FirstOrDefault(p => p.EndsWith(appZipResource));
 
         if (dashboardZipEmbeddedResourceName == null)
         {
             throw new NullReferenceException("Could not find dashboard-app.zip in the entry assembly. Please make sure dashboard-app.zip is included in your jobbr server project and build action is set to Embedded Resource");
         }
 
+        var zipStream = assembly.GetManifestResourceStream(dashboardZipEmbeddedResourceName);
+
         if (_virtualFileSystemProvider == null)
         {
-            _virtualFileSystemProvider = new ZipFileContentProvider(dashboardZipEmbeddedResourceName);
+            _virtualFileSystemProvider = new ZipFileContentProvider(zipStream);
         }
     }
 

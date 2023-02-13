@@ -12,7 +12,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <AssemblyTitle>Jobbr.Dashboard.Tests</AssemblyTitle>
     <Product>Jobbr.Dashboard.Tests</Product>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

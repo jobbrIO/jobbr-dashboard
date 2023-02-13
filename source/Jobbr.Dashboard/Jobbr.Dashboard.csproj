@@ -7,7 +7,7 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <AssemblyTitle>Jobbr.Dashboard.Backend</AssemblyTitle>
     <Product>Jobbr.Dashboard.Backend</Product>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>

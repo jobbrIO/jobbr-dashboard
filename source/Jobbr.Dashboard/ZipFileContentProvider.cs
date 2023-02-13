@@ -16,10 +16,8 @@ internal class ZipFileContentProvider : IFileProvider, IDisposable
 {
     private readonly NetZipArchiveFileSystem _fileSystem;
 
-    public ZipFileContentProvider(string embeddedResourceName)
+    public ZipFileContentProvider(Stream stream)
     {
-        var stream = Assembly.GetEntryAssembly()?.GetManifestResourceStream(embeddedResourceName);
-
         _fileSystem = NetZipArchiveFileSystem.OpenReadOnly(stream);
     }
 
