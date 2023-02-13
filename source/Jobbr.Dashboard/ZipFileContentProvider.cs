@@ -3,31 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 using SharpFileSystem;
 using SharpFileSystem.FileSystems;
 using SharpFileSystem.IO;
-using File = System.IO.File;
 
 namespace Jobbr.Dashboard;
 
 internal class ZipFileContentProvider : IFileProvider, IDisposable
 {
-    private static FileStream _fileStream;
     private readonly NetZipArchiveFileSystem _fileSystem;
 
-    public ZipFileContentProvider(string zipFileName)
+    public ZipFileContentProvider(string embeddedResourceName)
     {
-        var zipPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, zipFileName);
+        var stream = Assembly.GetEntryAssembly()?.GetManifestResourceStream(embeddedResourceName);
 
-        // Share file access across multiple instances
-        if (_fileStream == null)
-        {
-            _fileStream = File.Open(zipPath, FileMode.Open, FileAccess.ReadWrite);
-        }
-
-        _fileSystem = NetZipArchiveFileSystem.Open(_fileStream);
+        _fileSystem = NetZipArchiveFileSystem.OpenReadOnly(stream);
     }
 
     public IFileInfo GetFileInfo(string subpath)

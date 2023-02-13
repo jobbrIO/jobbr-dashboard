@@ -1,8 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)dashboard-app.zip">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)dashboard-app.zip">
       <Link>dashboard-app.zip</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
