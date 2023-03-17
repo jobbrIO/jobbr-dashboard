@@ -40,9 +40,8 @@ build:
 
 
 after_build:
-  - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%" -Symbols
+  - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%"
   - cmd: appveyor PushArtifact "Jobbr.Dashboard.%GitVersion_SemVer%.nupkg"
-  - cmd: appveyor PushArtifact "Jobbr.Dashboard.%GitVersion_SemVer%.symbols.nupkg"
 
 test:
   assemblies:
