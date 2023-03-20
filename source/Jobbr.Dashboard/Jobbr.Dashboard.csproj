@@ -2,9 +2,12 @@
   <PropertyGroup>
     <ProjectGuid>{DEA0DA38-DB0F-4EE5-9A22-A47FD338FDED}</ProjectGuid>
     <TargetFramework>net6.0</TargetFramework>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <AssemblyTitle>Jobbr.Dashboard.Backend</AssemblyTitle>
     <Product>Jobbr.Dashboard.Backend</Product>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
@@ -18,22 +21,17 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Jobbr.Server.WebAPI" Version="3.0.0-rc.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.1" />
+    <PackageReference Include="Jobbr.Server.WebAPI" Version="3.0.0" />
     <PackageReference Include="NCrontab" Version="3.3.1" />
-    <PackageReference Include="SimpleInjector" Version="5.4.0" />
-    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="7.0.0" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Include="Jobbr.ComponentModel.ArtefactStorage" Version="3.0.0-rc.1" />
-    <PackageReference Include="Jobbr.ComponentModel.Execution" Version="3.0.0-rc.1" />
-    <PackageReference Include="Jobbr.ComponentModel.Registration" Version="3.0.0-rc.2" />
-    <PackageReference Include="Jobbr.ComponentModel.Management" Version="3.0.0-rc.1" />
+    <PackageReference Include="SharpCoreFileSystem" Version="1.0.7" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.1" />
+    <PackageReference Include="Jobbr.ComponentModel.ArtefactStorage" Version="3.0.0" />
+    <PackageReference Include="Jobbr.ComponentModel.Execution" Version="3.0.0" />
+    <PackageReference Include="Jobbr.ComponentModel.Registration" Version="3.0.0" />
+    <PackageReference Include="Jobbr.ComponentModel.Management" Version="3.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="dashboard-app.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
+  <ImportGroup>
+    <Import Project="..\submodules\devsupport\src\Jobbr.DevSupport.StyleCopAnalyzer\Jobbr.DevSupport.StyleCopAnalyzer.targets" />
+  </ImportGroup>
+  <Import Project="..\..\Jobbr.Dashboard.targets" />
 </Project>

@@ -14,6 +14,7 @@ environment:
   IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
 
 install:
+  - git submodule update --init --recursive
   - choco install gitversion.portable --version 5.10.3 -y
   - ps: Install-Product node $env:nodejs_version
   - npm install source/Jobbr.Dashboard.Frontend/jobbr-dashboard --prefix source/Jobbr.Dashboard.Frontend/jobbr-dashboard
@@ -28,7 +29,7 @@ before_build:
   - cmd: copy dashboard-app.zip ..\..\..\Jobbr.Dashboard\dashboard-app.zip
   - cmd: cd ..\..\..\..
   - nuget restore source/Jobbr.Dashboard.sln
-  - ps: C:\ProgramData\chocolatey\lib\GitVersion.Portable\tools\GitVersion.exe /l console /output buildserver /updateAssemblyInfo
+  - ps: C:\ProgramData\chocolatey\lib\GitVersion.Portable\tools\GitVersion.exe /l console /output buildserver /updateprojectfiles
 
 platform: Any CPU
 configuration: Release
@@ -37,12 +38,14 @@ build:
   parallel: true 
   project: source/Jobbr.Dashboard.sln
 
-test: off
 
 after_build:
-  - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%" -Symbols
+  - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%"
   - cmd: appveyor PushArtifact "Jobbr.Dashboard.%GitVersion_SemVer%.nupkg"
-  - cmd: appveyor PushArtifact "Jobbr.Dashboard.%GitVersion_SemVer%.symbols.nupkg"
+
+test:
+  assemblies:
+    - '**\bin\Release\Jobbr.Dashboard.Tests.dll'
 
 deploy:
 - provider: NuGet

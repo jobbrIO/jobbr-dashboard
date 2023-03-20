@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Jobbr.Dashboard;
 using Jobbr.Server.Builder;
 using Jobbr.Server.ForkedExecution;
@@ -7,13 +9,18 @@ using Jobbr.Storage.MsSql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
 
 namespace Sample.Jobbr.Server
 {
+    /// <summary>
+    /// Program.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        /// <param name="args">Execution arguments.</param>
         public static void Main(string[] args)
         {
             const string baseAddress = "http://localhost";
@@ -73,7 +80,6 @@ namespace Sample.Jobbr.Server
                         }
                     });
 
-
                 repo.Define(nameof(DailyJob), typeof(DailyJob).FullName)
                     .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
                     .WithParameter(new
@@ -100,11 +106,12 @@ namespace Sample.Jobbr.Server
                 config.BackendAddress = $"{baseAddress}:1338";
                 config.SoftDeleteJobRunOnRetry = true;
             });
-            //jobbrBuilder.AddRavenDbStorage(config =>
-            //{
+
+            // jobbrBuilder.AddRavenDbStorage(config =>
+            // {
             //    config.Url = "http://localhost:8080/";
             //    config.Database = "Jobbr";
-            //});
+            // });
             jobbrBuilder.AddMsSqlStorage(config =>
             {
                 config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
@@ -122,6 +129,11 @@ namespace Sample.Jobbr.Server
             }
         }
 
+        /// <summary>
+        /// Create <see cref="IHostBuilder"/>.
+        /// </summary>
+        /// <param name="args">Host builder arguments.</param>
+        /// <returns>New <see cref="IHostBuilder"/>.</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(logging =>
