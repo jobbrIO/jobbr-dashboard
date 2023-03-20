@@ -6,32 +6,45 @@ using Jobbr.Server.ForkedExecution;
 using Jobbr.Server.JobRegistry;
 using Jobbr.Server.WebAPI;
 using Jobbr.Storage.MsSql;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Sample.Jobbr.Server
 {
+    /// <summary>
+    /// Program.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        /// <param name="args">Execution arguments.</param>
         public static void Main(string[] args)
         {
-            const string baseAddress = "http://localhost:1338/";
+            const string baseAddress = "http://localhost";
             const string jobRunDirectory = "C:/temp";
 
             if (Directory.Exists(jobRunDirectory) == false)
             {
-	            Directory.CreateDirectory(jobRunDirectory);
+                Directory.CreateDirectory(jobRunDirectory);
             }
 
-			var jobbrBuilder = new JobbrBuilder();
+            var app = CreateHostBuilder(args).Build();
+            var loggerFactory = app.Services.GetService<ILoggerFactory>();
+
+            var jobbrBuilder = new JobbrBuilder(loggerFactory);
             jobbrBuilder.AddForkedExecution(config =>
             {
                 config.JobRunDirectory = jobRunDirectory;
-                config.JobRunnerExecutable = "../../../Sample.JobRunner/bin/Debug/Sample.JobRunner.exe";
+                config.JobRunnerExecutable = "../../../../Sample.JobRunner/bin/Debug/net6.0/Sample.JobRunner.exe";
                 config.MaxConcurrentProcesses = 2;
             });
 
-            jobbrBuilder.AddJobs(repo =>
+            jobbrBuilder.AddJobs(loggerFactory, repo =>
             {
-                repo.Define(typeof(MinutelyJob).Name, typeof(MinutelyJob).FullName)
+                repo.Define(nameof(MinutelyJob), typeof(MinutelyJob).FullName)
                     .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
                     .WithParameter(new
                     {
@@ -44,7 +57,7 @@ namespace Sample.Jobbr.Server
                     })
                     .WithTrigger(DateTime.Now.Add(TimeSpan.FromDays(1337)), new { Foo = "bar" }, "ozu", "olibanjoli");
 
-                repo.Define(typeof(MinutelyJob).Name + "-2", typeof(MinutelyJob).FullName)
+                repo.Define(nameof(MinutelyJob) + "-2", typeof(MinutelyJob).FullName)
                     .WithTrigger("* * * * *", parameters: new { SomeProperty = "foobar" }, validFromDateTimeUtc: new DateTime(2000, 1, 1), validToDateTimeUtc: new DateTime(2100, 1, 1), userId: "ozu", userDisplayName: "olibanjoli")
                     .WithParameter(new
                     {
@@ -56,7 +69,7 @@ namespace Sample.Jobbr.Server
                         }
                     });
 
-                repo.Define(typeof(HourlyJob).Name, typeof(HourlyJob).FullName)
+                repo.Define(nameof(HourlyJob), typeof(HourlyJob).FullName)
                     .WithTrigger("0 * * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
                     .WithParameter(new
                     {
@@ -67,8 +80,7 @@ namespace Sample.Jobbr.Server
                         }
                     });
 
-
-                repo.Define(typeof(DailyJob).Name, typeof(DailyJob).FullName)
+                repo.Define(nameof(DailyJob), typeof(DailyJob).FullName)
                     .WithTrigger("0 0 * * *", parameters: new { Name = "Jack Bauer", Unit = "CTU", Skills = "Headshot" })
                     .WithParameter(new
                     {
@@ -79,8 +91,8 @@ namespace Sample.Jobbr.Server
                         }
                     });
 
-                repo.Define(typeof(FailingJob).Name, typeof(FailingJob).FullName)
-                    .WithTrigger("*/2 * * * *", parameters: new {SomeProperty = "foobar"})
+                repo.Define(nameof(FailingJob), typeof(FailingJob).FullName)
+                    .WithTrigger("*/2 * * * *", parameters: new { SomeProperty = "foobar" })
                     .WithParameter(new
                     {
                         Bla = "Blub",
@@ -88,17 +100,18 @@ namespace Sample.Jobbr.Server
                     });
             });
 
-            jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}api");
+            jobbrBuilder.AddWebApi(config => config.BackendAddress = $"{baseAddress}:1339/api");
             jobbrBuilder.AddDashboard(config =>
             {
-                config.BackendAddress = $"{baseAddress}";
+                config.BackendAddress = $"{baseAddress}:1338";
                 config.SoftDeleteJobRunOnRetry = true;
             });
-            //jobbrBuilder.AddRavenDbStorage(config =>
-            //{
+
+            // jobbrBuilder.AddRavenDbStorage(config =>
+            // {
             //    config.Url = "http://localhost:8080/";
             //    config.Database = "Jobbr";
-            //});
+            // });
             jobbrBuilder.AddMsSqlStorage(config =>
             {
                 config.ConnectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=JobbrDashboard2;Connect Timeout=5;Integrated Security=True";
@@ -115,5 +128,18 @@ namespace Sample.Jobbr.Server
                 Console.ReadLine();
             }
         }
+
+        /// <summary>
+        /// Create <see cref="IHostBuilder"/>.
+        /// </summary>
+        /// <param name="args">Host builder arguments.</param>
+        /// <returns>New <see cref="IHostBuilder"/>.</returns>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                });
     }
 }

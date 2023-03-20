@@ -1,27 +1,39 @@
-﻿using System.Web.Http;
-using Jobbr.Server.WebAPI;
+﻿using Jobbr.Server.WebAPI;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jobbr.Dashboard.Controller
 {
-    public class ConfigController : ApiController
+    /// <summary>
+    /// Configuration controller.
+    /// </summary>
+    [ApiController]
+    public class ConfigController : ControllerBase
     {
-        private readonly JobbrWebApiConfiguration webApiConfiguration;
-        private readonly DashboardConfiguration dashboardConfiguration;
+        private readonly JobbrWebApiConfiguration _webApiConfiguration;
+        private readonly DashboardConfiguration _dashboardConfiguration;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigController"/> class.
+        /// </summary>
+        /// <param name="webApiConfiguration">Jobbr API configuration.</param>
+        /// <param name="dashboardConfiguration">Dashboard configuration.</param>
         public ConfigController(JobbrWebApiConfiguration webApiConfiguration, DashboardConfiguration dashboardConfiguration)
         {
-            this.webApiConfiguration = webApiConfiguration;
-            this.dashboardConfiguration = dashboardConfiguration;
+            _webApiConfiguration = webApiConfiguration;
+            _dashboardConfiguration = dashboardConfiguration;
         }
 
-        [HttpGet]
-        [Route("config")]
-        public IHttpActionResult Get()
+        /// <summary>
+        /// Get current API configuration.
+        /// </summary>
+        /// <returns>Action result that contains the API configuration.</returns>
+        [HttpGet("config")]
+        public IActionResult Get()
         {
-            return this.Ok(new
+            return Ok(new
             {
-                Api = webApiConfiguration.BackendAddress,
-                dashboardConfiguration.SoftDeleteJobRunOnRetry
+                Api = _webApiConfiguration.BackendAddress,
+                _dashboardConfiguration.SoftDeleteJobRunOnRetry
             });
         }
     }

@@ -1,13 +1,21 @@
-﻿using System.Web.Http;
+﻿using Microsoft.AspNetCore.Mvc;
 using NCrontab;
 
 namespace Jobbr.Dashboard.Controller
 {
-    public class CronController : ApiController
+    /// <summary>
+    /// CRON controller.
+    /// </summary>
+    [ApiController]
+    public class CronController : ControllerBase
     {
-        [HttpGet]
-        [Route("cron/")]
-        public IHttpActionResult Validate(string cron)
+        /// <summary>
+        /// Validate that CRON expression is parseable.
+        /// </summary>
+        /// <param name="cron">CRON expression to validate.</param>
+        /// <returns>If CRON expression is parseable.</returns>
+        [HttpGet("cron/")]
+        public IActionResult Validate(string cron)
         {
             var parsed = CrontabSchedule.TryParse(cron);
 

@@ -1,76 +1,151 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Jobbr.ComponentModel.Registration;
-using Jobbr.Dashboard.Logging;
-using Microsoft.Owin.Hosting;
-using Microsoft.Owin.Hosting.Services;
-using Microsoft.Owin.Hosting.Starter;
+using Jobbr.Dashboard.Controller;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
+using SimpleInjector;
 
-namespace Jobbr.Dashboard
+namespace Jobbr.Dashboard;
+
+/// <summary>
+///     The dashboard server backend.
+/// </summary>
+public class DashboardBackend : IJobbrComponent
 {
-    public class DashboardBackend : IJobbrComponent
+    private readonly DashboardConfiguration _configuration;
+    private readonly ILogger _logger;
+    private readonly InstanceProducer[] _serviceContainer;
+
+    private static IFileProvider _virtualFileSystemProvider;
+    private IWebHost _webHost;
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="DashboardBackend" /> class.
+    /// </summary>
+    public DashboardBackend(ILoggerFactory loggerFactory, Container serviceContainer, DashboardConfiguration configuration)
     {
-        private static readonly ILog Logger = LogProvider.For<DashboardBackend>();
+        _logger = loggerFactory.CreateLogger<DashboardBackend>();
+        _serviceContainer = serviceContainer.GetCurrentRegistrations();
+        _configuration = configuration;
 
-        private readonly IJobbrServiceProvider dependencyResolver;
+        const string appZipResource = "dashboard-app.zip";
 
-        /// <summary>
-        /// The webhost that serves for the OWIN WebAPI component
-        /// </summary>
-        private IDisposable webHost;
+        var assembly = Assembly.GetExecutingAssembly();
+        var dashboardZipEmbeddedResourceName = assembly.GetManifestResourceNames().FirstOrDefault(p => p.EndsWith(appZipResource));
 
-        private readonly DashboardConfiguration configuration;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DashboardBackend"/> class.
-        /// </summary>
-        public DashboardBackend(IJobbrServiceProvider dependencyResolver, DashboardConfiguration configuration)
+        if (dashboardZipEmbeddedResourceName == null)
         {
-            this.dependencyResolver = dependencyResolver;
-            this.configuration = configuration;
+            throw new NullReferenceException("Could not find dashboard-app.zip in the entry assembly. Please make sure dashboard-app.zip is included in your jobbr server project and build action is set to Embedded Resource");
         }
 
-        /// <summary>
-        /// Start the component
-        /// </summary>
-        public void Start()
-        {
-            if (string.IsNullOrWhiteSpace(this.configuration.BackendAddress))
-            {
-                throw new ArgumentException("Unable to start DashboardBackend when no BackendUrl is specified");
-            }
+        var zipStream = assembly.GetManifestResourceStream(dashboardZipEmbeddedResourceName);
 
-            var services = (ServiceProvider) ServicesFactory.Create();
-            var options = new StartOptions
+        if (_virtualFileSystemProvider == null)
+        {
+            _virtualFileSystemProvider = new ZipFileContentProvider(zipStream);
+        }
+    }
+
+    /// <summary>
+    ///     Start the component.
+    /// </summary>
+    public void Start()
+    {
+        if (_webHost != null)
+        {
+            throw new InvalidOperationException("The server has already been started.");
+        }
+
+        if (string.IsNullOrWhiteSpace(_configuration.BackendAddress))
+        {
+            throw new ArgumentException("Unable to start DashboardBackend when no backend URL is specified.", nameof(_configuration.BackendAddress));
+        }
+
+        _webHost = new WebHostBuilder()
+            .UseKestrel()
+            .UseUrls(new Uri(_configuration.BackendAddress).GetLeftPart(UriPartial.Authority))
+            .ConfigureServices(services =>
             {
-                Urls =
+                foreach (var instanceProducer in _serviceContainer)
                 {
-                    this.configuration.BackendAddress
-                },
-                AppStartup = typeof(Startup).FullName
-            };
+                    services.Add(new ServiceDescriptor(instanceProducer.ServiceType, instanceProducer.GetInstance()));
+                }
 
-            // Pass through the IJobbrServiceProvider to allow Startup-Classes to let them inject this dependency
-            services.Add(typeof(IJobbrServiceProvider), () => this.dependencyResolver);
+                // Controllers with endpoints need to be added manually due to discovery issues.
+                // https://stackoverflow.com/q/73777145
+                services.AddControllers()
+                    .AddApplicationPart(typeof(ConfigController).Assembly)
+                    .AddApplicationPart(typeof(CronController).Assembly)
+                    .AddApplicationPart(typeof(SystemController).Assembly);
+            })
+            .Configure(app =>
+            {
+                app.UseRouting();
 
-            var hostingStarter = services.GetService<IHostingStarter>();
-            this.webHost = hostingStarter.Start(options);
+                app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-            Logger.InfoFormat($"Started OWIN-Host for DashboardBackend at '{this.configuration.BackendAddress}'.");
-        }
+                app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-        public void Stop()
+                app.UseFileServer(new FileServerOptions
+                {
+                    EnableDefaultFiles = true,
+                    FileProvider = _virtualFileSystemProvider,
+                    StaticFileOptions =
+                    {
+                        FileProvider = _virtualFileSystemProvider,
+                        ServeUnknownFileTypes = true
+                    },
+                    DefaultFilesOptions =
+                    {
+                        DefaultFileNames = new[]
+                        {
+                            "index.html"
+                        }
+                    }
+                });
+            })
+            .Build();
+
+        _webHost.Start();
+
+        _logger.LogInformation("Started web host for DashboardBackend at '{backendAddress}'", _configuration.BackendAddress);
+    }
+
+    /// <summary>
+    ///     Stop web host.
+    /// </summary>
+    public void Stop()
+    {
+        _logger.LogInformation("Stopping web host for Web-Endpoints");
+
+        Task.FromResult(_webHost.StopAsync());
+    }
+
+    /// <summary>
+    ///     Dispose web host.
+    /// </summary>
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+        Dispose(true);
+    }
+
+    /// <summary>
+    ///     Conditional web host dispose.
+    /// </summary>
+    /// <param name="disposing">If true, dispose.</param>
+    private void Dispose(bool disposing)
+    {
+        if (disposing)
         {
-            Logger.InfoFormat("Stopping OWIN-Host for Web-Endpoints'");
-
-            this.webHost?.Dispose();
-
-            this.webHost = null;
-        }
-
-        public void Dispose()
-        {
-            this.webHost.Dispose();
-            this.webHost = null;
+            Task.Run(async () => await _webHost.StopAsync());
+            _webHost?.Dispose();
         }
     }
 }
