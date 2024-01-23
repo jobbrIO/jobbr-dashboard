@@ -25,7 +25,7 @@ assembly_info:
 before_build:
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard & au build --env prod
   - cmd: cd source\Jobbr.Dashboard.Frontend\jobbr-dashboard\dist & 7z a -tzip dashboard-app.zip *.*
-  - cmd: copy dashboard-app.zip ..\..\..\..\dashboard-app.zip  
+  - cmd: copy dashboard-app.zip ..\..\..\..\dashboard-app.zip
   - cmd: copy dashboard-app.zip ..\..\..\Jobbr.Dashboard\dashboard-app.zip
   - cmd: cd ..\..\..\..
   - nuget restore source/Jobbr.Dashboard.sln
@@ -35,9 +35,8 @@ platform: Any CPU
 configuration: Release
 
 build:
-  parallel: true 
+  parallel: true
   project: source/Jobbr.Dashboard.sln
-
 
 after_build:
   - cmd: nuget pack Jobbr.Dashboard.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%"
@@ -48,9 +47,9 @@ test:
     - '**\bin\Release\Jobbr.Dashboard.Tests.dll'
 
 deploy:
-- provider: NuGet
-  server: https://nuget.org
-  api_key:
-    secure: anKLNUxe1pn63rrNVCigoQVfA/fWML9gEpE1UHRLK/LDmQX4SM9WwzDx0kliHKWC
-  on:
-    appveyor_repo_tag: true
+  - provider: NuGet
+    server: https://nuget.org
+    api_key:
+      secure: 60SMVZkhtzWAeH6Mp7DT1YZlZGGG8jwOEXMH0oRhX1iQLBejg1TpaDxgN6i0RisX
+    on:
+      appveyor_repo_tag: true
