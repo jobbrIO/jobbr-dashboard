@@ -1,3 +1,7 @@
+> [!IMPORTANT]  
+> This repository is obsolete.  
+> Development of Jobbr has been moved to the [jobbr mono-repo](https://github.com/jobbrIO/jobbr).
+
 # Jobbr Dashboard [![Develop build status](https://img.shields.io/appveyor/ci/Jobbr/jobbr-dashboard/develop.svg?label=develop)](https://ci.appveyor.com/project/Jobbr/jobbr-dashboard)
 
 This is a storage provider implementation for the [Jobbr .NET JobServer](http://www.jobbr.io) to store artefacts related from job runs on the filesystem in a folder of your choice. 
